@@ -1333,7 +1333,6 @@ export const LotItemScalarFieldEnum = {
   name: 'name',
   quantity: 'quantity',
   batch: 'batch',
-  notes: 'notes',
   custom: 'custom',
   uuu: 'uuu',
   entityId: 'entityId',

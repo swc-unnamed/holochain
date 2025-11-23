@@ -165,9 +165,11 @@
 														<div class="flex w-full items-center justify-between text-sm">
 															<span>{subItem.title}</span>
 															{#if subItem.flag}
-																<span class="rounded-md border px-3 py-1 text-xs text-primary"
-																	>{subItem.flag.toUpperCase()}</span
-																>
+																{#if !isActive}
+																	<span class="rounded-md border px-3 py-1 text-xs">
+																		{subItem.flag.toUpperCase()}
+																	</span>
+																{/if}
 															{/if}
 														</div>
 													</a>

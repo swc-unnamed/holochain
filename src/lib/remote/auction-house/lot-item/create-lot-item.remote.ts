@@ -42,8 +42,7 @@ export const createLotItem = command(createLotItemSchema, async (data) => {
       quantity: data.quantity,
       batch: data.batch,
       custom: data.custom,
-      uuu: data.uuu,
-      notes: data.notes,
+      uuu: data.uuu
     }
   });
 })

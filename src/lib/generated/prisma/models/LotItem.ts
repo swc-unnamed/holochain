@@ -40,7 +40,6 @@ export type LotItemMinAggregateOutputType = {
   name: string | null
   quantity: number | null
   batch: boolean | null
-  notes: string | null
   custom: boolean | null
   uuu: boolean | null
   entityId: string | null
@@ -55,7 +54,6 @@ export type LotItemMaxAggregateOutputType = {
   name: string | null
   quantity: number | null
   batch: boolean | null
-  notes: string | null
   custom: boolean | null
   uuu: boolean | null
   entityId: string | null
@@ -70,7 +68,6 @@ export type LotItemCountAggregateOutputType = {
   name: number
   quantity: number
   batch: number
-  notes: number
   custom: number
   uuu: number
   entityId: number
@@ -95,7 +92,6 @@ export type LotItemMinAggregateInputType = {
   name?: true
   quantity?: true
   batch?: true
-  notes?: true
   custom?: true
   uuu?: true
   entityId?: true
@@ -110,7 +106,6 @@ export type LotItemMaxAggregateInputType = {
   name?: true
   quantity?: true
   batch?: true
-  notes?: true
   custom?: true
   uuu?: true
   entityId?: true
@@ -125,7 +120,6 @@ export type LotItemCountAggregateInputType = {
   name?: true
   quantity?: true
   batch?: true
-  notes?: true
   custom?: true
   uuu?: true
   entityId?: true
@@ -227,7 +221,6 @@ export type LotItemGroupByOutputType = {
   name: string
   quantity: number
   batch: boolean
-  notes: string | null
   custom: boolean
   uuu: boolean
   entityId: string
@@ -265,7 +258,6 @@ export type LotItemWhereInput = {
   name?: Prisma.StringFilter<"LotItem"> | string
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
-  notes?: Prisma.StringNullableFilter<"LotItem"> | string | null
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
@@ -283,7 +275,6 @@ export type LotItemOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   custom?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -304,7 +295,6 @@ export type LotItemWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"LotItem"> | string
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
-  notes?: Prisma.StringNullableFilter<"LotItem"> | string | null
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
@@ -322,7 +312,6 @@ export type LotItemOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   custom?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -345,7 +334,6 @@ export type LotItemScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"LotItem"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"LotItem"> | number
   batch?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
-  notes?: Prisma.StringNullableWithAggregatesFilter<"LotItem"> | string | null
   custom?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
   uuu?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
   entityId?: Prisma.StringWithAggregatesFilter<"LotItem"> | string
@@ -359,7 +347,6 @@ export type LotItemCreateInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   createdAt?: Date | string
@@ -375,7 +362,6 @@ export type LotItemUncheckedCreateInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -389,7 +375,6 @@ export type LotItemUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -405,7 +390,6 @@ export type LotItemUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,7 +404,6 @@ export type LotItemCreateManyInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -434,7 +417,6 @@ export type LotItemUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -447,7 +429,6 @@ export type LotItemUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -472,7 +453,6 @@ export type LotItemCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   custom?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -491,7 +471,6 @@ export type LotItemMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   custom?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -506,7 +485,6 @@ export type LotItemMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   custom?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
@@ -650,7 +628,6 @@ export type LotItemCreateWithoutAssetInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   createdAt?: Date | string
@@ -665,7 +642,6 @@ export type LotItemUncheckedCreateWithoutAssetInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -708,7 +684,6 @@ export type LotItemScalarWhereInput = {
   name?: Prisma.StringFilter<"LotItem"> | string
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
-  notes?: Prisma.StringNullableFilter<"LotItem"> | string | null
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
@@ -722,7 +697,6 @@ export type LotItemCreateWithoutLotInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   createdAt?: Date | string
@@ -736,7 +710,6 @@ export type LotItemUncheckedCreateWithoutLotInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -776,7 +749,6 @@ export type LotItemCreateWithoutEntityInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   createdAt?: Date | string
@@ -791,7 +763,6 @@ export type LotItemUncheckedCreateWithoutEntityInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   assetId?: string | null
@@ -831,7 +802,6 @@ export type LotItemCreateManyAssetInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -844,7 +814,6 @@ export type LotItemUpdateWithoutAssetInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -859,7 +828,6 @@ export type LotItemUncheckedUpdateWithoutAssetInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -873,7 +841,6 @@ export type LotItemUncheckedUpdateManyWithoutAssetInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -886,7 +853,6 @@ export type LotItemCreateManyLotInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   entityId: string
@@ -900,7 +866,6 @@ export type LotItemUpdateWithoutLotInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -914,7 +879,6 @@ export type LotItemUncheckedUpdateWithoutLotInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -928,7 +892,6 @@ export type LotItemUncheckedUpdateManyWithoutLotInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -943,7 +906,6 @@ export type LotItemCreateManyEntityInput = {
   name: string
   quantity: number
   batch?: boolean
-  notes?: string | null
   custom?: boolean
   uuu?: boolean
   assetId?: string | null
@@ -956,7 +918,6 @@ export type LotItemUpdateWithoutEntityInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -971,7 +932,6 @@ export type LotItemUncheckedUpdateWithoutEntityInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,7 +945,6 @@ export type LotItemUncheckedUpdateManyWithoutEntityInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1001,7 +960,6 @@ export type LotItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   quantity?: boolean
   batch?: boolean
-  notes?: boolean
   custom?: boolean
   uuu?: boolean
   entityId?: boolean
@@ -1019,7 +977,6 @@ export type LotItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   quantity?: boolean
   batch?: boolean
-  notes?: boolean
   custom?: boolean
   uuu?: boolean
   entityId?: boolean
@@ -1037,7 +994,6 @@ export type LotItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   quantity?: boolean
   batch?: boolean
-  notes?: boolean
   custom?: boolean
   uuu?: boolean
   entityId?: boolean
@@ -1055,7 +1011,6 @@ export type LotItemSelectScalar = {
   name?: boolean
   quantity?: boolean
   batch?: boolean
-  notes?: boolean
   custom?: boolean
   uuu?: boolean
   entityId?: boolean
@@ -1064,7 +1019,7 @@ export type LotItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LotItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotId" | "name" | "quantity" | "batch" | "notes" | "custom" | "uuu" | "entityId" | "assetId" | "createdAt" | "updatedAt", ExtArgs["result"]["lotItem"]>
+export type LotItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotId" | "name" | "quantity" | "batch" | "custom" | "uuu" | "entityId" | "assetId" | "createdAt" | "updatedAt", ExtArgs["result"]["lotItem"]>
 export type LotItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lot?: boolean | Prisma.LotDefaultArgs<ExtArgs>
   entity?: boolean | Prisma.EntityDefaultArgs<ExtArgs>
@@ -1094,7 +1049,6 @@ export type $LotItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     quantity: number
     batch: boolean
-    notes: string | null
     custom: boolean
     uuu: boolean
     entityId: string
@@ -1532,7 +1486,6 @@ export interface LotItemFieldRefs {
   readonly name: Prisma.FieldRef<"LotItem", 'String'>
   readonly quantity: Prisma.FieldRef<"LotItem", 'Int'>
   readonly batch: Prisma.FieldRef<"LotItem", 'Boolean'>
-  readonly notes: Prisma.FieldRef<"LotItem", 'String'>
   readonly custom: Prisma.FieldRef<"LotItem", 'Boolean'>
   readonly uuu: Prisma.FieldRef<"LotItem", 'Boolean'>
   readonly entityId: Prisma.FieldRef<"LotItem", 'String'>

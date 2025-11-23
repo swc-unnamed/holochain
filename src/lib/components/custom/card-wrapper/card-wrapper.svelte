@@ -7,12 +7,13 @@
 	type Props = {
 		children?: Snippet;
 		title?: string;
-		description?: string | Snippet;
+		description?: string;
+		titleContainerClass?: string;
 		footer?: string | Snippet;
 		header?: Snippet;
 	};
 
-	let { children, title, description, footer, header }: Props = $props();
+	let { children, title, description, footer, header, titleContainerClass }: Props = $props();
 
 	let mobile = new IsMobile();
 </script>
@@ -20,20 +21,12 @@
 <Card.Root class={cn(mobile.current && 'border-none bg-transparent p-0 shadow-none')}>
 	<Card.Header class={cn(mobile.current && 'mt-4 p-0')} hidden={!title && !description}>
 		<Card.Title hidden={!title}>
-			<div class="flex w-full items-center justify-between">
+			<div class={cn('flex w-full items-center justify-between gap-4', titleContainerClass)}>
 				<h3>{title}</h3>
-				<div class="flex items-center gap-4">
-					{@render header?.()}
-				</div>
+				{@render header?.()}
 			</div>
 		</Card.Title>
-		<Card.Description hidden={!description}>
-			{#if typeof description === 'string'}
-				<p>{description}</p>
-			{:else}
-				{@render description?.()}
-			{/if}
-		</Card.Description>
+		<Card.Description hidden={!description}>{description}</Card.Description>
 	</Card.Header>
 	<Card.Content hidden={!children} class={cn('h-full', mobile.current && 'p-0')}>
 		{@render children?.()}

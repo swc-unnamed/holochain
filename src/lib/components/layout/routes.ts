@@ -14,11 +14,16 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
   {
     title: "Auction House",
     icon: "",
-    flag: "wip",
     items: [
       {
         title: "Auctions",
-        url: "/auction-house"
+        url: "/auction-house/auctions"
+      },
+      {
+        title: "Create Auction",
+        url: "/auction-house/auctions/create",
+        flag: "wip",
+        role: ['AUCTIONEER']
       },
       {
         title: "Open Lots",
@@ -76,7 +81,6 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
   {
     title: "Holochain",
     icon: "mdi:database",
-    flag: "wip",
     items: [
       {
         title: "Transactions",

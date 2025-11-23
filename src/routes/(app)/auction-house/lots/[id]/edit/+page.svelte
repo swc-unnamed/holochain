@@ -309,73 +309,28 @@
 </PageWrapper>
 
 {#snippet addItem()}
-	{#if mobile.current}
-		<Drawer.Root bind:open={dialogOpen}>
-			<Drawer.Trigger
-				class={buttonVariants({
-					size: 'sm',
-					variant: 'ghost'
-				})}
-			>
-				<GitPullRequestCreateArrow /> Add Item
-			</Drawer.Trigger>
-			<Drawer.Content class="min-h-1/2">
-				<Drawer.Header>
-					<Drawer.Title>Add Item</Drawer.Title>
-					<Drawer.Description>Add a new item to this lot.</Drawer.Description>
-				</Drawer.Header>
-
-				{@render addItemContent()}
-
-				<Drawer.Footer>
-					<Drawer.Close class={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-						<X /> Cancel
-					</Drawer.Close>
-					<Button disabled={newItemCmd.submitting} onclick={newItemCmd.submit}>
-						{#if newItemCmd.submitting}
-							<Spinner />
-						{:else}
-							<GitPullRequestCreateArrow />
-						{/if}
-						Add Item
-					</Button>
-				</Drawer.Footer>
-			</Drawer.Content>
-		</Drawer.Root>
-	{:else}
-		<Dialog.Root bind:open={dialogOpen}>
-			<Dialog.Trigger
-				class={buttonVariants({
-					size: 'sm',
-					variant: 'ghost'
-				})}
-			>
-				<GitPullRequestCreateArrow /> Add Item
-			</Dialog.Trigger>
-			<Dialog.Content interactOutsideBehavior="ignore" class="min-h-1/2">
-				<Dialog.Header>
-					<Dialog.Title>Add Item</Dialog.Title>
-					<Dialog.Description>Add a new item to this lot.</Dialog.Description>
-				</Dialog.Header>
-
-				{@render addItemContent()}
-
-				<Dialog.Footer>
-					<Dialog.Close class={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-						<X /> Cancel
-					</Dialog.Close>
-					<Button disabled={newItemCmd.submitting} onclick={newItemCmd.submit}>
-						{#if newItemCmd.submitting}
-							<Spinner />
-						{:else}
-							<GitPullRequestCreateArrow />
-						{/if}
-						Add Item
-					</Button>
-				</Dialog.Footer>
-			</Dialog.Content>
-		</Dialog.Root>
-	{/if}
+	<ResponsiveDialog title="Add Item" bind:open={dialogOpen}>
+		{#snippet trigger()}
+			<Button size="sm" variant="ghost">
+				<Plus /> Add Item
+			</Button>
+		{/snippet}
+		<p>Add a new item to this lot.</p>
+		{@render addItemContent()}
+		{#snippet footer()}
+			<Button size="sm" variant="ghost" onclick={() => (dialogOpen = false)}>
+				<X /> Cancel
+			</Button>
+			<Button disabled={newItemCmd.submitting} onclick={newItemCmd.submit}>
+				{#if newItemCmd.submitting}
+					<Spinner />
+				{:else}
+					<GitPullRequestCreateArrow />
+				{/if}
+				Add Item
+			</Button>
+		{/snippet}
+	</ResponsiveDialog>
 {/snippet}
 
 {#snippet addItemContent()}
@@ -417,13 +372,6 @@
 			description="This is considered a custom item."
 			bind:checked={newItemCmd.form.custom}
 			issues={newItemCmd.errors.custom?.message}
-		/>
-
-		<TextareaInput
-			label="Notes"
-			description="Any thing you want to say really."
-			bind:value={newItemCmd.form.notes}
-			issues={newItemCmd.errors.notes?.message}
 		/>
 	</div>
 {/snippet}

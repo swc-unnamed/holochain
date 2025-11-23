@@ -46,7 +46,6 @@ model LotItem {
   name      String
   quantity  Int
   batch     Boolean  @default(false)
-  notes     String?
   custom    Boolean  @default(false)
   uuu       Boolean  @default(true)
   entityId  String   @map("entity_id")

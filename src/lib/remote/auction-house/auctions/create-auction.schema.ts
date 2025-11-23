@@ -8,7 +8,7 @@ export const createAuctionSchema = z
     type: z.enum(AuctionType),
     start: z.string().nullish(),
     end: z.string().nullish(),
-    items: z.array(z.cuid2()).min(1, { message: 'At least one item must be included in the auction.' }),
+    lots: z.array(z.cuid2()).min(1, { message: 'At least one Lot must be included in the auction.' }),
   })
   .superRefine((data, ctx) => {
     const hasStart = (data.start ?? '').trim().length > 0;

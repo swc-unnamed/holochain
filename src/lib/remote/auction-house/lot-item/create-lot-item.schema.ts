@@ -7,5 +7,4 @@ export const createLotItemSchema = z.object({
   batch: z.boolean(),
   custom: z.boolean(),
   uuu: z.boolean(),
-  notes: z.string().max(500, { message: 'Notes must be at most 500 characters' }).nullish()
 });

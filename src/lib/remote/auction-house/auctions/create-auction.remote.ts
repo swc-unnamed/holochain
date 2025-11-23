@@ -2,20 +2,21 @@ import { createAuctionSchema } from "./create-auction.schema";
 import { command } from "$app/server";
 import { db } from "$lib/db/prisma";
 import { error } from "@sveltejs/kit";
+import { newAuctionTask } from "$lib/trigger/events/auction-house/auctions/new-auction.task";
 
 export const createAuction = command(createAuctionSchema, async (data) => {
   console.log("Creating auction with data:", data);
 
-  const items = await db.lotItem.findMany({
+  const lots = await db.lot.findMany({
     where: {
       id: {
-        in: data.items,
+        in: data.lots,
       }
     }
   });
 
   // make sure all items exist
-  if (items.length !== data.items.length) {
+  if (lots.length !== data.lots.length) {
     throw error(400, {
       message: 'One or more items do not exist.'
     })
@@ -40,7 +41,7 @@ export const createAuction = command(createAuctionSchema, async (data) => {
   await db.lot.updateMany({
     where: {
       id: {
-        in: data.items
+        in: data.lots
       }
     },
     data: {
@@ -49,7 +50,7 @@ export const createAuction = command(createAuctionSchema, async (data) => {
     }
   });
 
-  // todo: emit a task for the auction
+  await newAuctionTask.trigger({ auctionId: auction.id });
 
   return {
     id: auction.id

@@ -54,7 +54,6 @@ export const newLotTask = task({
         uuu: item.uuu,
         batch: item.batch,
         custom: item.custom,
-        note: item.notes,
         entity: {
           id: item.entity.id,
           name: item.entity.name,
