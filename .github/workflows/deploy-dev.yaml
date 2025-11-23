@@ -42,8 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     needs: deploy_image
     steps:
       - name: Checkout code
@@ -57,6 +55,8 @@ jobs:
         run: bun install
 
       - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           bun prisma migrate deploy
 
