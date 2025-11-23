@@ -76,6 +76,7 @@
     "nprogress": "^0.2.0",
     "pg-listen": "^1.7.0",
     "prisma": "^7.0.0",
+    "svelte-adapter-bun": "^1.0.1",
     "zod": "^4.1.12"
   }
 }
