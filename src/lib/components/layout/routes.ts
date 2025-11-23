@@ -13,7 +13,7 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
   },
   {
     title: "Auction House",
-    icon: "",
+    icon: "lucide:gavel",
     items: [
       {
         title: "Auctions",
@@ -94,8 +94,7 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
   },
   {
     title: "Administration",
-    icon: "",
-    flag: "new",
+    icon: "lucide:settings-2",
     role: ['DEVELOPER', 'TZAR'],
     items: [
       {
@@ -106,12 +105,6 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
       {
         title: "Account Management",
         url: "/admin/accounts",
-        role: ['DEVELOPER', 'TZAR']
-      },
-      {
-        title: "System Logs",
-        url: "/admin",
-        flag: "wip",
         role: ['DEVELOPER', 'TZAR']
       },
       {
