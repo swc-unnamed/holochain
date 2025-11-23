@@ -58,14 +58,14 @@ jobs:
         run: |
           bun prisma migrate deploy
 
-  deploy_app:
-    runs-on: ubuntu-latest
-    environment:
-      name: dev
-    needs:
-      - deploy_image
-      - deploy_migrations
-    steps:
-      - name: Deploy to Dev Environment
-        run: |
-          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+  # deploy_app:
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: dev
+  #   needs:
+  #     - deploy_image
+  #     - deploy_migrations
+  #   steps:
+  #     - name: Deploy to Dev Environment
+  #       run: |
+  #         curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
