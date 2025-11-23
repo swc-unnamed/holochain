@@ -8,9 +8,6 @@ COPY . .
 
 RUN bun install --ignore-scripts
 
-RUN bun prepare
-RUN bun prisma generate
-
 RUN bun run build
 
 RUN rm -rf ./node_modules
