@@ -1,5 +1,7 @@
 FROM oven/bun:1.3 AS build
 
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 WORKDIR /app
 
 COPY . .
