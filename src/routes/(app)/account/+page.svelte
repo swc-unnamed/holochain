@@ -28,8 +28,9 @@
 	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
 	import { setMode } from 'mode-watcher';
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
+	import Item from '$lib/components/custom/item/item.svelte';
+	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
 
-	const mobile = new IsMobile();
 	let { data } = $props();
 	let account = $derived(data.account);
 	let selectedTab = $state('details');
@@ -47,6 +48,8 @@
 			}
 		})
 	);
+
+	const mobile = new IsMobile();
 
 	async function resetAnonymousId() {
 		// Logic to reset the anonymous ID
@@ -175,7 +178,20 @@
 
 		<Tabs.Content value="karma_logs">
 			<CardWrapper title="Karma Logs">
-				<DataTable data={account.karmaLogs} columns={karmaLogColumns} />
+				{#if mobile.current}
+					<div class="grid gap-3">
+						{#each account.karmaLogs as log}
+							<Item
+								variant="outline"
+								title={`${log.delta > 0 ? '+' : ''}${log.delta} Karma`}
+								description={log.reason}
+								footer={`${standardDateFormat(log.createdAt)}`}
+							/>
+						{/each}
+					</div>
+				{:else}
+					<DataTable data={account.karmaLogs} columns={karmaLogColumns} />
+				{/if}
 			</CardWrapper>
 		</Tabs.Content>
 	</Tabs.Root>

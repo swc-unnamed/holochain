@@ -14,9 +14,16 @@
 	import { banUser } from '$lib/remote/admin/accounts/ban-user.remote.js';
 	import { toast } from 'svelte-sonner';
 	import Item from '$lib/components/custom/item/item.svelte';
-	import { Ban } from '@lucide/svelte';
+	import { Ban, Save } from '@lucide/svelte';
 	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
 	import { invalidate } from '$app/navigation';
+	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
+	import { CommandForm } from '@akcodeworks/svelte-command-form';
+	import { updateUserSchema } from '$lib/remote/admin/accounts/update-user.schema';
+	import { updateUser } from '$lib/remote/admin/accounts/update-user.remote.js';
+	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
+	import { AppRole } from '$lib/generated/prisma/enums.js';
+	import { Spinner } from '$lib/components/ui/spinner/index.js';
 
 	const { data } = $props();
 	const user = $derived(data.userDetails);
@@ -39,6 +46,23 @@
 			toast.error('Failed to ban user. Please try again.');
 		}
 	}
+
+	const updateUserCmd = new CommandForm(updateUserSchema, {
+		command: updateUser,
+		invalidate: 'admin:accounts:id',
+		initial: () => ({
+			userId: user.id,
+			displayName: user.displayName,
+			name: user.name,
+			role: user.role
+		}),
+		onSuccess: () => {
+			toast.success('User updated successfully.');
+		},
+		onError: () => {
+			toast.error('Failed to update user');
+		}
+	});
 </script>
 
 <PageWrapper title={user.displayName} crumbOverrides={[[user.id, user.displayName]]}>
@@ -55,44 +79,34 @@
 				</div>
 			</div>
 
-			<Dialog.Root bind:open={banUserDialogOpen}>
-				<Dialog.Trigger
-					class={buttonVariants({
-						variant: 'destructive',
-						size: 'sm'
-					})}
-				>
-					Ban User
-				</Dialog.Trigger>
-				<Dialog.Content>
-					<Dialog.Header>
-						<Dialog.Title>Ban User?</Dialog.Title>
-					</Dialog.Header>
+			<ResponsiveDialog bind:open={banUserDialogOpen} title="Ban User?">
+				{#snippet trigger()}
+					<Button size="sm" variant="ghost" class="text-destructive">Ban User</Button>
+				{/snippet}
 
-					<div class="grid gap-3">
-						<TextareaInput label="Ban Reason" bind:value={banData.reason} />
-						<FieldInput label="Banned Until" bind:value={banData.bannedUntil} type="date" />
+				<div class="grid gap-3">
+					<TextareaInput label="Ban Reason" bind:value={banData.reason} />
+					<FieldInput label="Banned Until" bind:value={banData.bannedUntil} type="date" />
+				</div>
+
+				{#snippet footer()}
+					<div class="flex justify-end gap-2">
+						<Button variant="outline" size="sm" onclick={() => (banUserDialogOpen = false)}>
+							Cancel
+						</Button>
+						<Button
+							variant="destructive"
+							size="sm"
+							onclick={async () => {
+								await handleBanUser();
+								banUserDialogOpen = false;
+							}}
+						>
+							Confirm Ban
+						</Button>
 					</div>
-
-					<Dialog.Footer>
-						<div class="flex justify-end gap-2">
-							<Button variant="outline" size="sm" onclick={() => (banUserDialogOpen = false)}>
-								Cancel
-							</Button>
-							<Button
-								variant="destructive"
-								size="sm"
-								onclick={async () => {
-									await handleBanUser();
-									banUserDialogOpen = false;
-								}}
-							>
-								Confirm Ban
-							</Button>
-						</div>
-					</Dialog.Footer>
-				</Dialog.Content>
-			</Dialog.Root>
+				{/snippet}
+			</ResponsiveDialog>
 		</div>
 	</CardWrapper>
 
@@ -116,10 +130,43 @@
 	{/if}
 
 	<CardWrapper title="Overview">
-		<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-			<FieldInput label="Name" value={user.displayName} readonly />
-			<FieldInput label="Display Name" value={user.displayName} readonly />
-			<FieldInput label="ANONID" value={user.anonid} readonly />
+		<div class="grid w-full gap-3">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+				<FieldInput
+					label="Name"
+					description="Be careful when changing this, this is the user's login username."
+					bind:value={updateUserCmd.form.name}
+				/>
+				<FieldInput label="Display Name" value={updateUserCmd.form.displayName} />
+				<SelectInput
+					type="single"
+					label="Role"
+					bind:value={updateUserCmd.form.role}
+					records={[
+						{ label: 'Patron', value: AppRole.PATRON },
+						{ label: 'Auctioneer', value: AppRole.AUCTIONEER },
+						{ label: 'Developer', value: AppRole.DEVELOPER },
+						{ label: 'Tzar', value: AppRole.TZAR }
+					]}
+					labelKey="label"
+					valueKey="value"
+				/>
+				<FieldInput label="ANONID" value={user.anonid} readonly />
+			</div>
+			<div class="w-full">
+				<Button
+					class="w-full md:w-auto"
+					onclick={updateUserCmd.submit}
+					disabled={updateUserCmd.submitting}
+				>
+					{#if updateUserCmd.submitting}
+						<Spinner />
+					{:else}
+						<Save />
+					{/if}
+					Save Changes
+				</Button>
+			</div>
 		</div>
 	</CardWrapper>
 

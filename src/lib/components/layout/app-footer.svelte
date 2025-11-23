@@ -2,7 +2,14 @@
 	import * as Sidebar from '$lib/components/ui/sidebar';
 	import { toast } from 'svelte-sonner';
 	import Button from '../ui/button/button.svelte';
-	import { HeartIcon, MessageSquareIcon, MoonIcon, RssIcon, UserIcon } from '@lucide/svelte';
+	import { RssIcon, UserIcon, LogOut } from '@lucide/svelte';
+	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
+	import { useSidebar } from '$lib/components/ui/sidebar';
+	import { logout } from '$lib/remote/auth/logout.remote';
+	import { goto } from '$app/navigation';
+
+	const sidebar = useSidebar();
+	const mobile = new IsMobile();
 </script>
 
 <Sidebar.Menu>
@@ -23,12 +30,35 @@
 						toast('Notifications', {
 							description: "Notifications are coming soon, we just haven't built them yet!"
 						});
+
+						if (mobile.current) {
+							sidebar.setOpenMobile(false);
+						}
 					}}
 				>
 					<RssIcon />
 				</Button>
-				<Button variant="outline" size="icon" href="/account">
+				<Button
+					variant="outline"
+					size="icon"
+					href="/account"
+					onclick={() => {
+						if (mobile.current) {
+							sidebar.setOpenMobile(false);
+						}
+					}}
+				>
 					<UserIcon />
+				</Button>
+				<Button
+					variant="outline"
+					size="icon"
+					onclick={async () => {
+						await logout();
+						await goto('/auth/login');
+					}}
+				>
+					<LogOut />
 				</Button>
 			</div>
 		</div>
