@@ -23,9 +23,7 @@ export default defineConfig({
   build: {
     extensions: [
       prismaExtension({
-        schema: "prisma",
-        migrate: false,
-        directUrlEnvVarName: "DATABASE_URL"
+        mode: 'modern',
       })
     ]
   }
