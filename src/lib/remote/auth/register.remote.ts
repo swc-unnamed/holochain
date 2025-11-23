@@ -35,7 +35,6 @@ export const registerAccount = command(registerSchema, async (data) => {
       displayName: data.name,
       anonid: nanoid(),
       passwordHash: encryptedPassword,
-      accountSetupComplete: false,
       karma: 10,
       karmaLogs: {
         create: {
