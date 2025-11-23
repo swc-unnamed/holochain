@@ -1,0 +1,7 @@
+model SiteConfiguration {
+  id    String               @id @default(cuid())
+  key   SiteConfigurationKey @unique @map("key")
+  value String               @map("value")
+
+  @@map("site_configurations")
+}

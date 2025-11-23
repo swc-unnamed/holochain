@@ -1,0 +1,26 @@
+FROM oven/bun:1.3 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN bun install --ignore-scripts
+
+RUN bun prepare
+RUN bun prisma generate
+
+RUN bun run build
+
+RUN rm -rf ./node_modules
+
+RUN bun install --production --ignore-scripts
+
+FROM oven/bun:1.3 AS runtime
+WORKDIR /app
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/build /app/build
+
+ENV NODE_ENV="production"
+
+EXPOSE 3000
+CMD ["bun", "/app/build/index.js"]

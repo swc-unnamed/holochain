@@ -1,0 +1,48 @@
+model User {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  displayName     String           @map("display_name")
+  anonid          String           @unique @map("anonid")
+  karma           Int              @default(0)
+  combineId       String?          @unique @map("combine_id")
+  combineScopes   String[]         @default(["character_read"]) @map("combine_scopes")
+  passwordHash    String?          @map("password_hash")
+  role            AppRole          @default(PATRON)
+  banned          Boolean          @default(false)
+  bannedReason    String?          @map("banned_reason")
+  bannedUntil     DateTime?        @map("banned_until")
+  bannedById      String?          @map("banned_by_id")
+  avatarUrl       String?          @map("avatar_url")
+  discordId       String?          @map("discord_id")
+  discordUsername String?          @map("discord_username")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  lastSeenAt      DateTime         @default(now()) @map("last_seen_at")
+  preferences     UserPreference[]
+  karmaLogs       UserKarmaLog[]
+  lotsOwned       Lot[]            @relation(name: "lots_created")
+  lotsPurchased   Lot[]            @relation(name: "lots_purchased")
+
+  @@map("users")
+}
+
+model UserPreference {
+  id     String            @id @default(cuid())
+  userId String            @map("user_id")
+  user   User              @relation(fields: [userId], references: [id])
+  key    UserPreferenceKey @map("key")
+  value  String            @map("value")
+
+  @@unique([userId, key], name: "user_key")
+  @@map("user_preferences")
+}
+
+model UserKarmaLog {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  delta     Int      @map("delta")
+  reason    String   @map("reason")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_karma_logs")
+}
