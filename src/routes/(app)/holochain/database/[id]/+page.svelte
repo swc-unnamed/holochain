@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
+	import Empty from '$lib/components/custom/empty/empty.svelte';
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -28,7 +29,7 @@
 </script>
 
 <PageWrapper title={entity.name} crumbOverrides={[[entity.id, entity.name]]}>
-	<CardWrapper title={entity.name}>
+	<CardWrapper title={entity.name} description={entity.type.toUpperCase()}>
 		{#snippet header()}
 			{#if able(['DEVELOPER', 'TZAR'])}
 				<Button size="sm" variant="outline" href={`/holochain/database/${entity.id}/edit`}>
@@ -36,9 +37,6 @@
 					Edit
 				</Button>
 			{/if}
-		{/snippet}
-		{#snippet description()}
-			<Badge>{entity.type}</Badge>
 		{/snippet}
 
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)]">
@@ -101,10 +99,6 @@
 
 	{#if entity.transactions?.length}
 		<CardWrapper title="Transactions">
-			{#snippet description()}
-				<p class="text-sm text-muted-foreground">Historical movements of this entity's value.</p>
-			{/snippet}
-
 			<Table.Root class="mt-2">
 				<Table.Header>
 					<Table.Row>
@@ -132,9 +126,7 @@
 		</CardWrapper>
 	{:else}
 		<CardWrapper title="Transactions">
-			{#snippet description()}
-				<p class="text-sm text-muted-foreground">No transactions recorded for this entity yet.</p>
-			{/snippet}
+			<Empty title="No Transactions Recorded" />
 		</CardWrapper>
 	{/if}
 </PageWrapper>

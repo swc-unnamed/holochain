@@ -147,10 +147,10 @@
 <PageWrapper title={`Edit Lot - ${lot.lotNumber}`} crumbOverrides={[[lot.id, `#${lot.lotNumber}`]]}>
 	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 		<div>
-			<CardWrapper title="Lot Details">
-				{#snippet description()}
-					<p>Last Updated: {standardDateFormat(lot.updatedAt)}</p>
-				{/snippet}
+			<CardWrapper
+				title="Lot Details"
+				description={`Last Updated: ${standardDateFormat(lot.updatedAt)}`}
+			>
 				{#snippet header()}
 					<Badge>{lot.status}</Badge>
 				{/snippet}

@@ -57,27 +57,35 @@
 			</div>
 		{/snippet}
 		<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-			<div class="grid gap-3">
-				<FieldInput label="Title" bind:value={cmd.form.title} issues={cmd.errors.title?.message} />
-				<TextareaInput
-					label="Description"
-					bind:value={cmd.form.description}
-					issues={cmd.errors.description?.message}
-				/>
+			<div>
+				<div class="grid gap-3">
+					<FieldInput
+						label="Title"
+						bind:value={cmd.form.title}
+						issues={cmd.errors.title?.message}
+					/>
+					<TextareaInput
+						label="Description"
+						bind:value={cmd.form.description}
+						issues={cmd.errors.description?.message}
+					/>
+				</div>
 			</div>
-			<div class="grid gap-3">
-				<FieldInput
-					label="Start Date"
-					type="datetime-local"
-					bind:value={cmd.form.start}
-					issues={cmd.errors.start?.message}
-				/>
-				<FieldInput
-					label="End Date"
-					type="datetime-local"
-					bind:value={cmd.form.end}
-					issues={cmd.errors.end?.message}
-				/>
+			<div>
+				<div class="grid gap-3">
+					<FieldInput
+						label="Start Date"
+						type="datetime-local"
+						bind:value={cmd.form.start}
+						issues={cmd.errors.start?.message}
+					/>
+					<FieldInput
+						label="End Date"
+						type="datetime-local"
+						bind:value={cmd.form.end}
+						issues={cmd.errors.end?.message}
+					/>
+				</div>
 			</div>
 		</div>
 

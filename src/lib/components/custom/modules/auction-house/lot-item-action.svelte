@@ -47,8 +47,7 @@
 			quantity: item.quantity,
 			uuu: item.uuu,
 			batch: item.batch,
-			custom: item.custom,
-			notes: item.notes
+			custom: item.custom
 		}),
 		onSuccess: () => {
 			toast.success('Updated', {
