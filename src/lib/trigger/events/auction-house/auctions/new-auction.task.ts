@@ -13,4 +13,4 @@ export const newAuctionTask = task({
       message: "New auction task executed successfully",
     }
   }
-})
+});

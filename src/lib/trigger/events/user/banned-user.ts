@@ -1,4 +1,5 @@
-import { logger, task, wait } from '@trigger.dev/sdk/v3';
+import { logger, task } from '@trigger.dev/sdk/v3';
+import { newUserEventTask } from './new-user';
 
 export const bannedUserEventTask = task({
   id: 'user-banned-event',
@@ -10,9 +11,11 @@ export const bannedUserEventTask = task({
       payload: payload
     });
 
-    await wait.for({
-      seconds: 10,
-    });
+    await newUserEventTask.trigger({
+      userId: payload.userId,
+    }, {
+      delay: "7d"
+    })
 
     return {
       message: 'Banned user event processed',
