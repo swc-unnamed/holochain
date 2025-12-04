@@ -4,7 +4,7 @@ export const load = async () => {
   const auctions = await db.auction.findMany({
     where: {
       status: {
-        notIn: ['CANCELLED', 'COMPLETED']
+        not: 'CANCELLED'
       }
     },
     include: {

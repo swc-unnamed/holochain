@@ -21,12 +21,14 @@
 <Card.Root class={cn(mobile.current && 'border-none bg-transparent p-0 shadow-none')}>
 	<Card.Header class={cn(mobile.current && 'mt-4 p-0')} hidden={!title && !description}>
 		<Card.Title hidden={!title}>
-			<div class={cn('flex w-full items-center justify-between gap-4', titleContainerClass)}>
-				<h3>{title}</h3>
+			<div class={cn('flex w-full items-start justify-between', titleContainerClass)}>
+				<div class="flex flex-col gap-1">
+					<h3>{title}</h3>
+					<span hidden={!description} class="text-sm text-muted-foreground">{description}</span>
+				</div>
 				{@render header?.()}
 			</div>
 		</Card.Title>
-		<Card.Description hidden={!description}>{description}</Card.Description>
 	</Card.Header>
 	<Card.Content hidden={!children} class={cn('h-full', mobile.current && 'p-0')}>
 		{@render children?.()}

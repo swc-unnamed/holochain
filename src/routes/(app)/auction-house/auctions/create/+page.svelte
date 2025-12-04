@@ -43,22 +43,18 @@
 
 <PageWrapper title="Create Auction">
 	<CardWrapper title="Create Auction">
-		{#snippet header()}
-			<div>
-				<SelectInput
-					type="single"
-					label="Auction Type"
-					bind:value={cmd.form.type}
-					records={[{ label: 'Live', value: AuctionType['LIVE'] }]}
-					valueKey="value"
-					labelKey="label"
-					issues={cmd.errors.type?.message}
-				/>
-			</div>
-		{/snippet}
 		<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 			<div>
 				<div class="grid gap-3">
+					<SelectInput
+						type="single"
+						label="Auction Type"
+						bind:value={cmd.form.type}
+						records={[{ label: 'Live', value: AuctionType['LIVE'] }]}
+						valueKey="value"
+						labelKey="label"
+						issues={cmd.errors.type?.message}
+					/>
 					<FieldInput
 						label="Title"
 						bind:value={cmd.form.title}
