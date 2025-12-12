@@ -8,7 +8,6 @@ import { env } from '$env/dynamic/private';
 import { nanoid } from '$lib/utils/helpers/shared/nanoid';
 import { getDefaultPreferences } from '$lib/types/user-preference-detail';
 import type { UserPreferenceKey } from '$lib/generated/prisma/enums';
-import { newUserEventTask } from '../../trigger/events/user/new-user';
 import "dotenv/config";
 
 export const registerAccount = command(registerSchema, async (data) => {
@@ -60,7 +59,5 @@ export const registerAccount = command(registerSchema, async (data) => {
     httpOnly: true,
     secure: env.NODE_ENV !== 'development'
   });
-
-  await newUserEventTask.trigger({ userId: user.id });
   return { success: true, message: 'Registration successful', redirect: '/account' }
 })
