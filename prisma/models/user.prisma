@@ -15,6 +15,7 @@ model User {
   avatarUrl       String?          @map("avatar_url")
   discordId       String?          @map("discord_id")
   discordUsername String?          @map("discord_username")
+  approvedMiddle  Boolean          @default(false) @map("approved_middle")
   createdAt       DateTime         @default(now()) @map("created_at")
   lastSeenAt      DateTime         @default(now()) @map("last_seen_at")
   preferences     UserPreference[]

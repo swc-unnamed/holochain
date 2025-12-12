@@ -32,6 +32,7 @@ model Lot {
   startPrice     String    @map("start_price")
   purchasePrice  String?   @map("purchase_price")
   anonLot        Boolean   @default(false) @map("anon_lot")
+  creditsTo      String    @default("MIDDLE") @map("credits_to")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at")
   items          LotItem[]
@@ -56,6 +57,16 @@ model LotItem {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("lot_items")
+}
+
+model AuctionConfiguration {
+  id        String                  @id @default(cuid())
+  key       AuctionConfigurationKey @unique @map("key")
+  value     String?                 @map("value")
+  createdAt DateTime                @default(now()) @map("created_at")
+  updatedAt DateTime                @default(now()) @updatedAt @map("updated_at")
+
+  @@map("auction_configurations")
 }
 
 enum LotType {
@@ -91,4 +102,10 @@ enum AuctionStatus {
   PENDING
 
   @@map("auction_status")
+}
+
+enum AuctionConfigurationKey {
+  LIVE_DISCORD_BROADCAST_WEBHOOK_URL
+
+  @@map("auction_configuration_key")
 }

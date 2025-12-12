@@ -56,6 +56,7 @@ export const ModelName = {
   Auction: 'Auction',
   Lot: 'Lot',
   LotItem: 'LotItem',
+  AuctionConfiguration: 'AuctionConfiguration',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
@@ -155,6 +156,17 @@ export const LotItemScalarFieldEnum = {
 } as const
 
 export type LotItemScalarFieldEnum = (typeof LotItemScalarFieldEnum)[keyof typeof LotItemScalarFieldEnum]
+
+
+export const AuctionConfigurationScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
 
 
 export const EntityScalarFieldEnum = {

@@ -2,124 +2,302 @@
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
-	import * as Table from '$lib/components/ui/table/index.js';
-	import LotItemAction from '$lib/components/custom/modules/auction-house/lot-item-action.svelte';
-	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
-	import HyperlinkCell from '$lib/components/custom/data-table/hyperlink-cell.svelte';
+	import Badge from '$lib/components/ui/badge/badge.svelte';
+	import Empty from '$lib/components/custom/empty/empty.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Edit, Edit2, Pencil } from '@lucide/svelte';
-	import { toAbbrCurrency, toLocalCurrency } from '$lib/utils/helpers/shared/currency.js';
+	import {
+		Pencil,
+		CircleDot,
+		Gavel,
+		Hash,
+		Layers,
+		Package,
+		ChevronLeft,
+		ChevronRight,
+		Coins,
+		MapPin,
+		Calendar,
+		User,
+		UserX
+	} from '@lucide/svelte';
+	import { toAbbrCurrency } from '$lib/utils/helpers/shared/currency.js';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
-	const mobile = new IsMobile();
+
+	// Lot navigation state
+	let currentLotIndex = $state(0);
+	let currentLot = $derived(auction.lots[currentLotIndex]);
+	let hasPrev = $derived(currentLotIndex > 0);
+	let hasNext = $derived(currentLotIndex < auction.lots.length - 1);
+
+	function prevLot() {
+		if (hasPrev) currentLotIndex--;
+	}
+
+	function nextLot() {
+		if (hasNext) currentLotIndex++;
+	}
+
+	function selectLot(index: number) {
+		currentLotIndex = index;
+	}
 </script>
 
 <PageWrapper title="Auction Details" crumbOverrides={[[auction.id, auction.title]]}>
-	<CardWrapper title={auction.title} description={auction.description ?? ''}>
-		{#snippet header()}
-			<div class="flex items-center gap-1">
-				<span
-					class="inline-flex items-center rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium tracking-wide text-primary uppercase"
-				>
-					{auction.status}
-				</span>
-				<Button size="sm" variant="outline" href={`/auction-house/auctions/${auction.id}/manage`}>
-					<Pencil />
-					<span>Manage</span>
-				</Button>
+	<!-- Auction Header Card -->
+	<div class="rounded-xl border border-border/60 bg-card p-6">
+		<div class="flex flex-wrap items-start justify-between gap-4">
+			<div class="space-y-2">
+				<div class="flex items-center gap-3">
+					<h1 class="text-2xl font-bold">{auction.title}</h1>
+					<Badge
+						variant={auction.status === 'ACTIVE' ? 'default' : 'secondary'}
+						class="px-3 py-1 text-sm"
+					>
+						<CircleDot class="mr-1 size-3" />
+						{auction.status}
+					</Badge>
+				</div>
+				{#if auction.description}
+					<p class="max-w-2xl text-muted-foreground">{auction.description}</p>
+				{/if}
 			</div>
-		{/snippet}
-		<div class="space-y-6">
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-				<div class="rounded-xl border border-border/80 bg-muted/40 p-4">
-					<p class="text-xs tracking-wide text-muted-foreground uppercase">Starts</p>
-					<p class="text-lg font-semibold text-foreground">
-						{auction.start ? standardDateFormat(auction.start) : 'Not scheduled'}
-					</p>
+			<Button size="sm" variant="outline" href={`/auction-house/auctions/${auction.id}/manage`}>
+				<Pencil class="size-4" />
+				<span>Manage</span>
+			</Button>
+		</div>
+
+		<!-- Auction Stats -->
+		<div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Calendar class="size-3" />
+					Starts
+				</p>
+				<p class="mt-1 text-lg font-semibold">
+					{auction.start ? standardDateFormat(auction.start) : 'Not scheduled'}
+				</p>
+			</div>
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Calendar class="size-3" />
+					Ends
+				</p>
+				<p class="mt-1 text-lg font-semibold">
+					{auction.end ? standardDateFormat(auction.end) : 'Not scheduled'}
+				</p>
+			</div>
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Gavel class="size-3" />
+					Total Lots
+				</p>
+				<p class="mt-1 text-lg font-semibold">{auction.lots.length}</p>
+			</div>
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Package class="size-3" />
+					Total Items
+				</p>
+				<p class="mt-1 text-lg font-semibold">
+					{auction.lots.reduce((sum, lot) => sum + (lot.items?.length ?? 0), 0)}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	{#if auction.lots.length === 0}
+		<Empty description="No lots assigned to this auction yet." />
+	{:else}
+		<!-- Lots Browser -->
+		<div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
+			<!-- Current Lot Spotlight (3 cols) -->
+			<div class="space-y-4 lg:col-span-3">
+				<!-- Lot Navigation -->
+				<div class="flex items-center justify-between">
+					<Button variant="outline" size="sm" onclick={prevLot} disabled={!hasPrev}>
+						<ChevronLeft class="size-4" />
+						<span>Previous</span>
+					</Button>
+					<div class="text-center">
+						<p class="flex items-center justify-center gap-1 text-2xl font-bold">
+							<Hash class="size-5" />
+							Lot {currentLot.lotNumber}
+						</p>
+						<p class="text-sm text-muted-foreground">{currentLot.title}</p>
+					</div>
+					<Button variant="outline" size="sm" onclick={nextLot} disabled={!hasNext}>
+						<span>Next</span>
+						<ChevronRight class="size-4" />
+					</Button>
 				</div>
-				<div class="rounded-xl border border-border/80 bg-muted/40 p-4">
-					<p class="text-xs tracking-wide text-muted-foreground uppercase">Ends</p>
-					<p class="text-lg font-semibold text-foreground">
-						{auction.end ? standardDateFormat(auction.end) : 'Not scheduled'}
-					</p>
+
+				<!-- Current Lot Details Card -->
+				<div class="rounded-xl border-2 border-primary/50 bg-card p-6">
+					<!-- Lot Header -->
+					<div class="mb-4 flex flex-wrap items-center gap-2 border-b border-border/60 pb-4">
+						<Badge variant="outline" class="text-sm">{currentLot.status}</Badge>
+						{#if currentLot.anonLot}
+							<Badge variant="secondary" class="text-sm">
+								<UserX class="mr-1 size-3" />
+								Anonymous
+							</Badge>
+						{/if}
+						<!-- Seller Info -->
+						{#if currentLot.createdBy}
+							<Badge variant="outline" class="text-sm">
+								{#if currentLot.anonLot}
+									<UserX class="mr-1 size-3" />
+									{currentLot.createdBy.anonid}
+								{:else}
+									<User class="mr-1 size-3" />
+									{currentLot.createdBy.displayName}
+								{/if}
+							</Badge>
+						{/if}
+					</div>
+
+					<div class="mb-4 flex flex-wrap items-start justify-between gap-4">
+						<div>
+							<p class="text-muted-foreground">
+								{currentLot.details || 'No details provided'}
+							</p>
+							{#if currentLot.location}
+								<p class="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
+									<MapPin class="size-3" />
+									{currentLot.location}
+								</p>
+							{/if}
+						</div>
+						<div class="text-right">
+							<p
+								class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
+							>
+								<Coins class="size-3" />
+								Starting Bid
+							</p>
+							<p class="text-3xl font-bold text-primary">
+								{toAbbrCurrency(currentLot.startPrice)}
+							</p>
+							<p class="text-sm text-muted-foreground">credits</p>
+						</div>
+					</div>
+
+					<!-- Items in Current Lot -->
+					<div class="border-t border-border/60 pt-4">
+						<div class="mb-3 flex items-center gap-2">
+							<Layers class="size-4 text-muted-foreground" />
+							<span class="text-sm font-medium">{currentLot.items.length} Items</span>
+						</div>
+
+						{#if currentLot.items.length === 0}
+							<div
+								class="flex items-center justify-center rounded-lg border border-dashed border-border p-8 text-muted-foreground"
+							>
+								<Package class="mr-2 size-5" />
+								<span>No items in this lot</span>
+							</div>
+						{:else}
+							<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+								{#each currentLot.items as item}
+									<a
+										href="/holochain/database/{item.entityId}"
+										target="_blank"
+										rel="noopener noreferrer"
+										class="group overflow-hidden rounded-xl border border-border/60 bg-muted/20 transition-all hover:border-primary/40"
+									>
+										<div class="aspect-square overflow-hidden">
+											<img
+												src={item.entity.imageLarge}
+												alt={item.entity.name}
+												class="h-full w-full rounded-xl border bg-black object-cover p-2 transition-transform group-hover:scale-105"
+											/>
+										</div>
+										<div class="p-3">
+											<p class="font-medium">{item.entity.name}</p>
+											<div class="mt-1 flex flex-wrap items-center gap-1">
+												<Badge variant="secondary" class="text-xs">x{item.quantity}</Badge>
+												{#if item.custom}
+													<Badge variant="outline" class="text-xs">Custom</Badge>
+												{/if}
+												{#if item.batch}
+													<Badge variant="outline" class="text-xs">Batch</Badge>
+												{/if}
+												{#if item.uuu}
+													<Badge variant="outline" class="text-xs">UUU</Badge>
+												{/if}
+											</div>
+										</div>
+									</a>
+								{/each}
+							</div>
+						{/if}
+					</div>
 				</div>
-				<div class="rounded-xl border border-border/80 bg-muted/40 p-4">
-					<p class="text-xs tracking-wide text-muted-foreground uppercase">Lots Assigned</p>
-					<p class="text-lg font-semibold text-foreground">
-						{auction.lots?.length ?? 0}
-					</p>
+			</div>
+
+			<!-- Lot Queue Sidebar (1 col) -->
+			<div class="lg:col-span-1">
+				<div class="sticky top-20 space-y-3">
+					<div class="flex items-center justify-between">
+						<h3 class="font-semibold">All Lots</h3>
+						<span class="text-xs text-muted-foreground">{auction.lots.length} total</span>
+					</div>
+
+					<div class="max-h-[calc(100vh-200px)] space-y-2 overflow-y-auto pr-1">
+						{#each auction.lots as lot, index}
+							<button
+								onclick={() => selectLot(index)}
+								class="w-full rounded-lg border p-3 text-left transition-all {index ===
+								currentLotIndex
+									? 'border-primary bg-primary/10'
+									: 'border-border/60 bg-muted/20 hover:border-border hover:bg-muted/40'}"
+							>
+								<div class="flex items-center gap-2">
+									<div
+										class="flex size-8 shrink-0 items-center justify-center rounded bg-muted font-mono text-xs font-bold {index ===
+										currentLotIndex
+											? 'bg-primary text-primary-foreground'
+											: ''}"
+									>
+										{lot.lotNumber}
+									</div>
+									<div class="min-w-0 flex-1">
+										<p class="truncate text-sm font-medium">{lot.title}</p>
+										<div class="flex items-center gap-2">
+											<span class="text-xs text-muted-foreground">
+												{lot.items.length} items
+											</span>
+											<Badge variant="outline" class="px-1 py-0 text-[10px]">{lot.status}</Badge>
+										</div>
+									</div>
+								</div>
+								<!-- Mini image preview -->
+								{#if lot.items.length > 0}
+									<div class="mt-2 flex -space-x-2">
+										{#each lot.items.slice(0, 4) as item}
+											<img
+												src={item.entity.imageSmall}
+												alt={item.entity.name}
+												class="size-6 rounded border border-background object-cover"
+											/>
+										{/each}
+										{#if lot.items.length > 4}
+											<div
+												class="flex size-6 items-center justify-center rounded border border-background bg-muted text-xs"
+											>
+												+{lot.items.length - 4}
+											</div>
+										{/if}
+									</div>
+								{/if}
+							</button>
+						{/each}
+					</div>
 				</div>
 			</div>
 		</div>
-	</CardWrapper>
-
-	{#each auction.lots as lot}
-		<CardWrapper title={lot.title}>
-			{#snippet header()}
-				<div class="flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between">
-					<div class="grid gap-1 text-sm text-muted-foreground">
-						<span class="font-semibold text-foreground">Lot #{lot.lotNumber}</span>
-						<span>Minimum Bid · {toAbbrCurrency(lot.startPrice)}</span>
-						<span>
-							Items · {lot.items?.length ?? 0}
-						</span>
-					</div>
-				</div>
-			{/snippet}
-			<div class="space-y-4">
-				<div
-					class="grid grid-cols-1 gap-4 rounded-xl border border-dashed border-border/70 bg-muted/30 p-4 sm:grid-cols-3"
-				>
-					<div>
-						<p class="text-xs tracking-wide text-muted-foreground uppercase">Lot Number</p>
-						<p class="text-base font-medium text-foreground">{lot.lotNumber}</p>
-					</div>
-					<div>
-						<p class="text-xs tracking-wide text-muted-foreground uppercase">Minimum Bid</p>
-						<p class="text-base font-medium text-foreground">{toLocalCurrency(lot.startPrice)}</p>
-					</div>
-					<div>
-						<p class="text-xs tracking-wide text-muted-foreground uppercase">Item Count</p>
-						<p class="text-base font-medium text-foreground">{lot.items?.length ?? 0}</p>
-					</div>
-				</div>
-				{#if !mobile.current}
-					<Table.Root>
-						<Table.Header>
-							<Table.Row>
-								<Table.Head>Entity</Table.Head>
-								<Table.Head>Quantity</Table.Head>
-								<Table.Head>UUU</Table.Head>
-								<Table.Head>Batch</Table.Head>
-								<Table.Head>Custom</Table.Head>
-							</Table.Row>
-						</Table.Header>
-						<Table.Body>
-							{#each lot.items as item}
-								<Table.Row>
-									<Table.Cell>
-										<HyperlinkCell
-											text={item.entity.name}
-											href={`/holochain/database/${item.entityId}`}
-										/>
-									</Table.Cell>
-									<Table.Cell>{item.quantity}</Table.Cell>
-									<Table.Cell>{item.uuu}</Table.Cell>
-									<Table.Cell>{item.batch}</Table.Cell>
-									<Table.Cell>{item.custom}</Table.Cell>
-								</Table.Row>
-							{/each}
-						</Table.Body>
-					</Table.Root>
-				{/if}
-
-				{#if mobile.current}
-					{#each lot.items as item}
-						<LotItemAction {item} entities={[item.entity]} hideActions />
-					{/each}
-				{/if}
-			</div>
-		</CardWrapper>
-	{/each}
+	{/if}
 </PageWrapper>

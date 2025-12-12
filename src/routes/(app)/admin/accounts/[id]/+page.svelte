@@ -79,34 +79,40 @@
 				</div>
 			</div>
 
-			<ResponsiveDialog bind:open={banUserDialogOpen} title="Ban User?">
-				{#snippet trigger()}
-					<Button size="sm" variant="ghost" class="text-destructive">Ban User</Button>
-				{/snippet}
-
-				<div class="grid gap-3">
-					<TextareaInput label="Ban Reason" bind:value={banData.reason} />
-					<FieldInput label="Banned Until" bind:value={banData.bannedUntil} type="date" />
-				</div>
-
-				{#snippet footer()}
-					<div class="flex justify-end gap-2">
-						<Button variant="outline" size="sm" onclick={() => (banUserDialogOpen = false)}>
-							Cancel
-						</Button>
-						<Button
-							variant="destructive"
-							size="sm"
-							onclick={async () => {
-								await handleBanUser();
-								banUserDialogOpen = false;
-							}}
-						>
-							Confirm Ban
-						</Button>
+			{#if user.name !== 'um_admin'}
+				<ResponsiveDialog
+					bind:open={banUserDialogOpen}
+					title="Ban User?"
+					trigger="Ban User"
+					triggerButton={buttonVariants({
+						variant: 'destructive',
+						size: 'sm'
+					})}
+				>
+					<div class="grid gap-3">
+						<TextareaInput label="Ban Reason" bind:value={banData.reason} />
+						<FieldInput label="Banned Until" bind:value={banData.bannedUntil} type="date" />
 					</div>
-				{/snippet}
-			</ResponsiveDialog>
+
+					{#snippet footer()}
+						<div class="flex justify-end gap-2">
+							<Button variant="outline" size="sm" onclick={() => (banUserDialogOpen = false)}>
+								Cancel
+							</Button>
+							<Button
+								variant="destructive"
+								size="sm"
+								onclick={async () => {
+									await handleBanUser();
+									banUserDialogOpen = false;
+								}}
+							>
+								Confirm Ban
+							</Button>
+						</div>
+					{/snippet}
+				</ResponsiveDialog>
+			{/if}
 		</div>
 	</CardWrapper>
 

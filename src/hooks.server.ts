@@ -3,6 +3,7 @@ import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
 const authHandle: Handle = async ({ event, resolve }) => {
+  if (event.url.pathname.startsWith('/api')) return resolve(event);
   if (event.url.pathname.startsWith('/auth')) return resolve(event);
 
   const session = event.cookies.get('um_session');

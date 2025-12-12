@@ -8,6 +8,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
 	import type { Prisma, AuctionStatus } from '$lib/generated/prisma/browser';
+	import { MousePointerBan, ArrowDown01, ReplaceAll, Radio } from '@lucide/svelte';
 
 	type AuctionWithLots = Prisma.AuctionGetPayload<{
 		include: { _count: { select: { lots: true } } };
@@ -111,7 +112,7 @@
 			case 'ACTIVE':
 				return 'default';
 			case 'PENDING':
-				return 'secondary';
+				return 'outline';
 			case 'CANCELLED':
 				return 'destructive';
 			default:
@@ -133,15 +134,11 @@
 
 <PageWrapper title="Auction House">
 	<div class="flex flex-col gap-6">
-		<section class="space-y-2">
-			<h1 class="text-2xl font-semibold tracking-tight">Auction Overview</h1>
-			<p class="max-w-2xl text-muted-foreground">
-				Track what is live right now and get ahead of the auctions that are about to launch.
-			</p>
-		</section>
-
 		<div class="grid gap-4 md:grid-cols-3">
 			<CardWrapper title="Live auctions" description="Open and accepting bids">
+				{#snippet header()}
+					<Radio />
+				{/snippet}
 				<div class="flex items-baseline justify-between">
 					<span class="text-4xl font-semibold">{stats.current}</span>
 				</div>
@@ -155,6 +152,9 @@
 			</CardWrapper>
 
 			<CardWrapper title="Upcoming" description="Scheduled launches">
+				{#snippet header()}
+					<ArrowDown01 />
+				{/snippet}
 				<div class="text-4xl font-semibold">{stats.upcoming}</div>
 				<p class="text-sm text-muted-foreground">
 					{#if nextUpcomingStart}
@@ -166,8 +166,13 @@
 			</CardWrapper>
 
 			<CardWrapper title="Catalog coverage" description="Lots across live auctions">
+				{#snippet header()}
+					<ReplaceAll />
+				{/snippet}
 				<div class="text-4xl font-semibold">{stats.liveLots}</div>
-				<p class="text-sm text-muted-foreground">Spread across current auctions</p>
+				<p class="text-sm text-muted-foreground">
+					Total lots available for bidding across all current auctions.
+				</p>
 			</CardWrapper>
 		</div>
 

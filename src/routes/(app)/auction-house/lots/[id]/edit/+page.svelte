@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import TextareaInput from '$lib/components/custom/fields/textarea-input/textarea-input.svelte';
@@ -6,16 +7,26 @@
 	import { editLot } from '$lib/remote/auction-house/lot/edit-lot.remote.js';
 	import { editLotSchema } from '$lib/remote/auction-house/lot/edit-lot.schema.js';
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
-	import { CloudDownload, CloudUpload, GitPullRequestCreateArrow, Plus, X } from '@lucide/svelte';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import {
+		CloudDownload,
+		CloudUpload,
+		GitPullRequestCreateArrow,
+		Plus,
+		X,
+		Save,
+		Loader2,
+		Package,
+		TrendingUp,
+		Calendar,
+		Eye
+	} from '@lucide/svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import CheckboxInput from '$lib/components/custom/fields/checkbox-input/checkbox-input.svelte';
 	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
 	import { LotType } from '$lib/generated/prisma/enums.js';
 	import Empty from '$lib/components/custom/empty/empty.svelte';
 	import Spinner from '$lib/components/ui/spinner/spinner.svelte';
 	import { toast } from 'svelte-sonner';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import * as Drawer from '$lib/components/ui/drawer/index.js';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
 	import { createLotItemSchema } from '$lib/remote/auction-house/lot-item/create-lot-item.schema.js';
 	import { createLotItem } from '$lib/remote/auction-house/lot-item/create-lot-item.remote.js';
@@ -27,17 +38,27 @@
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { withdrawLotSchema } from '$lib/remote/auction-house/lot/withdraw-lot.schema.js';
 	import { withdrawLot } from '$lib/remote/auction-house/lot/withdraw-lot.remote.js';
+	import { getLotForEdit } from '$lib/remote/auction-house/lot/get-lot-for-edit.remote';
+	import { getEntities } from '$lib/remote/holochain/database/get-entities.remote';
+	import * as Card from '$lib/components/ui/card';
+	import * as Table from '$lib/components/ui/table';
+	import { Separator } from '$lib/components/ui/separator';
+	import { toLocalCurrency } from '$lib/utils/helpers/shared/currency';
+	import WipBanner from '$lib/components/custom/wip-banner.svelte';
 
 	let { data } = $props();
-	const lot = $derived(data.lot);
-	const entities = $derived(data.entities);
+
+	// Load lot and entities data
+	let lot = $state(await getLotForEdit({ lotId: data.lotId }));
+	let entities = $state(await getEntities());
+
 	const lotDisabled = $derived.by(() => lot.status !== 'DRAFT');
 	const canWithdraw = $derived.by(() => {
 		switch (lot.status) {
 			case 'LISTED':
 				return true;
 			case 'SCHEDULED':
-				return true;
+				return false; // Cannot withdraw if scheduled for auction
 			case 'SOLD':
 				return false;
 			case 'DRAFT':
@@ -50,10 +71,18 @@
 				return false;
 		}
 	});
+
 	let dialogOpen = $state(false);
 	let publishDialogOpen = $state(false);
 	let withdrawDialogOpen = $state(false);
 	const mobile = new IsMobile();
+
+	// Computed stats
+	const stats = $derived.by(() => {
+		const totalItems = lot.items.reduce((sum, item) => sum + item.quantity, 0);
+		const uniqueItems = lot.items.length;
+		return { totalItems, uniqueItems };
+	});
 
 	const lotCmd = new CommandForm(editLotSchema, {
 		command: editLot,
@@ -68,10 +97,12 @@
 			anonLot: lot.anonLot,
 			type: lot.type
 		}),
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast.success('Updated', {
 				description: `Lot #${lot.lotNumber} has been updated successfully.`
 			});
+			// Reload lot data
+			lot = await getLotForEdit({ lotId: data.lotId });
 		},
 		onError: () => {
 			toast.error('Error', {
@@ -92,11 +123,13 @@
 			uuu: true,
 			notes: ''
 		}),
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast.success('Item Added', {
 				description: `A new item has been added to lot #${lot.lotNumber}.`
 			});
 			dialogOpen = false;
+			// Reload lot data
+			lot = await getLotForEdit({ lotId: data.lotId });
 		},
 		onError: () => {
 			toast.error('Error', {
@@ -111,11 +144,13 @@
 		initial: () => ({
 			lotId: lot.id
 		}),
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast.success('Lot Published', {
 				description: `Lot #${lot.lotNumber} has been published successfully.`
 			});
 			publishDialogOpen = false;
+			// Reload lot data
+			lot = await getLotForEdit({ lotId: data.lotId });
 		},
 		onError: () => {
 			toast.error('Error', {
@@ -130,11 +165,13 @@
 		initial: () => ({
 			lotId: lot.id
 		}),
-		onSuccess: () => {
+		onSuccess: async () => {
 			toast.success('Lot Withdrawn', {
 				description: `Lot #${lot.lotNumber} has been withdrawn successfully.`
 			});
 			withdrawDialogOpen = false;
+			// Reload lot data
+			lot = await getLotForEdit({ lotId: data.lotId });
 		},
 		onError: () => {
 			toast.error('Error', {
@@ -142,19 +179,146 @@
 			});
 		}
 	});
+
+	function getStatusColor(status: string) {
+		switch (status) {
+			case 'DRAFT':
+				return 'secondary';
+			case 'LISTED':
+				return 'default';
+			case 'SCHEDULED':
+				return 'default';
+			case 'SOLD':
+				return 'default';
+			case 'WITHDRAWN':
+				return 'outline';
+			case 'COMPLETED':
+				return 'default';
+			default:
+				return 'secondary';
+		}
+	}
+
+	function getStatusLabel(status: string) {
+		return status.charAt(0) + status.slice(1).toLowerCase();
+	}
 </script>
 
-<PageWrapper title={`Edit Lot - ${lot.lotNumber}`} crumbOverrides={[[lot.id, `#${lot.lotNumber}`]]}>
-	<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+<PageWrapper title={`Edit Lot #${lot.lotNumber}`} crumbOverrides={[[lot.id, `#${lot.lotNumber}`]]}>
+	<WipBanner />
+
+	<!-- Summary Section -->
+	<div class="mb-6 grid gap-4 md:grid-cols-4">
+		<Card.Root>
+			<Card.Header class="pb-2">
+				<Card.Title class="text-sm font-medium text-muted-foreground">Status</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				<Badge variant={getStatusColor(lot.status)} class="text-base">
+					{getStatusLabel(lot.status)}
+				</Badge>
+			</Card.Content>
+		</Card.Root>
+
+		<Card.Root>
+			<Card.Header class="pb-2">
+				<Card.Title class="text-sm font-medium text-muted-foreground">Start Price</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				<div class="flex items-center gap-2">
+					<TrendingUp class="size-4 text-muted-foreground" />
+					<span class="text-2xl font-bold">{toLocalCurrency(lot.startPrice)}</span>
+				</div>
+			</Card.Content>
+		</Card.Root>
+
+		<Card.Root>
+			<Card.Header class="pb-2">
+				<Card.Title class="text-sm font-medium text-muted-foreground">Items</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				<div class="flex items-center gap-2">
+					<Package class="size-4 text-muted-foreground" />
+					<span class="text-2xl font-bold">{stats.totalItems}</span>
+					<span class="text-sm text-muted-foreground">({stats.uniqueItems} unique)</span>
+				</div>
+			</Card.Content>
+		</Card.Root>
+
+		<Card.Root>
+			<Card.Header class="pb-2">
+				<Card.Title class="text-sm font-medium text-muted-foreground">Last Updated</Card.Title>
+			</Card.Header>
+			<Card.Content>
+				<div class="flex items-center gap-2">
+					<Calendar class="size-4 text-muted-foreground" />
+					<span class="text-sm">{standardDateFormat(lot.updatedAt)}</span>
+				</div>
+			</Card.Content>
+		</Card.Root>
+	</div>
+
+	<!-- Action Bar -->
+	<Card.Root class="mb-6">
+		<Card.Content class="pt-6">
+			<div class="flex flex-wrap items-center gap-3">
+				{#if !lotDisabled}
+					<Button
+						variant="default"
+						onclick={lotCmd.submit}
+						disabled={lotCmd.submitting}
+						class="gap-2"
+					>
+						{#if lotCmd.submitting}
+							<Spinner />
+						{:else}
+							<Save class="size-4" />
+						{/if}
+						Save Changes
+					</Button>
+				{/if}
+
+				{#if lotCmd.form.type === LotType.LOT && !lotDisabled}
+					<Button
+						variant="secondary"
+						onclick={() => (publishDialogOpen = true)}
+						class="gap-2"
+					>
+						<CloudUpload class="size-4" />
+						Publish Lot
+					</Button>
+				{/if}
+
+				{#if canWithdraw}
+					<Button
+						variant="destructive"
+						onclick={() => (withdrawDialogOpen = true)}
+						class="gap-2"
+					>
+						<CloudDownload class="size-4" />
+						Withdraw Lot
+					</Button>
+				{/if}
+
+				<div class="ml-auto">
+					<Button
+						variant="outline"
+						onclick={() => goto(`/auction-house/lots/${lot.id}`)}
+						class="gap-2"
+					>
+						<Eye class="size-4" />
+						View Lot
+					</Button>
+				</div>
+			</div>
+		</Card.Content>
+	</Card.Root>
+
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+		<!-- Lot Details -->
 		<div>
-			<CardWrapper
-				title="Lot Details"
-				description={`Last Updated: ${standardDateFormat(lot.updatedAt)}`}
-			>
-				{#snippet header()}
-					<Badge>{lot.status}</Badge>
-				{/snippet}
-				<div class="grid gap-2">
+			<CardWrapper title="Lot Details">
+				<div class="grid gap-4">
 					<FieldInput
 						label="Title"
 						bind:value={lotCmd.form.title}
@@ -189,7 +353,9 @@
 
 					{#if lotDisabled}
 						{#if lot.anonLot}
-							<p class="rounded-xl bg-orange-500/60 p-2 text-center font-bold">Anonymous Lot</p>
+							<div class="rounded-lg bg-orange-500/20 p-3 text-center">
+								<p class="font-semibold text-orange-700 dark:text-orange-300">Anonymous Lot</p>
+							</div>
 						{/if}
 					{:else}
 						<CheckboxInput
@@ -214,126 +380,155 @@
 						readonly={lotDisabled}
 					/>
 				</div>
-
-				{#snippet footer()}
-					<div class="flex w-full items-center justify-between gap-3">
-						{#if lotCmd.form.type === LotType.LOT}
-							{#if !lotDisabled}
-								<ResponsiveDialog title="Publish Lot" bind:open={publishDialogOpen}>
-									{#snippet trigger()}
-										<Button variant="secondary" size="sm">
-											<CloudUpload /> Publish Lot
-										</Button>
-									{/snippet}
-
-									<div class="grid gap-3">
-										<p>
-											You are about to publish this lot. Once published, it will be visible to all
-											users.
-										</p>
-										{#if lot.anonLot}
-											<p>
-												You are publishing this lot as an anonymous lot. Your
-												<span class="text-orange-500">ANONID</span>
-												will be the only identifier visible to users. Make sure you use a middle to ensure
-												high anonymity.
-											</p>
-										{/if}
-									</div>
-									{#snippet footer()}
-										<Button
-											size="sm"
-											variant="secondary"
-											onclick={() => (publishDialogOpen = false)}
-										>
-											<X /> Nevermind, not yet
-										</Button>
-										<Button
-											variant="secondary"
-											size="sm"
-											disabled={publishLotCmd.submitting}
-											onclick={publishLotCmd.submit}
-										>
-											{#if publishLotCmd.submitting}
-												<Spinner />
-											{:else}
-												<CloudUpload />
-											{/if}
-											Publish Lot
-										</Button>
-									{/snippet}
-								</ResponsiveDialog>
-							{/if}
-						{/if}
-						{#if !lotDisabled}
-							<Button
-								variant="secondary"
-								size="sm"
-								onclick={lotCmd.submit}
-								disabled={lotCmd.submitting}
-							>
-								{#if lotCmd.submitting}
-									<Spinner />
-								{:else}
-									<Plus />
-								{/if}
-								Save Changes
-							</Button>
-						{/if}
-						{#if lotDisabled && canWithdraw}
-							{@render withdrawDialog()}
-						{/if}
-					</div>
-				{/snippet}
 			</CardWrapper>
 		</div>
 
+		<!-- Lot Items -->
 		<div>
 			<CardWrapper title="Lot Items">
 				{#snippet header()}
 					{#if !lotDisabled}
-						{@render addItem()}
+						<Button onclick={() => (dialogOpen = true)} size="sm" class="gap-2">
+							<Plus class="size-4" />
+							Add Item
+						</Button>
 					{/if}
 				{/snippet}
-				<div class="grid gap-2">
-					{#if lot.items.length < 1}
-						<Empty />
-					{/if}
-					{#each lot.items as item}
-						<LotItemAction {item} {entities} hideActions={lotDisabled} />
-					{/each}
-				</div>
+
+				{#if lot.items.length === 0}
+					<Empty />
+				{:else}
+					<!-- Mobile: Card View -->
+					<div class="grid gap-3 md:hidden">
+						{#each lot.items as item (item.id)}
+							<Card.Root class="overflow-hidden">
+								<Card.Header class="pb-3">
+									<div class="flex items-start gap-3">
+										{#if item.entity.imageSmall}
+											<img
+												src={item.entity.imageSmall}
+												alt={item.entity.name}
+												class="size-12 rounded object-cover"
+											/>
+										{/if}
+										<div class="flex-1">
+											<Card.Title class="text-base">{item.name}</Card.Title>
+											<Card.Description class="mt-1 text-xs">
+												Type: {item.entity.type}
+											</Card.Description>
+										</div>
+									</div>
+								</Card.Header>
+								<Card.Content class="space-y-2 pb-3">
+									<div class="grid grid-cols-2 gap-2 text-sm">
+										<div>
+											<p class="text-xs text-muted-foreground">Quantity</p>
+											<p class="font-medium">
+												{#if item.batch}
+													{item.quantity}
+													{item.quantity === 1 ? 'batch' : 'batches'}
+												{:else}
+													{item.quantity}
+												{/if}
+											</p>
+										</div>
+										<div>
+											<p class="text-xs text-muted-foreground">Attributes</p>
+											<div class="flex gap-1">
+												{#if item.uuu}
+													<Badge variant="outline" class="text-xs">U/U/U</Badge>
+												{/if}
+												{#if item.custom}
+													<Badge variant="outline" class="text-xs">Custom</Badge>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</Card.Content>
+								{#if !lotDisabled}
+									<Card.Footer class="pt-3">
+										<LotItemAction {item} {entities} hideActions={lotDisabled} />
+									</Card.Footer>
+								{/if}
+							</Card.Root>
+						{/each}
+					</div>
+
+					<!-- Desktop: Table View -->
+					<div class="hidden md:block">
+						<Table.Root>
+							<Table.Header>
+								<Table.Row>
+									<Table.Head class="w-[80px]">Image</Table.Head>
+									<Table.Head>Name</Table.Head>
+									<Table.Head>Type</Table.Head>
+									<Table.Head class="text-right">Quantity</Table.Head>
+									<Table.Head>Attributes</Table.Head>
+									{#if !lotDisabled}
+										<Table.Head class="text-right">Actions</Table.Head>
+									{/if}
+								</Table.Row>
+							</Table.Header>
+							<Table.Body>
+								{#each lot.items as item (item.id)}
+									<Table.Row>
+										<Table.Cell>
+											{#if item.entity.imageSmall}
+												<img
+													src={item.entity.imageSmall}
+													alt={item.entity.name}
+													class="size-12 rounded object-cover"
+												/>
+											{:else}
+												<div class="flex size-12 items-center justify-center rounded bg-muted">
+													<Package class="size-6 text-muted-foreground" />
+												</div>
+											{/if}
+										</Table.Cell>
+										<Table.Cell class="font-medium">{item.name}</Table.Cell>
+										<Table.Cell>
+											<Badge variant="outline">{item.entity.type}</Badge>
+										</Table.Cell>
+										<Table.Cell class="text-right">
+											{#if item.batch}
+												{item.quantity}
+												{item.quantity === 1 ? 'batch' : 'batches'}
+											{:else}
+												{item.quantity}
+											{/if}
+										</Table.Cell>
+										<Table.Cell>
+											<div class="flex gap-1">
+												{#if item.uuu}
+													<Badge variant="secondary" class="text-xs">U/U/U</Badge>
+												{/if}
+												{#if item.custom}
+													<Badge variant="secondary" class="text-xs">Custom</Badge>
+												{/if}
+												{#if !item.uuu && !item.custom}
+													<span class="text-xs text-muted-foreground">-</span>
+												{/if}
+											</div>
+										</Table.Cell>
+										{#if !lotDisabled}
+											<Table.Cell class="text-right">
+												<LotItemAction {item} {entities} hideActions={lotDisabled} />
+											</Table.Cell>
+										{/if}
+									</Table.Row>
+								{/each}
+							</Table.Body>
+						</Table.Root>
+					</div>
+				{/if}
 			</CardWrapper>
 		</div>
 	</div>
 </PageWrapper>
 
-{#snippet addItem()}
-	<ResponsiveDialog title="Add Item" bind:open={dialogOpen}>
-		{#snippet trigger()}
-			<Button size="sm" variant="ghost">
-				<Plus /> Add Item
-			</Button>
-		{/snippet}
-		<p>Add a new item to this lot.</p>
-		{@render addItemContent()}
-		{#snippet footer()}
-			<Button size="sm" variant="ghost" onclick={() => (dialogOpen = false)}>
-				<X /> Cancel
-			</Button>
-			<Button disabled={newItemCmd.submitting} onclick={newItemCmd.submit}>
-				{#if newItemCmd.submitting}
-					<Spinner />
-				{:else}
-					<GitPullRequestCreateArrow />
-				{/if}
-				Add Item
-			</Button>
-		{/snippet}
-	</ResponsiveDialog>
-{/snippet}
-
-{#snippet addItemContent()}
+<!-- Add Item Dialog -->
+<ResponsiveDialog title="Add Item" bind:open={dialogOpen}>
+	<p class="mb-4 text-sm text-muted-foreground">Add a new item to this lot.</p>
 	<div class="grid gap-3">
 		<SelectInput
 			type="single"
@@ -374,37 +569,83 @@
 			issues={newItemCmd.errors.custom?.message}
 		/>
 	</div>
-{/snippet}
+	{#snippet footer()}
+		<Button size="sm" variant="ghost" onclick={() => (dialogOpen = false)}>
+			<X class="size-4" />
+			Cancel
+		</Button>
+		<Button disabled={newItemCmd.submitting} onclick={newItemCmd.submit} class="gap-2">
+			{#if newItemCmd.submitting}
+				<Spinner />
+			{:else}
+				<GitPullRequestCreateArrow class="size-4" />
+			{/if}
+			Add Item
+		</Button>
+	{/snippet}
+</ResponsiveDialog>
 
-{#snippet withdrawDialog()}
-	<ResponsiveDialog title="Withdraw Lot" bind:open={withdrawDialogOpen}>
-		{#snippet trigger()}
-			<Button size="sm" variant="ghost">
-				<CloudDownload />
-				Withdraw Lot
-			</Button>
-		{/snippet}
+<!-- Publish Dialog -->
+<ResponsiveDialog title="Publish Lot" bind:open={publishDialogOpen}>
+	<div class="grid gap-3">
 		<p>
-			Withdrawing this lot will remove it from public view. You can only withdraw lots that are
-			currently listed or scheduled. Are you sure you want to proceed?
+			You are about to publish this lot. Once published, it will be visible to all users.
 		</p>
-		{#snippet footer()}
-			<Button size="sm" variant="secondary" onclick={() => (withdrawDialogOpen = false)}>
-				<X /> Nevermind
-			</Button>
-			<Button
-				size="sm"
-				variant="destructive"
-				onclick={withdrawLotCmd.submit}
-				disabled={withdrawLotCmd.submitting}
-			>
-				{#if withdrawLotCmd.submitting}
-					<Spinner />
-				{:else}
-					<CloudDownload />
-				{/if}
-				Withdraw Lot
-			</Button>
-		{/snippet}
-	</ResponsiveDialog>
-{/snippet}
+		{#if lot.anonLot}
+			<p class="rounded-lg bg-orange-500/20 p-3 text-sm">
+				You are publishing this lot as an anonymous lot. Your
+				<span class="font-semibold text-orange-700 dark:text-orange-300">ANONID</span>
+				will be the only identifier visible to users. Make sure you use a middle to ensure high
+				anonymity.
+			</p>
+		{/if}
+	</div>
+	{#snippet footer()}
+		<Button size="sm" variant="secondary" onclick={() => (publishDialogOpen = false)}>
+			<X class="size-4" />
+			Cancel
+		</Button>
+		<Button
+			variant="default"
+			size="sm"
+			disabled={publishLotCmd.submitting}
+			onclick={publishLotCmd.submit}
+			class="gap-2"
+		>
+			{#if publishLotCmd.submitting}
+				<Spinner />
+			{:else}
+				<CloudUpload class="size-4" />
+			{/if}
+			Publish Lot
+		</Button>
+	{/snippet}
+</ResponsiveDialog>
+
+<!-- Withdraw Dialog -->
+<ResponsiveDialog title="Withdraw Lot" bind:open={withdrawDialogOpen}>
+	<p>
+		Withdrawing this lot will remove it from public view. You can only withdraw lots that are
+		currently listed. Are you sure you want to proceed?
+	</p>
+	{#snippet footer()}
+		<Button size="sm" variant="secondary" onclick={() => (withdrawDialogOpen = false)}>
+			<X class="size-4" />
+			Cancel
+		</Button>
+		<Button
+			size="sm"
+			variant="destructive"
+			onclick={withdrawLotCmd.submit}
+			disabled={withdrawLotCmd.submitting}
+			class="gap-2"
+		>
+			{#if withdrawLotCmd.submitting}
+				<Spinner />
+			{:else}
+				<CloudDownload class="size-4" />
+			{/if}
+			Withdraw Lot
+		</Button>
+	{/snippet}
+</ResponsiveDialog>

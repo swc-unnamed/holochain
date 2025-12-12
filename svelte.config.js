@@ -18,9 +18,6 @@ const config = {
     experimental: {
       remoteFunctions: true
     },
-    alias: {
-      '$triggers': './trigger/*'
-    }
 	}
 };
 

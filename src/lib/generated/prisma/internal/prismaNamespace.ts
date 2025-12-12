@@ -389,6 +389,7 @@ export const ModelName = {
   Auction: 'Auction',
   Lot: 'Lot',
   LotItem: 'LotItem',
+  AuctionConfiguration: 'AuctionConfiguration',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotItem" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "userKarmaLog"
+    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotItem" | "auctionConfiguration" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "userKarmaLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -781,6 +782,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LotItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LotItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    AuctionConfiguration: {
+      payload: Prisma.$AuctionConfigurationPayload<ExtArgs>
+      fields: Prisma.AuctionConfigurationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuctionConfigurationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuctionConfigurationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        findFirst: {
+          args: Prisma.AuctionConfigurationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuctionConfigurationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        findMany: {
+          args: Prisma.AuctionConfigurationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>[]
+        }
+        create: {
+          args: Prisma.AuctionConfigurationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        createMany: {
+          args: Prisma.AuctionConfigurationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuctionConfigurationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>[]
+        }
+        delete: {
+          args: Prisma.AuctionConfigurationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        update: {
+          args: Prisma.AuctionConfigurationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuctionConfigurationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuctionConfigurationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuctionConfigurationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuctionConfigurationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuctionConfigurationPayload>
+        }
+        aggregate: {
+          args: Prisma.AuctionConfigurationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuctionConfiguration>
+        }
+        groupBy: {
+          args: Prisma.AuctionConfigurationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuctionConfigurationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuctionConfigurationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuctionConfigurationCountAggregateOutputType> | number
         }
       }
     }
@@ -1344,6 +1419,17 @@ export const LotItemScalarFieldEnum = {
 export type LotItemScalarFieldEnum = (typeof LotItemScalarFieldEnum)[keyof typeof LotItemScalarFieldEnum]
 
 
+export const AuctionConfigurationScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
+
+
 export const EntityScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1577,6 +1663,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'AuctionConfigurationKey'
+ */
+export type EnumAuctionConfigurationKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionConfigurationKey'>
+    
+
+
+/**
+ * Reference to a field of type 'AuctionConfigurationKey[]'
+ */
+export type ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionConfigurationKey[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -1743,6 +1843,7 @@ export type GlobalOmitConfig = {
   auction?: Prisma.AuctionOmit
   lot?: Prisma.LotOmit
   lotItem?: Prisma.LotItemOmit
+  auctionConfiguration?: Prisma.AuctionConfigurationOmit
   entity?: Prisma.EntityOmit
   entityTransaction?: Prisma.EntityTransactionOmit
   siteConfiguration?: Prisma.SiteConfigurationOmit

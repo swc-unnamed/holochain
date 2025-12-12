@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ButtonVariant } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
@@ -8,6 +9,7 @@
 		title: string | Snippet;
 		description?: string | Snippet | undefined;
 		trigger?: string | Snippet;
+		triggerButton?: string;
 		children: Snippet;
 		footer: Snippet;
 		open: boolean;
@@ -23,13 +25,14 @@
 		footer,
 		open = $bindable(false),
 		onOpenChange = $bindable(),
-		trigger
+		trigger,
+		triggerButton
 	}: Props = $props();
 </script>
 
 {#if isMobile.current}
 	<Drawer.Root bind:open {onOpenChange}>
-		<Drawer.Trigger hidden={!trigger}>
+		<Drawer.Trigger hidden={!trigger} class={triggerButton}>
 			{#if typeof trigger === 'string'}
 				{trigger}
 			{:else}
@@ -69,7 +72,7 @@
 
 {#if !isMobile.current}
 	<Dialog.Root bind:open {onOpenChange}>
-		<Dialog.Trigger hidden={!trigger}>
+		<Dialog.Trigger hidden={!trigger} class={triggerButton}>
 			{#if typeof trigger === 'string'}
 				{trigger}
 			{:else}

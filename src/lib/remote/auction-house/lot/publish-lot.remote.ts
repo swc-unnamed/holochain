@@ -2,7 +2,6 @@ import { command, getRequestEvent } from "$app/server";
 import { db } from "$lib/db/prisma";
 import { error } from "@sveltejs/kit";
 import { publishLotSchema } from "./publish-lot.schema";
-import { newLotTask } from "$lib/trigger/events/auction-house/lots/lot-listed.task";
 
 export const publishLot = command(publishLotSchema, async (data) => {
   const { locals } = getRequestEvent();
@@ -37,7 +36,7 @@ export const publishLot = command(publishLotSchema, async (data) => {
     })
   }
 
-  const updatedLot = await db.lot.update({
+  await db.lot.update({
     where: {
       id: data.lotId
     },
@@ -45,6 +44,4 @@ export const publishLot = command(publishLotSchema, async (data) => {
       status: 'LISTED'
     }
   });
-
-  await newLotTask.trigger({ lotId: updatedLot.id });
 })

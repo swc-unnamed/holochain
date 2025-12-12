@@ -2,7 +2,6 @@ import { createAuctionSchema } from "./create-auction.schema";
 import { command } from "$app/server";
 import { db } from "$lib/db/prisma";
 import { error } from "@sveltejs/kit";
-import { newAuctionTask } from "$lib/trigger/events/auction-house/auctions/new-auction.task";
 
 export const createAuction = command(createAuctionSchema, async (data) => {
   console.log("Creating auction with data:", data);
@@ -49,8 +48,6 @@ export const createAuction = command(createAuctionSchema, async (data) => {
       status: 'SCHEDULED',
     }
   });
-
-  await newAuctionTask.trigger({ auctionId: auction.id });
 
   return {
     id: auction.id

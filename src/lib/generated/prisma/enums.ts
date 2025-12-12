@@ -48,6 +48,13 @@ export const AuctionStatus = {
 export type AuctionStatus = (typeof AuctionStatus)[keyof typeof AuctionStatus]
 
 
+export const AuctionConfigurationKey = {
+  LIVE_DISCORD_BROADCAST_WEBHOOK_URL: 'LIVE_DISCORD_BROADCAST_WEBHOOK_URL'
+} as const
+
+export type AuctionConfigurationKey = (typeof AuctionConfigurationKey)[keyof typeof AuctionConfigurationKey]
+
+
 export const AppRole = {
   PATRON: 'PATRON',
   AUCTIONEER: 'AUCTIONEER',

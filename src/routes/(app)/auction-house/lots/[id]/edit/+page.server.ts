@@ -8,13 +8,9 @@ export const load = async ({ params, locals, depends }) => {
     where: {
       id: params.id,
     },
-    include: {
-      items: {
-        orderBy: {
-          name: 'asc'
-        }
-      }
-    },
+    select: {
+      createdById: true
+    }
   });
 
   if (!lot) {
@@ -27,17 +23,7 @@ export const load = async ({ params, locals, depends }) => {
     guard(locals, ['DEVELOPER', 'TZAR'])
   }
 
-  const entities = await db.entity.findMany({
-    select: {
-      id: true,
-      name: true,
-      type: true,
-      imageSmall: true
-    }
-  });
-
   return {
-    lot: lot,
-    entities: entities
-  }
+    lotId: params.id,
+  };
 }

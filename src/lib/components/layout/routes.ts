@@ -22,7 +22,6 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
       {
         title: "Create Auction",
         url: "/auction-house/auctions/create",
-        flag: "wip",
         role: ['AUCTIONEER']
       },
       {
@@ -33,6 +32,11 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         title: "My Lots",
         url: "/auction-house/lots/me"
       },
+      {
+        title: "Configuration",
+        url: "/auction-house/config",
+        role: ['DEVELOPER', 'TZAR']
+      }
     ]
   },
   // {

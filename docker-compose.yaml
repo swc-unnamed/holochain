@@ -10,5 +10,12 @@ services:
     ports:
       - "5432:5432"
 
+  inngest:
+    image: inngest/inngest
+    command:
+      ["inngest", "dev", "-u", "http://host.docker.internal:5173/api/inngest"]
+    ports:
+      - "8288:8288"
+
 volumes:
   db_data:

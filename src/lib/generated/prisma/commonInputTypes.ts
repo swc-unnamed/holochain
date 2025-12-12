@@ -243,6 +243,23 @@ export type BoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
+export type EnumAuctionConfigurationKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuctionConfigurationKey | Prisma.EnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel> | $Enums.AuctionConfigurationKey
+}
+
+export type EnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuctionConfigurationKey | Prisma.EnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel> | $Enums.AuctionConfigurationKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
+}
+
 export type JsonFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -602,6 +619,23 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedBoolFilter<$PrismaModel>
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
+}
+
+export type NestedEnumAuctionConfigurationKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuctionConfigurationKey | Prisma.EnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel> | $Enums.AuctionConfigurationKey
+}
+
+export type NestedEnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuctionConfigurationKey | Prisma.EnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuctionConfigurationKey[] | Prisma.ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel> | $Enums.AuctionConfigurationKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
 }
 
 export type NestedJsonFilter<$PrismaModel = never> =

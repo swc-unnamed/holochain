@@ -8,11 +8,16 @@ export const load = async ({ params }) => {
     where: { id: id },
     include: {
       lots: {
-        select: {
-          id: true,
-          title: true,
-          startPrice: true,
-          lotNumber: true,
+        orderBy: { lotNumber: 'asc' },
+        include: {
+          createdBy: {
+            select: {
+              id: true,
+              name: true,
+              displayName: true,
+              anonid: true
+            }
+          },
           items: {
             include: {
               entity: {
@@ -20,7 +25,8 @@ export const load = async ({ params }) => {
                   id: true,
                   name: true,
                   type: true,
-                  imageSmall: true
+                  imageSmall: true,
+                  imageLarge: true
                 }
               }
             }

@@ -1,6 +1,5 @@
 import { command, getRequestEvent } from '$app/server';
 import { db } from '$lib/db/prisma';
-import { bannedUserEventTask } from '$lib/trigger/events/user/banned-user';
 import { guard } from '$lib/utils/auth/server-guard';
 import { error } from '@sveltejs/kit';
 import { z } from 'zod/v4';
@@ -36,8 +35,6 @@ export const banUser = command(schema, async (data) => {
       bannedById: locals.user.id
     }
   });
-
-  await bannedUserEventTask.trigger({ userId: data.userId, reason: data.reason })
 
   return {
     success: true

@@ -22,7 +22,6 @@ export const accountColumns: ColumnDef<AccountColumn>[] = [
 
       return renderComponent(HyperlinkCell, { text: displayName, href: `/admin/accounts/${getValue<string>()}` });
     },
-    maxSize: 24
   },
   {
     accessorKey: 'karma',

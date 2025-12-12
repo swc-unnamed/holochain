@@ -65,6 +65,11 @@ export type Lot = Prisma.LotModel
  */
 export type LotItem = Prisma.LotItemModel
 /**
+ * Model AuctionConfiguration
+ * 
+ */
+export type AuctionConfiguration = Prisma.AuctionConfigurationModel
+/**
  * Model Entity
  * 
  */

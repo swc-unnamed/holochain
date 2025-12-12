@@ -89,9 +89,8 @@
 			</div>
 		</div>
 	</CardWrapper>
-
 	<Tabs.Root bind:value={selectedTab}>
-		<Tabs.List class={mobile.current ? 'w-full' : ''}>
+		<Tabs.List class="w-full">
 			<Tabs.Trigger value="details">Account Details</Tabs.Trigger>
 			<Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
 			<Tabs.Trigger value="karma_logs">Karma Logs</Tabs.Trigger>

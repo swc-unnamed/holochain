@@ -14,6 +14,9 @@ export const load = async ({ locals }) => {
       role: true,
       anonid: true,
       banned: true,
+    },
+    orderBy: {
+      displayName: 'asc'
     }
   })
 

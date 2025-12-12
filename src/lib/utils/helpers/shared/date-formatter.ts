@@ -8,3 +8,7 @@ import { format } from 'date-fns';
 export function standardDateFormat(date: Date): string {
   return format(date, 'dd-MMM-yy HH:mm').toUpperCase();
 }
+
+export function dateToDateInputValue(date: Date): string {
+  return format(date, 'yyyy-MM-dd\'T\'HH:mm');
+}
