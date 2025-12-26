@@ -10,7 +10,8 @@
 		speed = 1,
 		onComplete = () => {},
 		children,
-		class: className
+		class: className,
+		title
 	}: TerminalRootProps = $props();
 
 	const terminal = useTerminalRoot({ delay, speed, onComplete });
@@ -28,6 +29,6 @@
 <!-- <div class={cn('font-mono text-sm font-light', className)}>
 	{@render children?.()}
 </div> -->
-<Window class={cn('font-mono text-sm font-light', className)}>
+<Window class={cn('font-mono text-sm font-light', className)} {title}>
 	{@render children?.()}
 </Window>

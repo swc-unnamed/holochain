@@ -1,11 +1,13 @@
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
+import path from 'node:path';
 import "dotenv/config";
+
 export default defineConfig({
-  schema: "prisma",
+  schema: path.join('prisma', 'models'),
   migrations: {
-    path: "prisma/migrations",
+    path: path.join('prisma', 'migrations'),
   },
   datasource: {
-    url: env("DATABASE_URL"),
+    url: process.env.DATABASE_URL || 'postgresql://user:password@localhost:5432/holochaindb',
   }
 });

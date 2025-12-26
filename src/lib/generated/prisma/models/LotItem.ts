@@ -41,6 +41,7 @@ export type LotItemMinAggregateOutputType = {
   quantity: number | null
   batch: boolean | null
   custom: boolean | null
+  customImageUrl: string | null
   uuu: boolean | null
   entityId: string | null
   assetId: string | null
@@ -55,6 +56,7 @@ export type LotItemMaxAggregateOutputType = {
   quantity: number | null
   batch: boolean | null
   custom: boolean | null
+  customImageUrl: string | null
   uuu: boolean | null
   entityId: string | null
   assetId: string | null
@@ -69,6 +71,7 @@ export type LotItemCountAggregateOutputType = {
   quantity: number
   batch: number
   custom: number
+  customImageUrl: number
   uuu: number
   entityId: number
   assetId: number
@@ -93,6 +96,7 @@ export type LotItemMinAggregateInputType = {
   quantity?: true
   batch?: true
   custom?: true
+  customImageUrl?: true
   uuu?: true
   entityId?: true
   assetId?: true
@@ -107,6 +111,7 @@ export type LotItemMaxAggregateInputType = {
   quantity?: true
   batch?: true
   custom?: true
+  customImageUrl?: true
   uuu?: true
   entityId?: true
   assetId?: true
@@ -121,6 +126,7 @@ export type LotItemCountAggregateInputType = {
   quantity?: true
   batch?: true
   custom?: true
+  customImageUrl?: true
   uuu?: true
   entityId?: true
   assetId?: true
@@ -222,6 +228,7 @@ export type LotItemGroupByOutputType = {
   quantity: number
   batch: boolean
   custom: boolean
+  customImageUrl: string | null
   uuu: boolean
   entityId: string
   assetId: string | null
@@ -259,6 +266,7 @@ export type LotItemWhereInput = {
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
+  customImageUrl?: Prisma.StringNullableFilter<"LotItem"> | string | null
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
   assetId?: Prisma.StringNullableFilter<"LotItem"> | string | null
@@ -276,6 +284,7 @@ export type LotItemOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
   custom?: Prisma.SortOrder
+  customImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   assetId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -296,6 +305,7 @@ export type LotItemWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
+  customImageUrl?: Prisma.StringNullableFilter<"LotItem"> | string | null
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
   assetId?: Prisma.StringNullableFilter<"LotItem"> | string | null
@@ -313,6 +323,7 @@ export type LotItemOrderByWithAggregationInput = {
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
   custom?: Prisma.SortOrder
+  customImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   assetId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -335,6 +346,7 @@ export type LotItemScalarWhereWithAggregatesInput = {
   quantity?: Prisma.IntWithAggregatesFilter<"LotItem"> | number
   batch?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
   custom?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
+  customImageUrl?: Prisma.StringNullableWithAggregatesFilter<"LotItem"> | string | null
   uuu?: Prisma.BoolWithAggregatesFilter<"LotItem"> | boolean
   entityId?: Prisma.StringWithAggregatesFilter<"LotItem"> | string
   assetId?: Prisma.StringNullableWithAggregatesFilter<"LotItem"> | string | null
@@ -348,6 +360,7 @@ export type LotItemCreateInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -363,6 +376,7 @@ export type LotItemUncheckedCreateInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   assetId?: string | null
@@ -376,6 +390,7 @@ export type LotItemUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -391,6 +406,7 @@ export type LotItemUncheckedUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -405,6 +421,7 @@ export type LotItemCreateManyInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   assetId?: string | null
@@ -418,6 +435,7 @@ export type LotItemUpdateManyMutationInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -430,6 +448,7 @@ export type LotItemUncheckedUpdateManyInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -454,6 +473,7 @@ export type LotItemCountOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
   custom?: Prisma.SortOrder
+  customImageUrl?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
@@ -472,6 +492,7 @@ export type LotItemMaxOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
   custom?: Prisma.SortOrder
+  customImageUrl?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
@@ -486,6 +507,7 @@ export type LotItemMinOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   batch?: Prisma.SortOrder
   custom?: Prisma.SortOrder
+  customImageUrl?: Prisma.SortOrder
   uuu?: Prisma.SortOrder
   entityId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
@@ -629,6 +651,7 @@ export type LotItemCreateWithoutAssetInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -643,6 +666,7 @@ export type LotItemUncheckedCreateWithoutAssetInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   createdAt?: Date | string
@@ -685,6 +709,7 @@ export type LotItemScalarWhereInput = {
   quantity?: Prisma.IntFilter<"LotItem"> | number
   batch?: Prisma.BoolFilter<"LotItem"> | boolean
   custom?: Prisma.BoolFilter<"LotItem"> | boolean
+  customImageUrl?: Prisma.StringNullableFilter<"LotItem"> | string | null
   uuu?: Prisma.BoolFilter<"LotItem"> | boolean
   entityId?: Prisma.StringFilter<"LotItem"> | string
   assetId?: Prisma.StringNullableFilter<"LotItem"> | string | null
@@ -698,6 +723,7 @@ export type LotItemCreateWithoutLotInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -711,6 +737,7 @@ export type LotItemUncheckedCreateWithoutLotInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   assetId?: string | null
@@ -750,6 +777,7 @@ export type LotItemCreateWithoutEntityInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -764,6 +792,7 @@ export type LotItemUncheckedCreateWithoutEntityInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   assetId?: string | null
   createdAt?: Date | string
@@ -803,6 +832,7 @@ export type LotItemCreateManyAssetInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   createdAt?: Date | string
@@ -815,6 +845,7 @@ export type LotItemUpdateWithoutAssetInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -829,6 +860,7 @@ export type LotItemUncheckedUpdateWithoutAssetInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -842,6 +874,7 @@ export type LotItemUncheckedUpdateManyWithoutAssetInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -854,6 +887,7 @@ export type LotItemCreateManyLotInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   entityId: string
   assetId?: string | null
@@ -867,6 +901,7 @@ export type LotItemUpdateWithoutLotInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -880,6 +915,7 @@ export type LotItemUncheckedUpdateWithoutLotInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -893,6 +929,7 @@ export type LotItemUncheckedUpdateManyWithoutLotInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   entityId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -907,6 +944,7 @@ export type LotItemCreateManyEntityInput = {
   quantity: number
   batch?: boolean
   custom?: boolean
+  customImageUrl?: string | null
   uuu?: boolean
   assetId?: string | null
   createdAt?: Date | string
@@ -919,6 +957,7 @@ export type LotItemUpdateWithoutEntityInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -933,6 +972,7 @@ export type LotItemUncheckedUpdateWithoutEntityInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -946,6 +986,7 @@ export type LotItemUncheckedUpdateManyWithoutEntityInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   batch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   custom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uuu?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -961,6 +1002,7 @@ export type LotItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quantity?: boolean
   batch?: boolean
   custom?: boolean
+  customImageUrl?: boolean
   uuu?: boolean
   entityId?: boolean
   assetId?: boolean
@@ -978,6 +1020,7 @@ export type LotItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   quantity?: boolean
   batch?: boolean
   custom?: boolean
+  customImageUrl?: boolean
   uuu?: boolean
   entityId?: boolean
   assetId?: boolean
@@ -995,6 +1038,7 @@ export type LotItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   quantity?: boolean
   batch?: boolean
   custom?: boolean
+  customImageUrl?: boolean
   uuu?: boolean
   entityId?: boolean
   assetId?: boolean
@@ -1012,6 +1056,7 @@ export type LotItemSelectScalar = {
   quantity?: boolean
   batch?: boolean
   custom?: boolean
+  customImageUrl?: boolean
   uuu?: boolean
   entityId?: boolean
   assetId?: boolean
@@ -1019,7 +1064,7 @@ export type LotItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LotItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotId" | "name" | "quantity" | "batch" | "custom" | "uuu" | "entityId" | "assetId" | "createdAt" | "updatedAt", ExtArgs["result"]["lotItem"]>
+export type LotItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotId" | "name" | "quantity" | "batch" | "custom" | "customImageUrl" | "uuu" | "entityId" | "assetId" | "createdAt" | "updatedAt", ExtArgs["result"]["lotItem"]>
 export type LotItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lot?: boolean | Prisma.LotDefaultArgs<ExtArgs>
   entity?: boolean | Prisma.EntityDefaultArgs<ExtArgs>
@@ -1050,6 +1095,7 @@ export type $LotItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     quantity: number
     batch: boolean
     custom: boolean
+    customImageUrl: string | null
     uuu: boolean
     entityId: string
     assetId: string | null
@@ -1487,6 +1533,7 @@ export interface LotItemFieldRefs {
   readonly quantity: Prisma.FieldRef<"LotItem", 'Int'>
   readonly batch: Prisma.FieldRef<"LotItem", 'Boolean'>
   readonly custom: Prisma.FieldRef<"LotItem", 'Boolean'>
+  readonly customImageUrl: Prisma.FieldRef<"LotItem", 'String'>
   readonly uuu: Prisma.FieldRef<"LotItem", 'Boolean'>
   readonly entityId: Prisma.FieldRef<"LotItem", 'String'>
   readonly assetId: Prisma.FieldRef<"LotItem", 'String'>

@@ -6,7 +6,7 @@ type Props = {
   label?: string;
   labelSnippet?: Snippet;
   description?: string;
-  fieldClass?: strin;
+  fieldClass?: string;
   descriptionSnippet?: Snippet;
   issues?: string | RemoteFormIssue[];
 } & ComponentProps<typeof Textarea>;

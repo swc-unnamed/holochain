@@ -36,7 +36,6 @@ export const editLot = command(editLotSchema, async (data) => {
       details: data.details,
       location: data.location,
       anonLot: data.anonLot,
-      type: data.type,
       startPrice: data.startPrice.replace(/,/g, '').trim(),
     }
   });

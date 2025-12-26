@@ -17,11 +17,13 @@
 	import { mode } from 'mode-watcher';
 	import { Badge } from '../ui/badge';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
+	import { toast } from 'svelte-sonner';
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 	const url = $derived(new SvelteURL(page.url));
 	const mobile = new IsMobile();
 	const sidebar = useSidebar();
+
 	function isActiveRoute(currentPath: string, routePath: string): boolean {
 		const cur = currentPath.replace(/\/+$/, '');
 		const route = routePath.replace(/\/+$/, '');
@@ -40,6 +42,7 @@
 
 		return regex.test(cur);
 	}
+
 	let searchTerm: string = $state('');
 
 	let shownRoutes = $derived.by(() => {
@@ -73,9 +76,6 @@
 	<Sidebar.Header class="rounded-t-xl">
 		<button
 			class="flex flex-col rounded-xl p-3 text-left hover:cursor-pointer hover:bg-background/50"
-			onclick={() => {
-				alert('boom');
-			}}
 		>
 			<div class="flex items-center gap-2">
 				<UserAvatar id={page.data.user.id} class="size-8" />

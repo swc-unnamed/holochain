@@ -10,15 +10,7 @@
 	import type { Prisma, AuctionStatus } from '$lib/generated/prisma/browser';
 	import { MousePointerBan, ArrowDown01, ReplaceAll, Radio } from '@lucide/svelte';
 
-	type AuctionWithLots = Prisma.AuctionGetPayload<{
-		include: { _count: { select: { lots: true } } };
-	}>;
-
-	type AuctionsPageData = {
-		auctions: AuctionWithLots[];
-	};
-
-	let { data }: { data: AuctionsPageData } = $props();
+	let { data } = $props();
 
 	const auctions = $derived(data.auctions ?? []);
 	const now = new Date();
@@ -31,70 +23,12 @@
 		return parsed ? standardDateFormat(parsed) : null;
 	};
 
-	const compareStartAsc = (a: AuctionWithLots, b: AuctionWithLots) => {
-		const aTime = toDate(a.start)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-		const bTime = toDate(b.start)?.getTime() ?? Number.MAX_SAFE_INTEGER;
-		return aTime - bTime;
-	};
+	const currentAuctions = $derived(auctions.filter((x) => x.status === 'ACTIVE'));
 
-	const compareEndDesc = (a: AuctionWithLots, b: AuctionWithLots) => {
-		const aTime = toDate(a.end)?.getTime() ?? toDate(a.start)?.getTime() ?? 0;
-		const bTime = toDate(b.end)?.getTime() ?? toDate(b.start)?.getTime() ?? 0;
-		return bTime - aTime;
-	};
-
-	const isCurrentAuction = (auction: AuctionWithLots) => {
-		const startTime = toDate(auction.start)?.getTime();
-		const endTime = toDate(auction.end)?.getTime();
-
-		if (auction.status === 'ACTIVE') {
-			return !endTime || endTime >= nowTime;
-		}
-
-		if (startTime && endTime) {
-			return startTime <= nowTime && nowTime <= endTime;
-		}
-
-		if (startTime && !endTime) {
-			return startTime <= nowTime;
-		}
-
-		return false;
-	};
-
-	const isUpcomingAuction = (auction: AuctionWithLots) => {
-		const startTime = toDate(auction.start)?.getTime();
-
-		if (startTime) {
-			return startTime > nowTime;
-		}
-
-		return auction.status === 'PENDING';
-	};
-
-	const currentAuctions = $derived(
-		auctions.filter((auction) => isCurrentAuction(auction)).sort(compareStartAsc)
-	);
-
-	const upcomingAuctions = $derived(
-		auctions
-			.filter((auction) => !isCurrentAuction(auction) && isUpcomingAuction(auction))
-			.sort(compareStartAsc)
-	);
+	const upcomingAuctions = $derived(auctions.filter((x) => x.status === 'PENDING'));
 
 	const firstCurrentAuction = $derived(currentAuctions.length ? currentAuctions[0] : null);
 	const firstUpcomingAuction = $derived(upcomingAuctions.length ? upcomingAuctions[0] : null);
-
-	const recentCompletedAuctions = $derived(
-		auctions
-			.filter((auction) => {
-				if (auction.status === 'COMPLETED') return true;
-				const endTime = toDate(auction.end)?.getTime();
-				return typeof endTime === 'number' && endTime < nowTime;
-			})
-			.sort(compareEndDesc)
-			.slice(0, 4)
-	);
 
 	const stats = $derived({
 		total: auctions.length,
@@ -134,48 +68,6 @@
 
 <PageWrapper title="Auction House">
 	<div class="flex flex-col gap-6">
-		<div class="grid gap-4 md:grid-cols-3">
-			<CardWrapper title="Live auctions" description="Open and accepting bids">
-				{#snippet header()}
-					<Radio />
-				{/snippet}
-				<div class="flex items-baseline justify-between">
-					<span class="text-4xl font-semibold">{stats.current}</span>
-				</div>
-				<p class="text-sm text-muted-foreground">
-					{#if firstCurrentAuction}
-						Next closing {formatDate(firstCurrentAuction.end) ?? 'TBD'}
-					{:else}
-						No auctions are currently live.
-					{/if}
-				</p>
-			</CardWrapper>
-
-			<CardWrapper title="Upcoming" description="Scheduled launches">
-				{#snippet header()}
-					<ArrowDown01 />
-				{/snippet}
-				<div class="text-4xl font-semibold">{stats.upcoming}</div>
-				<p class="text-sm text-muted-foreground">
-					{#if nextUpcomingStart}
-						Next start {nextUpcomingStart}
-					{:else}
-						Waiting on new launch dates.
-					{/if}
-				</p>
-			</CardWrapper>
-
-			<CardWrapper title="Catalog coverage" description="Lots across live auctions">
-				{#snippet header()}
-					<ReplaceAll />
-				{/snippet}
-				<div class="text-4xl font-semibold">{stats.liveLots}</div>
-				<p class="text-sm text-muted-foreground">
-					Total lots available for bidding across all current auctions.
-				</p>
-			</CardWrapper>
-		</div>
-
 		<div class="grid gap-6 lg:grid-cols-2">
 			<CardWrapper title="Current auctions" description="Open for bidding">
 				{#if currentAuctions.length === 0}
@@ -189,7 +81,6 @@
 							<Item variant="outline">
 								{#snippet header()}
 									<div class="flex flex-wrap items-center gap-2 text-xs">
-										<Badge variant="outline">{humanize(auction.type)}</Badge>
 										<Badge variant={statusBadgeVariant(auction.status)}>
 											{humanize(auction.status)}
 										</Badge>
@@ -212,9 +103,6 @@
 										>
 										{#if auction.start}
 											<span>Started {formatDate(auction.start)}</span>
-										{/if}
-										{#if auction.end}
-											<span>Ends {formatDate(auction.end)}</span>
 										{/if}
 									</div>
 								{/snippet}
@@ -242,7 +130,6 @@
 							<Item variant="outline">
 								{#snippet header()}
 									<div class="flex flex-wrap items-center gap-2 text-xs">
-										<Badge variant="outline">{humanize(auction.type)}</Badge>
 										<Badge variant={statusBadgeVariant(auction.status)}>
 											{humanize(auction.status)}
 										</Badge>
@@ -265,9 +152,6 @@
 										{:else}
 											<span>Start date TBD</span>
 										{/if}
-										{#if auction.end}
-											<span>Ends {formatDate(auction.end)}</span>
-										{/if}
 									</div>
 								{/snippet}
 
@@ -284,56 +168,10 @@
 		</div>
 
 		<CardWrapper title="Recently closed" description="Last four completed auctions">
-			{#if recentCompletedAuctions.length === 0}
-				<Empty
-					title="No past auctions"
-					description="Completed auctions will appear here once available."
-				/>
-			{:else}
-				<div class="grid gap-3">
-					{#each recentCompletedAuctions as auction}
-						<Item variant="outline">
-							{#snippet header()}
-								<div class="flex flex-wrap items-center gap-2 text-xs">
-									<Badge variant="outline">{humanize(auction.type)}</Badge>
-									<Badge variant={statusBadgeVariant(auction.status)}>
-										{humanize(auction.status)}
-									</Badge>
-								</div>
-							{/snippet}
-
-							{#snippet title()}
-								<div class="flex flex-col gap-1">
-									<span class="text-base font-semibold">{auction.title}</span>
-									<p class="text-sm text-muted-foreground">
-										{auction.description || 'Summary unavailable.'}
-									</p>
-								</div>
-							{/snippet}
-
-							{#snippet footer()}
-								<div class="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-									<span class="font-medium text-foreground"
-										>Lots: {lotsLabel(auction._count.lots)}</span
-									>
-									{#if auction.start}
-										<span>Started {formatDate(auction.start)}</span>
-									{/if}
-									{#if auction.end}
-										<span>Ended {formatDate(auction.end)}</span>
-									{/if}
-								</div>
-							{/snippet}
-
-							{#snippet actionSnippet()}
-								<Button variant="link" href={`/auction-house/auctions/${auction.id}`}>
-									Details
-								</Button>
-							{/snippet}
-						</Item>
-					{/each}
-				</div>
-			{/if}
+			<Empty
+				title="Recently Closed Update"
+				description="Completed auctions will appear here once available."
+			/>
 		</CardWrapper>
 	</div>
 </PageWrapper>

@@ -207,112 +207,51 @@
 <PageWrapper title={`Edit Lot #${lot.lotNumber}`} crumbOverrides={[[lot.id, `#${lot.lotNumber}`]]}>
 	<WipBanner />
 
-	<!-- Summary Section -->
-	<div class="mb-6 grid gap-4 md:grid-cols-4">
-		<Card.Root>
-			<Card.Header class="pb-2">
-				<Card.Title class="text-sm font-medium text-muted-foreground">Status</Card.Title>
-			</Card.Header>
-			<Card.Content>
-				<Badge variant={getStatusColor(lot.status)} class="text-base">
-					{getStatusLabel(lot.status)}
-				</Badge>
-			</Card.Content>
-		</Card.Root>
-
-		<Card.Root>
-			<Card.Header class="pb-2">
-				<Card.Title class="text-sm font-medium text-muted-foreground">Start Price</Card.Title>
-			</Card.Header>
-			<Card.Content>
-				<div class="flex items-center gap-2">
-					<TrendingUp class="size-4 text-muted-foreground" />
-					<span class="text-2xl font-bold">{toLocalCurrency(lot.startPrice)}</span>
-				</div>
-			</Card.Content>
-		</Card.Root>
-
-		<Card.Root>
-			<Card.Header class="pb-2">
-				<Card.Title class="text-sm font-medium text-muted-foreground">Items</Card.Title>
-			</Card.Header>
-			<Card.Content>
-				<div class="flex items-center gap-2">
-					<Package class="size-4 text-muted-foreground" />
-					<span class="text-2xl font-bold">{stats.totalItems}</span>
-					<span class="text-sm text-muted-foreground">({stats.uniqueItems} unique)</span>
-				</div>
-			</Card.Content>
-		</Card.Root>
-
-		<Card.Root>
-			<Card.Header class="pb-2">
-				<Card.Title class="text-sm font-medium text-muted-foreground">Last Updated</Card.Title>
-			</Card.Header>
-			<Card.Content>
-				<div class="flex items-center gap-2">
-					<Calendar class="size-4 text-muted-foreground" />
-					<span class="text-sm">{standardDateFormat(lot.updatedAt)}</span>
-				</div>
-			</Card.Content>
-		</Card.Root>
-	</div>
-
 	<!-- Action Bar -->
-	<Card.Root class="mb-6">
-		<Card.Content class="pt-6">
-			<div class="flex flex-wrap items-center gap-3">
-				{#if !lotDisabled}
-					<Button
-						variant="default"
-						onclick={lotCmd.submit}
-						disabled={lotCmd.submitting}
-						class="gap-2"
-					>
-						{#if lotCmd.submitting}
-							<Spinner />
-						{:else}
-							<Save class="size-4" />
-						{/if}
-						Save Changes
-					</Button>
-				{/if}
+	<CardWrapper>
+		<div class="flex flex-wrap items-center gap-3">
+			{#if !lotDisabled}
+				<Button
+					variant="default"
+					onclick={lotCmd.submit}
+					disabled={lotCmd.submitting}
+					class="gap-2"
+				>
+					{#if lotCmd.submitting}
+						<Spinner />
+					{:else}
+						<Save class="size-4" />
+					{/if}
+					Save Changes
+				</Button>
+			{/if}
 
-				{#if lotCmd.form.type === LotType.LOT && !lotDisabled}
-					<Button
-						variant="secondary"
-						onclick={() => (publishDialogOpen = true)}
-						class="gap-2"
-					>
-						<CloudUpload class="size-4" />
-						Publish Lot
-					</Button>
-				{/if}
+			{#if lotCmd.form.type === LotType.LOT && !lotDisabled}
+				<Button variant="secondary" onclick={() => (publishDialogOpen = true)} class="gap-2">
+					<CloudUpload class="size-4" />
+					Publish Lot
+				</Button>
+			{/if}
 
-				{#if canWithdraw}
-					<Button
-						variant="destructive"
-						onclick={() => (withdrawDialogOpen = true)}
-						class="gap-2"
-					>
-						<CloudDownload class="size-4" />
-						Withdraw Lot
-					</Button>
-				{/if}
+			{#if canWithdraw}
+				<Button variant="destructive" onclick={() => (withdrawDialogOpen = true)} class="gap-2">
+					<CloudDownload class="size-4" />
+					Withdraw Lot
+				</Button>
+			{/if}
 
-				<div class="ml-auto">
-					<Button
-						variant="outline"
-						onclick={() => goto(`/auction-house/lots/${lot.id}`)}
-						class="gap-2"
-					>
-						<Eye class="size-4" />
-						View Lot
-					</Button>
-				</div>
+			<div class="ml-auto">
+				<Button
+					variant="outline"
+					onclick={() => goto(`/auction-house/lots/${lot.id}`)}
+					class="gap-2"
+				>
+					<Eye class="size-4" />
+					View Lot
+				</Button>
 			</div>
-		</Card.Content>
-	</Card.Root>
+		</div>
+	</CardWrapper>
 
 	<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 		<!-- Lot Details -->
@@ -398,68 +337,11 @@
 				{#if lot.items.length === 0}
 					<Empty />
 				{:else}
-					<!-- Mobile: Card View -->
-					<div class="grid gap-3 md:hidden">
-						{#each lot.items as item (item.id)}
-							<Card.Root class="overflow-hidden">
-								<Card.Header class="pb-3">
-									<div class="flex items-start gap-3">
-										{#if item.entity.imageSmall}
-											<img
-												src={item.entity.imageSmall}
-												alt={item.entity.name}
-												class="size-12 rounded object-cover"
-											/>
-										{/if}
-										<div class="flex-1">
-											<Card.Title class="text-base">{item.name}</Card.Title>
-											<Card.Description class="mt-1 text-xs">
-												Type: {item.entity.type}
-											</Card.Description>
-										</div>
-									</div>
-								</Card.Header>
-								<Card.Content class="space-y-2 pb-3">
-									<div class="grid grid-cols-2 gap-2 text-sm">
-										<div>
-											<p class="text-xs text-muted-foreground">Quantity</p>
-											<p class="font-medium">
-												{#if item.batch}
-													{item.quantity}
-													{item.quantity === 1 ? 'batch' : 'batches'}
-												{:else}
-													{item.quantity}
-												{/if}
-											</p>
-										</div>
-										<div>
-											<p class="text-xs text-muted-foreground">Attributes</p>
-											<div class="flex gap-1">
-												{#if item.uuu}
-													<Badge variant="outline" class="text-xs">U/U/U</Badge>
-												{/if}
-												{#if item.custom}
-													<Badge variant="outline" class="text-xs">Custom</Badge>
-												{/if}
-											</div>
-										</div>
-									</div>
-								</Card.Content>
-								{#if !lotDisabled}
-									<Card.Footer class="pt-3">
-										<LotItemAction {item} {entities} hideActions={lotDisabled} />
-									</Card.Footer>
-								{/if}
-							</Card.Root>
-						{/each}
-					</div>
-
-					<!-- Desktop: Table View -->
 					<div class="hidden md:block">
 						<Table.Root>
 							<Table.Header>
 								<Table.Row>
-									<Table.Head class="w-[80px]">Image</Table.Head>
+									<Table.Head class="w-20">Image</Table.Head>
 									<Table.Head>Name</Table.Head>
 									<Table.Head>Type</Table.Head>
 									<Table.Head class="text-right">Quantity</Table.Head>
@@ -588,15 +470,12 @@
 <!-- Publish Dialog -->
 <ResponsiveDialog title="Publish Lot" bind:open={publishDialogOpen}>
 	<div class="grid gap-3">
-		<p>
-			You are about to publish this lot. Once published, it will be visible to all users.
-		</p>
+		<p>You are about to publish this lot. Once published, it will be visible to all users.</p>
 		{#if lot.anonLot}
 			<p class="rounded-lg bg-orange-500/20 p-3 text-sm">
 				You are publishing this lot as an anonymous lot. Your
 				<span class="font-semibold text-orange-700 dark:text-orange-300">ANONID</span>
-				will be the only identifier visible to users. Make sure you use a middle to ensure high
-				anonymity.
+				will be the only identifier visible to users. Make sure you use a middle to ensure high anonymity.
 			</p>
 		{/if}
 	</div>

@@ -33,7 +33,7 @@ export * from "./enums"
  * const assets = await prisma.asset.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
@@ -59,6 +59,11 @@ export type Auction = Prisma.AuctionModel
  * 
  */
 export type Lot = Prisma.LotModel
+/**
+ * Model LotHistory
+ * 
+ */
+export type LotHistory = Prisma.LotHistoryModel
 /**
  * Model LotItem
  * 
@@ -95,7 +100,7 @@ export type User = Prisma.UserModel
  */
 export type UserPreference = Prisma.UserPreferenceModel
 /**
- * Model UserKarmaLog
+ * Model ChainTrustRatingLog
  * 
  */
-export type UserKarmaLog = Prisma.UserKarmaLogModel
+export type ChainTrustRatingLog = Prisma.ChainTrustRatingLogModel

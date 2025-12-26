@@ -84,39 +84,10 @@
 	});
 </script>
 
-<Item variant="outline">
-	{#snippet title()}
-		<div class="flex items-center gap-1">
-			<img class="size-6 border" src={entity?.imageSmall} alt="" />
-			<a href={`/holochain/database/${item.entityId}`} class="underline underline-offset-4">
-				{item.name}
-			</a>
-			<span class="text-xs text-muted-foreground">x{item.quantity}</span>
-		</div>
-	{/snippet}
-	{#snippet description()}
-		<div class="flex flex-wrap items-center gap-1">
-			{#if item.uuu}
-				<Check class="size-4" /> <span class="text-sm">U/U/U</span>
-			{/if}
-			{#if item.batch}
-				<Check class="size-4" /> <span class="text-sm">Batch Item</span>
-			{/if}
-			{#if item.custom}
-				<Check class="size-4" /> <span class="text-sm">Custom Item</span>
-			{/if}
-		</div>
-	{/snippet}
-
-	{#snippet actionSnippet()}
-		{#if !hideActions}
-			<ButtonGroup.Root>
-				{@render editDialog()}
-				{@render deleteItem()}
-			</ButtonGroup.Root>
-		{/if}
-	{/snippet}
-</Item>
+<ButtonGroup.Root>
+	{@render editDialog()}
+	{@render deleteItem()}
+</ButtonGroup.Root>
 
 {#snippet editDialog()}
 	{#if mobile.current}
@@ -124,7 +95,7 @@
 			<Drawer.Trigger
 				class={buttonVariants({
 					size: 'sm',
-					variant: 'secondary'
+					variant: 'ghost'
 				})}
 			>
 				<Pencil /> Edit
@@ -149,7 +120,7 @@
 			<Dialog.Trigger
 				class={buttonVariants({
 					size: 'sm',
-					variant: 'secondary'
+					variant: 'ghost'
 				})}
 			>
 				<Pencil /> Edit
@@ -225,7 +196,7 @@
 {/snippet}
 
 {#snippet deleteItem()}
-	<Button variant="secondary" size="sm" onclick={() => (deleteDialogOpen = true)}>
+	<Button variant="ghost" size="sm" onclick={() => (deleteDialogOpen = true)}>
 		<Delete /> Delete
 	</Button>
 	<ResponsiveDialog

@@ -38,17 +38,16 @@ export type LotMinAggregateOutputType = {
   id: string | null
   lotNumber: number | null
   auctionId: string | null
-  type: $Enums.LotType | null
   title: string | null
   details: string | null
   location: string | null
   status: $Enums.LotStatus | null
   createdById: string | null
   purchasedById: string | null
-  organizationId: string | null
   startPrice: string | null
   purchasePrice: string | null
   anonLot: boolean | null
+  creditsTo: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,17 +56,16 @@ export type LotMaxAggregateOutputType = {
   id: string | null
   lotNumber: number | null
   auctionId: string | null
-  type: $Enums.LotType | null
   title: string | null
   details: string | null
   location: string | null
   status: $Enums.LotStatus | null
   createdById: string | null
   purchasedById: string | null
-  organizationId: string | null
   startPrice: string | null
   purchasePrice: string | null
   anonLot: boolean | null
+  creditsTo: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -76,17 +74,16 @@ export type LotCountAggregateOutputType = {
   id: number
   lotNumber: number
   auctionId: number
-  type: number
   title: number
   details: number
   location: number
   status: number
   createdById: number
   purchasedById: number
-  organizationId: number
   startPrice: number
   purchasePrice: number
   anonLot: number
+  creditsTo: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -105,17 +102,16 @@ export type LotMinAggregateInputType = {
   id?: true
   lotNumber?: true
   auctionId?: true
-  type?: true
   title?: true
   details?: true
   location?: true
   status?: true
   createdById?: true
   purchasedById?: true
-  organizationId?: true
   startPrice?: true
   purchasePrice?: true
   anonLot?: true
+  creditsTo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,17 +120,16 @@ export type LotMaxAggregateInputType = {
   id?: true
   lotNumber?: true
   auctionId?: true
-  type?: true
   title?: true
   details?: true
   location?: true
   status?: true
   createdById?: true
   purchasedById?: true
-  organizationId?: true
   startPrice?: true
   purchasePrice?: true
   anonLot?: true
+  creditsTo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -143,17 +138,16 @@ export type LotCountAggregateInputType = {
   id?: true
   lotNumber?: true
   auctionId?: true
-  type?: true
   title?: true
   details?: true
   location?: true
   status?: true
   createdById?: true
   purchasedById?: true
-  organizationId?: true
   startPrice?: true
   purchasePrice?: true
   anonLot?: true
+  creditsTo?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -249,17 +243,16 @@ export type LotGroupByOutputType = {
   id: string
   lotNumber: number
   auctionId: string | null
-  type: $Enums.LotType
   title: string
   details: string
   location: string
   status: $Enums.LotStatus
   createdById: string | null
   purchasedById: string | null
-  organizationId: string | null
   startPrice: string
   purchasePrice: string | null
   anonLot: boolean
+  creditsTo: string
   createdAt: Date
   updatedAt: Date
   _count: LotCountAggregateOutputType | null
@@ -291,46 +284,46 @@ export type LotWhereInput = {
   id?: Prisma.StringFilter<"Lot"> | string
   lotNumber?: Prisma.IntFilter<"Lot"> | number
   auctionId?: Prisma.StringNullableFilter<"Lot"> | string | null
-  type?: Prisma.EnumLotTypeFilter<"Lot"> | $Enums.LotType
   title?: Prisma.StringFilter<"Lot"> | string
   details?: Prisma.StringFilter<"Lot"> | string
   location?: Prisma.StringFilter<"Lot"> | string
   status?: Prisma.EnumLotStatusFilter<"Lot"> | $Enums.LotStatus
   createdById?: Prisma.StringNullableFilter<"Lot"> | string | null
   purchasedById?: Prisma.StringNullableFilter<"Lot"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"Lot"> | string | null
   startPrice?: Prisma.StringFilter<"Lot"> | string
   purchasePrice?: Prisma.StringNullableFilter<"Lot"> | string | null
   anonLot?: Prisma.BoolFilter<"Lot"> | boolean
+  creditsTo?: Prisma.StringFilter<"Lot"> | string
   createdAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
   auction?: Prisma.XOR<Prisma.AuctionNullableScalarRelationFilter, Prisma.AuctionWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   purchasedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.LotItemListRelationFilter
+  history?: Prisma.LotHistoryListRelationFilter
 }
 
 export type LotOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   lotNumber?: Prisma.SortOrder
   auctionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
   title?: Prisma.SortOrder
   details?: Prisma.SortOrder
   location?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   purchasedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   startPrice?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
   anonLot?: Prisma.SortOrder
+  creditsTo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   auction?: Prisma.AuctionOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   purchasedBy?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.LotItemOrderByRelationAggregateInput
+  history?: Prisma.LotHistoryOrderByRelationAggregateInput
 }
 
 export type LotWhereUniqueInput = Prisma.AtLeast<{
@@ -340,40 +333,39 @@ export type LotWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LotWhereInput[]
   NOT?: Prisma.LotWhereInput | Prisma.LotWhereInput[]
   auctionId?: Prisma.StringNullableFilter<"Lot"> | string | null
-  type?: Prisma.EnumLotTypeFilter<"Lot"> | $Enums.LotType
   title?: Prisma.StringFilter<"Lot"> | string
   details?: Prisma.StringFilter<"Lot"> | string
   location?: Prisma.StringFilter<"Lot"> | string
   status?: Prisma.EnumLotStatusFilter<"Lot"> | $Enums.LotStatus
   createdById?: Prisma.StringNullableFilter<"Lot"> | string | null
   purchasedById?: Prisma.StringNullableFilter<"Lot"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"Lot"> | string | null
   startPrice?: Prisma.StringFilter<"Lot"> | string
   purchasePrice?: Prisma.StringNullableFilter<"Lot"> | string | null
   anonLot?: Prisma.BoolFilter<"Lot"> | boolean
+  creditsTo?: Prisma.StringFilter<"Lot"> | string
   createdAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
   auction?: Prisma.XOR<Prisma.AuctionNullableScalarRelationFilter, Prisma.AuctionWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   purchasedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.LotItemListRelationFilter
+  history?: Prisma.LotHistoryListRelationFilter
 }, "id" | "lotNumber">
 
 export type LotOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   lotNumber?: Prisma.SortOrder
   auctionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
   title?: Prisma.SortOrder
   details?: Prisma.SortOrder
   location?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   purchasedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   startPrice?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrderInput | Prisma.SortOrder
   anonLot?: Prisma.SortOrder
+  creditsTo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LotCountOrderByAggregateInput
@@ -390,17 +382,16 @@ export type LotScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   lotNumber?: Prisma.IntWithAggregatesFilter<"Lot"> | number
   auctionId?: Prisma.StringNullableWithAggregatesFilter<"Lot"> | string | null
-  type?: Prisma.EnumLotTypeWithAggregatesFilter<"Lot"> | $Enums.LotType
   title?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   details?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   location?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   status?: Prisma.EnumLotStatusWithAggregatesFilter<"Lot"> | $Enums.LotStatus
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Lot"> | string | null
   purchasedById?: Prisma.StringNullableWithAggregatesFilter<"Lot"> | string | null
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"Lot"> | string | null
   startPrice?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   purchasePrice?: Prisma.StringNullableWithAggregatesFilter<"Lot"> | string | null
   anonLot?: Prisma.BoolWithAggregatesFilter<"Lot"> | boolean
+  creditsTo?: Prisma.StringWithAggregatesFilter<"Lot"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lot"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Lot"> | Date | string
 }
@@ -408,112 +399,110 @@ export type LotScalarWhereWithAggregatesInput = {
 export type LotCreateInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   auction?: Prisma.AuctionCreateNestedOneWithoutLotsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutLotsOwnedInput
   purchasedBy?: Prisma.UserCreateNestedOneWithoutLotsPurchasedInput
   items?: Prisma.LotItemCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryCreateNestedManyWithoutLotInput
 }
 
 export type LotUncheckedCreateInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.LotItemUncheckedCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryUncheckedCreateNestedManyWithoutLotInput
 }
 
 export type LotUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auction?: Prisma.AuctionUpdateOneWithoutLotsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutLotsOwnedNestedInput
   purchasedBy?: Prisma.UserUpdateOneWithoutLotsPurchasedNestedInput
   items?: Prisma.LotItemUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LotItemUncheckedUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUncheckedUpdateManyWithoutLotNestedInput
 }
 
 export type LotCreateManyInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LotUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -522,17 +511,16 @@ export type LotUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -551,17 +539,16 @@ export type LotCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lotNumber?: Prisma.SortOrder
   auctionId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   title?: Prisma.SortOrder
   details?: Prisma.SortOrder
   location?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   purchasedById?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
   startPrice?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   anonLot?: Prisma.SortOrder
+  creditsTo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -574,17 +561,16 @@ export type LotMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lotNumber?: Prisma.SortOrder
   auctionId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   title?: Prisma.SortOrder
   details?: Prisma.SortOrder
   location?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   purchasedById?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
   startPrice?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   anonLot?: Prisma.SortOrder
+  creditsTo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -593,17 +579,16 @@ export type LotMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lotNumber?: Prisma.SortOrder
   auctionId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   title?: Prisma.SortOrder
   details?: Prisma.SortOrder
   location?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   purchasedById?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
   startPrice?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   anonLot?: Prisma.SortOrder
+  creditsTo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -659,10 +644,6 @@ export type LotUncheckedUpdateManyWithoutAuctionNestedInput = {
   deleteMany?: Prisma.LotScalarWhereInput | Prisma.LotScalarWhereInput[]
 }
 
-export type EnumLotTypeFieldUpdateOperationsInput = {
-  set?: $Enums.LotType
-}
-
 export type EnumLotStatusFieldUpdateOperationsInput = {
   set?: $Enums.LotStatus
 }
@@ -677,6 +658,20 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type LotCreateNestedOneWithoutHistoryInput = {
+  create?: Prisma.XOR<Prisma.LotCreateWithoutHistoryInput, Prisma.LotUncheckedCreateWithoutHistoryInput>
+  connectOrCreate?: Prisma.LotCreateOrConnectWithoutHistoryInput
+  connect?: Prisma.LotWhereUniqueInput
+}
+
+export type LotUpdateOneRequiredWithoutHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.LotCreateWithoutHistoryInput, Prisma.LotUncheckedCreateWithoutHistoryInput>
+  connectOrCreate?: Prisma.LotCreateOrConnectWithoutHistoryInput
+  upsert?: Prisma.LotUpsertWithoutHistoryInput
+  connect?: Prisma.LotWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LotUpdateToOneWithWhereWithoutHistoryInput, Prisma.LotUpdateWithoutHistoryInput>, Prisma.LotUncheckedUpdateWithoutHistoryInput>
 }
 
 export type LotCreateNestedOneWithoutItemsInput = {
@@ -780,39 +775,39 @@ export type LotUncheckedUpdateManyWithoutPurchasedByNestedInput = {
 export type LotCreateWithoutAuctionInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutLotsOwnedInput
   purchasedBy?: Prisma.UserCreateNestedOneWithoutLotsPurchasedInput
   items?: Prisma.LotItemCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryCreateNestedManyWithoutLotInput
 }
 
 export type LotUncheckedCreateWithoutAuctionInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.LotItemUncheckedCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryUncheckedCreateNestedManyWithoutLotInput
 }
 
 export type LotCreateOrConnectWithoutAuctionInput = {
@@ -848,57 +843,147 @@ export type LotScalarWhereInput = {
   id?: Prisma.StringFilter<"Lot"> | string
   lotNumber?: Prisma.IntFilter<"Lot"> | number
   auctionId?: Prisma.StringNullableFilter<"Lot"> | string | null
-  type?: Prisma.EnumLotTypeFilter<"Lot"> | $Enums.LotType
   title?: Prisma.StringFilter<"Lot"> | string
   details?: Prisma.StringFilter<"Lot"> | string
   location?: Prisma.StringFilter<"Lot"> | string
   status?: Prisma.EnumLotStatusFilter<"Lot"> | $Enums.LotStatus
   createdById?: Prisma.StringNullableFilter<"Lot"> | string | null
   purchasedById?: Prisma.StringNullableFilter<"Lot"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"Lot"> | string | null
   startPrice?: Prisma.StringFilter<"Lot"> | string
   purchasePrice?: Prisma.StringNullableFilter<"Lot"> | string | null
   anonLot?: Prisma.BoolFilter<"Lot"> | boolean
+  creditsTo?: Prisma.StringFilter<"Lot"> | string
   createdAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lot"> | Date | string
 }
 
-export type LotCreateWithoutItemsInput = {
+export type LotCreateWithoutHistoryInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   auction?: Prisma.AuctionCreateNestedOneWithoutLotsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutLotsOwnedInput
   purchasedBy?: Prisma.UserCreateNestedOneWithoutLotsPurchasedInput
+  items?: Prisma.LotItemCreateNestedManyWithoutLotInput
 }
 
-export type LotUncheckedCreateWithoutItemsInput = {
+export type LotUncheckedCreateWithoutHistoryInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.LotItemUncheckedCreateNestedManyWithoutLotInput
+}
+
+export type LotCreateOrConnectWithoutHistoryInput = {
+  where: Prisma.LotWhereUniqueInput
+  create: Prisma.XOR<Prisma.LotCreateWithoutHistoryInput, Prisma.LotUncheckedCreateWithoutHistoryInput>
+}
+
+export type LotUpsertWithoutHistoryInput = {
+  update: Prisma.XOR<Prisma.LotUpdateWithoutHistoryInput, Prisma.LotUncheckedUpdateWithoutHistoryInput>
+  create: Prisma.XOR<Prisma.LotCreateWithoutHistoryInput, Prisma.LotUncheckedCreateWithoutHistoryInput>
+  where?: Prisma.LotWhereInput
+}
+
+export type LotUpdateToOneWithWhereWithoutHistoryInput = {
+  where?: Prisma.LotWhereInput
+  data: Prisma.XOR<Prisma.LotUpdateWithoutHistoryInput, Prisma.LotUncheckedUpdateWithoutHistoryInput>
+}
+
+export type LotUpdateWithoutHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  details?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
+  startPrice?: Prisma.StringFieldUpdateOperationsInput | string
+  purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  auction?: Prisma.AuctionUpdateOneWithoutLotsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutLotsOwnedNestedInput
+  purchasedBy?: Prisma.UserUpdateOneWithoutLotsPurchasedNestedInput
+  items?: Prisma.LotItemUpdateManyWithoutLotNestedInput
+}
+
+export type LotUncheckedUpdateWithoutHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  details?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startPrice?: Prisma.StringFieldUpdateOperationsInput | string
+  purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.LotItemUncheckedUpdateManyWithoutLotNestedInput
+}
+
+export type LotCreateWithoutItemsInput = {
+  id?: string
+  lotNumber?: number
+  title: string
+  details: string
+  location: string
+  status?: $Enums.LotStatus
+  startPrice: string
+  purchasePrice?: string | null
+  anonLot?: boolean
+  creditsTo: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  auction?: Prisma.AuctionCreateNestedOneWithoutLotsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutLotsOwnedInput
+  purchasedBy?: Prisma.UserCreateNestedOneWithoutLotsPurchasedInput
+  history?: Prisma.LotHistoryCreateNestedManyWithoutLotInput
+}
+
+export type LotUncheckedCreateWithoutItemsInput = {
+  id?: string
+  lotNumber?: number
+  auctionId?: string | null
+  title: string
+  details: string
+  location: string
+  status?: $Enums.LotStatus
+  createdById?: string | null
+  purchasedById?: string | null
+  startPrice: string
+  purchasePrice?: string | null
+  anonLot?: boolean
+  creditsTo: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.LotHistoryUncheckedCreateNestedManyWithoutLotInput
 }
 
 export type LotCreateOrConnectWithoutItemsInput = {
@@ -919,77 +1004,77 @@ export type LotUpdateToOneWithWhereWithoutItemsInput = {
 
 export type LotUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auction?: Prisma.AuctionUpdateOneWithoutLotsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutLotsOwnedNestedInput
   purchasedBy?: Prisma.UserUpdateOneWithoutLotsPurchasedNestedInput
+  history?: Prisma.LotHistoryUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.LotHistoryUncheckedUpdateManyWithoutLotNestedInput
 }
 
 export type LotCreateWithoutCreatedByInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   auction?: Prisma.AuctionCreateNestedOneWithoutLotsInput
   purchasedBy?: Prisma.UserCreateNestedOneWithoutLotsPurchasedInput
   items?: Prisma.LotItemCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryCreateNestedManyWithoutLotInput
 }
 
 export type LotUncheckedCreateWithoutCreatedByInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.LotItemUncheckedCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryUncheckedCreateNestedManyWithoutLotInput
 }
 
 export type LotCreateOrConnectWithoutCreatedByInput = {
@@ -1005,39 +1090,39 @@ export type LotCreateManyCreatedByInputEnvelope = {
 export type LotCreateWithoutPurchasedByInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   auction?: Prisma.AuctionCreateNestedOneWithoutLotsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutLotsOwnedInput
   items?: Prisma.LotItemCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryCreateNestedManyWithoutLotInput
 }
 
 export type LotUncheckedCreateWithoutPurchasedByInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.LotItemUncheckedCreateNestedManyWithoutLotInput
+  history?: Prisma.LotHistoryUncheckedCreateNestedManyWithoutLotInput
 }
 
 export type LotCreateOrConnectWithoutPurchasedByInput = {
@@ -1085,72 +1170,70 @@ export type LotUpdateManyWithWhereWithoutPurchasedByInput = {
 export type LotCreateManyAuctionInput = {
   id?: string
   lotNumber?: number
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LotUpdateWithoutAuctionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneWithoutLotsOwnedNestedInput
   purchasedBy?: Prisma.UserUpdateOneWithoutLotsPurchasedNestedInput
   items?: Prisma.LotItemUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateWithoutAuctionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LotItemUncheckedUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUncheckedUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateManyWithoutAuctionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1159,16 +1242,15 @@ export type LotCreateManyCreatedByInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   purchasedById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1177,126 +1259,123 @@ export type LotCreateManyPurchasedByInput = {
   id?: string
   lotNumber?: number
   auctionId?: string | null
-  type?: $Enums.LotType
   title: string
   details: string
   location: string
   status?: $Enums.LotStatus
   createdById?: string | null
-  organizationId?: string | null
   startPrice: string
   purchasePrice?: string | null
   anonLot?: boolean
+  creditsTo: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LotUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auction?: Prisma.AuctionUpdateOneWithoutLotsNestedInput
   purchasedBy?: Prisma.UserUpdateOneWithoutLotsPurchasedNestedInput
   items?: Prisma.LotItemUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LotItemUncheckedUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUncheckedUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   purchasedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LotUpdateWithoutPurchasedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auction?: Prisma.AuctionUpdateOneWithoutLotsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutLotsOwnedNestedInput
   items?: Prisma.LotItemUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateWithoutPurchasedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LotItemUncheckedUpdateManyWithoutLotNestedInput
+  history?: Prisma.LotHistoryUncheckedUpdateManyWithoutLotNestedInput
 }
 
 export type LotUncheckedUpdateManyWithoutPurchasedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lotNumber?: Prisma.IntFieldUpdateOperationsInput | number
   auctionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumLotTypeFieldUpdateOperationsInput | $Enums.LotType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLotStatusFieldUpdateOperationsInput | $Enums.LotStatus
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startPrice?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anonLot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditsTo?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1308,10 +1387,12 @@ export type LotUncheckedUpdateManyWithoutPurchasedByInput = {
 
 export type LotCountOutputType = {
   items: number
+  history: number
 }
 
 export type LotCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | LotCountOutputTypeCountItemsArgs
+  history?: boolean | LotCountOutputTypeCountHistoryArgs
 }
 
 /**
@@ -1331,28 +1412,35 @@ export type LotCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Exten
   where?: Prisma.LotItemWhereInput
 }
 
+/**
+ * LotCountOutputType without action
+ */
+export type LotCountOutputTypeCountHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LotHistoryWhereInput
+}
+
 
 export type LotSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lotNumber?: boolean
   auctionId?: boolean
-  type?: boolean
   title?: boolean
   details?: boolean
   location?: boolean
   status?: boolean
   createdById?: boolean
   purchasedById?: boolean
-  organizationId?: boolean
   startPrice?: boolean
   purchasePrice?: boolean
   anonLot?: boolean
+  creditsTo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   auction?: boolean | Prisma.Lot$auctionArgs<ExtArgs>
   createdBy?: boolean | Prisma.Lot$createdByArgs<ExtArgs>
   purchasedBy?: boolean | Prisma.Lot$purchasedByArgs<ExtArgs>
   items?: boolean | Prisma.Lot$itemsArgs<ExtArgs>
+  history?: boolean | Prisma.Lot$historyArgs<ExtArgs>
   _count?: boolean | Prisma.LotCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lot"]>
 
@@ -1360,17 +1448,16 @@ export type LotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   lotNumber?: boolean
   auctionId?: boolean
-  type?: boolean
   title?: boolean
   details?: boolean
   location?: boolean
   status?: boolean
   createdById?: boolean
   purchasedById?: boolean
-  organizationId?: boolean
   startPrice?: boolean
   purchasePrice?: boolean
   anonLot?: boolean
+  creditsTo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   auction?: boolean | Prisma.Lot$auctionArgs<ExtArgs>
@@ -1382,17 +1469,16 @@ export type LotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   lotNumber?: boolean
   auctionId?: boolean
-  type?: boolean
   title?: boolean
   details?: boolean
   location?: boolean
   status?: boolean
   createdById?: boolean
   purchasedById?: boolean
-  organizationId?: boolean
   startPrice?: boolean
   purchasePrice?: boolean
   anonLot?: boolean
+  creditsTo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   auction?: boolean | Prisma.Lot$auctionArgs<ExtArgs>
@@ -1404,27 +1490,27 @@ export type LotSelectScalar = {
   id?: boolean
   lotNumber?: boolean
   auctionId?: boolean
-  type?: boolean
   title?: boolean
   details?: boolean
   location?: boolean
   status?: boolean
   createdById?: boolean
   purchasedById?: boolean
-  organizationId?: boolean
   startPrice?: boolean
   purchasePrice?: boolean
   anonLot?: boolean
+  creditsTo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotNumber" | "auctionId" | "type" | "title" | "details" | "location" | "status" | "createdById" | "purchasedById" | "organizationId" | "startPrice" | "purchasePrice" | "anonLot" | "createdAt" | "updatedAt", ExtArgs["result"]["lot"]>
+export type LotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lotNumber" | "auctionId" | "title" | "details" | "location" | "status" | "createdById" | "purchasedById" | "startPrice" | "purchasePrice" | "anonLot" | "creditsTo" | "createdAt" | "updatedAt", ExtArgs["result"]["lot"]>
 export type LotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auction?: boolean | Prisma.Lot$auctionArgs<ExtArgs>
   createdBy?: boolean | Prisma.Lot$createdByArgs<ExtArgs>
   purchasedBy?: boolean | Prisma.Lot$purchasedByArgs<ExtArgs>
   items?: boolean | Prisma.Lot$itemsArgs<ExtArgs>
+  history?: boolean | Prisma.Lot$historyArgs<ExtArgs>
   _count?: boolean | Prisma.LotCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LotIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1445,22 +1531,22 @@ export type $LotPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     purchasedBy: Prisma.$UserPayload<ExtArgs> | null
     items: Prisma.$LotItemPayload<ExtArgs>[]
+    history: Prisma.$LotHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     lotNumber: number
     auctionId: string | null
-    type: $Enums.LotType
     title: string
     details: string
     location: string
     status: $Enums.LotStatus
     createdById: string | null
     purchasedById: string | null
-    organizationId: string | null
     startPrice: string
     purchasePrice: string | null
     anonLot: boolean
+    creditsTo: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["lot"]>
@@ -1861,6 +1947,7 @@ export interface Prisma__LotClient<T, Null = never, ExtArgs extends runtime.Type
   createdBy<T extends Prisma.Lot$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lot$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   purchasedBy<T extends Prisma.Lot$purchasedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lot$purchasedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Lot$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lot$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  history<T extends Prisma.Lot$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lot$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1893,17 +1980,16 @@ export interface LotFieldRefs {
   readonly id: Prisma.FieldRef<"Lot", 'String'>
   readonly lotNumber: Prisma.FieldRef<"Lot", 'Int'>
   readonly auctionId: Prisma.FieldRef<"Lot", 'String'>
-  readonly type: Prisma.FieldRef<"Lot", 'LotType'>
   readonly title: Prisma.FieldRef<"Lot", 'String'>
   readonly details: Prisma.FieldRef<"Lot", 'String'>
   readonly location: Prisma.FieldRef<"Lot", 'String'>
   readonly status: Prisma.FieldRef<"Lot", 'LotStatus'>
   readonly createdById: Prisma.FieldRef<"Lot", 'String'>
   readonly purchasedById: Prisma.FieldRef<"Lot", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Lot", 'String'>
   readonly startPrice: Prisma.FieldRef<"Lot", 'String'>
   readonly purchasePrice: Prisma.FieldRef<"Lot", 'String'>
   readonly anonLot: Prisma.FieldRef<"Lot", 'Boolean'>
+  readonly creditsTo: Prisma.FieldRef<"Lot", 'String'>
   readonly createdAt: Prisma.FieldRef<"Lot", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lot", 'DateTime'>
 }
@@ -2380,6 +2466,30 @@ export type Lot$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   take?: number
   skip?: number
   distinct?: Prisma.LotItemScalarFieldEnum | Prisma.LotItemScalarFieldEnum[]
+}
+
+/**
+ * Lot.history
+ */
+export type Lot$historyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LotHistory
+   */
+  select?: Prisma.LotHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LotHistory
+   */
+  omit?: Prisma.LotHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LotHistoryInclude<ExtArgs> | null
+  where?: Prisma.LotHistoryWhereInput
+  orderBy?: Prisma.LotHistoryOrderByWithRelationInput | Prisma.LotHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.LotHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LotHistoryScalarFieldEnum | Prisma.LotHistoryScalarFieldEnum[]
 }
 
 /**

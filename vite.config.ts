@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
   server: {
     host: true,
-    allowedHosts: ['host.docker.internal']
+    allowedHosts: ['host.docker.internal'],
+    hmr: false
   }
 });

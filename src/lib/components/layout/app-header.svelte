@@ -55,7 +55,7 @@
 	<div class="flex w-full items-center gap-1 px-4 lg:gap-2">
 		<Sidebar.Trigger class="-ml-1" />
 		<Separator orientation="vertical" class="mx-2 data-[orientation=vertical]:h-4" />
-		{#if !mobile.current}
+		<!-- {#if !mobile.current}
 			<Breadcrumb.Root>
 				<Breadcrumb.List>
 					{#each prevSegments as seg, i}
@@ -72,15 +72,12 @@
 					</Breadcrumb.Item>
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
-		{/if}
+		{/if} -->
 
 		{#if mobile.current}
 			<div class="flex w-full items-center justify-start gap-2">
 				<img src="/images/uim-18.png" class="size-6" alt="logo" />
-				<span class="font-bold">
-					<!-- {typeof currentLabel === 'string' ? currentLabel.toUpperCase() : currentLabel} -->
-					Unnamed Holochain
-				</span>
+				<span class="font-bold"> Unnamed Holochain </span>
 			</div>
 		{/if}
 

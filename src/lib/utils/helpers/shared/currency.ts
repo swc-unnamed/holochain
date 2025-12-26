@@ -44,3 +44,8 @@ export const toAbbrCurrency = (amount: string | number) => {
 
   return `${absValue}${sign}`;
 };
+
+export const parseCurrency = (formatted: string): string => {
+  const parsed = Number(formatted.replace(/,/g, ''));
+  return isNaN(parsed) ? '0' : String(parsed);
+}

@@ -27,11 +27,11 @@ export type AggregateUser = {
 }
 
 export type UserAvgAggregateOutputType = {
-  karma: number | null
+  ctr: number | null
 }
 
 export type UserSumAggregateOutputType = {
-  karma: number | null
+  ctr: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -39,7 +39,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   displayName: string | null
   anonid: string | null
-  karma: number | null
+  ctr: number | null
   combineId: string | null
   passwordHash: string | null
   role: $Enums.AppRole | null
@@ -50,6 +50,7 @@ export type UserMinAggregateOutputType = {
   avatarUrl: string | null
   discordId: string | null
   discordUsername: string | null
+  approvedMiddle: boolean | null
   createdAt: Date | null
   lastSeenAt: Date | null
 }
@@ -59,7 +60,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   displayName: string | null
   anonid: string | null
-  karma: number | null
+  ctr: number | null
   combineId: string | null
   passwordHash: string | null
   role: $Enums.AppRole | null
@@ -70,6 +71,7 @@ export type UserMaxAggregateOutputType = {
   avatarUrl: string | null
   discordId: string | null
   discordUsername: string | null
+  approvedMiddle: boolean | null
   createdAt: Date | null
   lastSeenAt: Date | null
 }
@@ -79,7 +81,7 @@ export type UserCountAggregateOutputType = {
   name: number
   displayName: number
   anonid: number
-  karma: number
+  ctr: number
   combineId: number
   combineScopes: number
   passwordHash: number
@@ -91,6 +93,7 @@ export type UserCountAggregateOutputType = {
   avatarUrl: number
   discordId: number
   discordUsername: number
+  approvedMiddle: number
   createdAt: number
   lastSeenAt: number
   _all: number
@@ -98,11 +101,11 @@ export type UserCountAggregateOutputType = {
 
 
 export type UserAvgAggregateInputType = {
-  karma?: true
+  ctr?: true
 }
 
 export type UserSumAggregateInputType = {
-  karma?: true
+  ctr?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -110,7 +113,7 @@ export type UserMinAggregateInputType = {
   name?: true
   displayName?: true
   anonid?: true
-  karma?: true
+  ctr?: true
   combineId?: true
   passwordHash?: true
   role?: true
@@ -121,6 +124,7 @@ export type UserMinAggregateInputType = {
   avatarUrl?: true
   discordId?: true
   discordUsername?: true
+  approvedMiddle?: true
   createdAt?: true
   lastSeenAt?: true
 }
@@ -130,7 +134,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   displayName?: true
   anonid?: true
-  karma?: true
+  ctr?: true
   combineId?: true
   passwordHash?: true
   role?: true
@@ -141,6 +145,7 @@ export type UserMaxAggregateInputType = {
   avatarUrl?: true
   discordId?: true
   discordUsername?: true
+  approvedMiddle?: true
   createdAt?: true
   lastSeenAt?: true
 }
@@ -150,7 +155,7 @@ export type UserCountAggregateInputType = {
   name?: true
   displayName?: true
   anonid?: true
-  karma?: true
+  ctr?: true
   combineId?: true
   combineScopes?: true
   passwordHash?: true
@@ -162,6 +167,7 @@ export type UserCountAggregateInputType = {
   avatarUrl?: true
   discordId?: true
   discordUsername?: true
+  approvedMiddle?: true
   createdAt?: true
   lastSeenAt?: true
   _all?: true
@@ -258,7 +264,7 @@ export type UserGroupByOutputType = {
   name: string
   displayName: string
   anonid: string
-  karma: number
+  ctr: number
   combineId: string | null
   combineScopes: string[]
   passwordHash: string | null
@@ -270,6 +276,7 @@ export type UserGroupByOutputType = {
   avatarUrl: string | null
   discordId: string | null
   discordUsername: string | null
+  approvedMiddle: boolean
   createdAt: Date
   lastSeenAt: Date
   _count: UserCountAggregateOutputType | null
@@ -302,7 +309,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   displayName?: Prisma.StringFilter<"User"> | string
   anonid?: Prisma.StringFilter<"User"> | string
-  karma?: Prisma.IntFilter<"User"> | number
+  ctr?: Prisma.IntFilter<"User"> | number
   combineId?: Prisma.StringNullableFilter<"User"> | string | null
   combineScopes?: Prisma.StringNullableListFilter<"User">
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
@@ -314,10 +321,11 @@ export type UserWhereInput = {
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   discordId?: Prisma.StringNullableFilter<"User"> | string | null
   discordUsername?: Prisma.StringNullableFilter<"User"> | string | null
+  approvedMiddle?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   lastSeenAt?: Prisma.DateTimeFilter<"User"> | Date | string
   preferences?: Prisma.UserPreferenceListRelationFilter
-  karmaLogs?: Prisma.UserKarmaLogListRelationFilter
+  ctrLogs?: Prisma.ChainTrustRatingLogListRelationFilter
   lotsOwned?: Prisma.LotListRelationFilter
   lotsPurchased?: Prisma.LotListRelationFilter
 }
@@ -327,7 +335,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrderInput | Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -339,10 +347,11 @@ export type UserOrderByWithRelationInput = {
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   discordId?: Prisma.SortOrderInput | Prisma.SortOrder
   discordUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedMiddle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
   preferences?: Prisma.UserPreferenceOrderByRelationAggregateInput
-  karmaLogs?: Prisma.UserKarmaLogOrderByRelationAggregateInput
+  ctrLogs?: Prisma.ChainTrustRatingLogOrderByRelationAggregateInput
   lotsOwned?: Prisma.LotOrderByRelationAggregateInput
   lotsPurchased?: Prisma.LotOrderByRelationAggregateInput
 }
@@ -356,7 +365,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   displayName?: Prisma.StringFilter<"User"> | string
-  karma?: Prisma.IntFilter<"User"> | number
+  ctr?: Prisma.IntFilter<"User"> | number
   combineScopes?: Prisma.StringNullableListFilter<"User">
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumAppRoleFilter<"User"> | $Enums.AppRole
@@ -367,10 +376,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   discordId?: Prisma.StringNullableFilter<"User"> | string | null
   discordUsername?: Prisma.StringNullableFilter<"User"> | string | null
+  approvedMiddle?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   lastSeenAt?: Prisma.DateTimeFilter<"User"> | Date | string
   preferences?: Prisma.UserPreferenceListRelationFilter
-  karmaLogs?: Prisma.UserKarmaLogListRelationFilter
+  ctrLogs?: Prisma.ChainTrustRatingLogListRelationFilter
   lotsOwned?: Prisma.LotListRelationFilter
   lotsPurchased?: Prisma.LotListRelationFilter
 }, "id" | "name" | "anonid" | "combineId">
@@ -380,7 +390,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrderInput | Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -392,6 +402,7 @@ export type UserOrderByWithAggregationInput = {
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   discordId?: Prisma.SortOrderInput | Prisma.SortOrder
   discordUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedMiddle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -409,7 +420,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   displayName?: Prisma.StringWithAggregatesFilter<"User"> | string
   anonid?: Prisma.StringWithAggregatesFilter<"User"> | string
-  karma?: Prisma.IntWithAggregatesFilter<"User"> | number
+  ctr?: Prisma.IntWithAggregatesFilter<"User"> | number
   combineId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   combineScopes?: Prisma.StringNullableListFilter<"User">
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -421,6 +432,7 @@ export type UserScalarWhereWithAggregatesInput = {
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   discordId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   discordUsername?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  approvedMiddle?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   lastSeenAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -430,7 +442,7 @@ export type UserCreateInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -442,10 +454,11 @@ export type UserCreateInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
 }
@@ -455,7 +468,7 @@ export type UserUncheckedCreateInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -467,10 +480,11 @@ export type UserUncheckedCreateInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
 }
@@ -480,7 +494,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,10 +506,11 @@ export type UserUpdateInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
 }
@@ -505,7 +520,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -517,10 +532,11 @@ export type UserUncheckedUpdateInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
@@ -530,7 +546,7 @@ export type UserCreateManyInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -542,6 +558,7 @@ export type UserCreateManyInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
 }
@@ -551,7 +568,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -563,6 +580,7 @@ export type UserUpdateManyMutationInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -572,7 +590,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -584,6 +602,7 @@ export type UserUncheckedUpdateManyInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -606,7 +625,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
@@ -618,12 +637,13 @@ export type UserCountOrderByAggregateInput = {
   avatarUrl?: Prisma.SortOrder
   discordId?: Prisma.SortOrder
   discordUsername?: Prisma.SortOrder
+  approvedMiddle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -631,7 +651,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -642,6 +662,7 @@ export type UserMaxOrderByAggregateInput = {
   avatarUrl?: Prisma.SortOrder
   discordId?: Prisma.SortOrder
   discordUsername?: Prisma.SortOrder
+  approvedMiddle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
 }
@@ -651,7 +672,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -662,12 +683,13 @@ export type UserMinOrderByAggregateInput = {
   avatarUrl?: Prisma.SortOrder
   discordId?: Prisma.SortOrder
   discordUsername?: Prisma.SortOrder
+  approvedMiddle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
-  karma?: Prisma.SortOrder
+  ctr?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -734,18 +756,18 @@ export type UserUpdateOneRequiredWithoutPreferencesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPreferencesInput, Prisma.UserUpdateWithoutPreferencesInput>, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
 }
 
-export type UserCreateNestedOneWithoutKarmaLogsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutKarmaLogsInput, Prisma.UserUncheckedCreateWithoutKarmaLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarmaLogsInput
+export type UserCreateNestedOneWithoutCtrLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutKarmaLogsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutKarmaLogsInput, Prisma.UserUncheckedCreateWithoutKarmaLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarmaLogsInput
-  upsert?: Prisma.UserUpsertWithoutKarmaLogsInput
+export type UserUpdateOneRequiredWithoutCtrLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
+  upsert?: Prisma.UserUpsertWithoutCtrLogsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKarmaLogsInput, Prisma.UserUpdateWithoutKarmaLogsInput>, Prisma.UserUncheckedUpdateWithoutKarmaLogsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCtrLogsInput, Prisma.UserUpdateWithoutCtrLogsInput>, Prisma.UserUncheckedUpdateWithoutCtrLogsInput>
 }
 
 export type UserCreateWithoutLotsOwnedInput = {
@@ -753,7 +775,7 @@ export type UserCreateWithoutLotsOwnedInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -765,10 +787,11 @@ export type UserCreateWithoutLotsOwnedInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
 }
 
@@ -777,7 +800,7 @@ export type UserUncheckedCreateWithoutLotsOwnedInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -789,10 +812,11 @@ export type UserUncheckedCreateWithoutLotsOwnedInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
@@ -806,7 +830,7 @@ export type UserCreateWithoutLotsPurchasedInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -818,10 +842,11 @@ export type UserCreateWithoutLotsPurchasedInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
 }
 
@@ -830,7 +855,7 @@ export type UserUncheckedCreateWithoutLotsPurchasedInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -842,10 +867,11 @@ export type UserUncheckedCreateWithoutLotsPurchasedInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutUserInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
@@ -870,7 +896,7 @@ export type UserUpdateWithoutLotsOwnedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -882,10 +908,11 @@ export type UserUpdateWithoutLotsOwnedInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
 }
 
@@ -894,7 +921,7 @@ export type UserUncheckedUpdateWithoutLotsOwnedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -906,10 +933,11 @@ export type UserUncheckedUpdateWithoutLotsOwnedInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
@@ -929,7 +957,7 @@ export type UserUpdateWithoutLotsPurchasedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -941,10 +969,11 @@ export type UserUpdateWithoutLotsPurchasedInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -953,7 +982,7 @@ export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -965,10 +994,11 @@ export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
-  karmaLogs?: Prisma.UserKarmaLogUncheckedUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -977,7 +1007,7 @@ export type UserCreateWithoutPreferencesInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -989,9 +1019,10 @@ export type UserCreateWithoutPreferencesInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
-  karmaLogs?: Prisma.UserKarmaLogCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
 }
@@ -1001,7 +1032,7 @@ export type UserUncheckedCreateWithoutPreferencesInput = {
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -1013,9 +1044,10 @@ export type UserUncheckedCreateWithoutPreferencesInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
-  karmaLogs?: Prisma.UserKarmaLogUncheckedCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
 }
@@ -1041,7 +1073,7 @@ export type UserUpdateWithoutPreferencesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1053,9 +1085,10 @@ export type UserUpdateWithoutPreferencesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  karmaLogs?: Prisma.UserKarmaLogUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
 }
@@ -1065,7 +1098,7 @@ export type UserUncheckedUpdateWithoutPreferencesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1077,19 +1110,20 @@ export type UserUncheckedUpdateWithoutPreferencesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  karmaLogs?: Prisma.UserKarmaLogUncheckedUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
-export type UserCreateWithoutKarmaLogsInput = {
+export type UserCreateWithoutCtrLogsInput = {
   id?: string
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -1101,6 +1135,7 @@ export type UserCreateWithoutKarmaLogsInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceCreateNestedManyWithoutUserInput
@@ -1108,12 +1143,12 @@ export type UserCreateWithoutKarmaLogsInput = {
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
 }
 
-export type UserUncheckedCreateWithoutKarmaLogsInput = {
+export type UserUncheckedCreateWithoutCtrLogsInput = {
   id?: string
   name: string
   displayName: string
   anonid: string
-  karma?: number
+  ctr?: number
   combineId?: string | null
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
   passwordHash?: string | null
@@ -1125,6 +1160,7 @@ export type UserUncheckedCreateWithoutKarmaLogsInput = {
   avatarUrl?: string | null
   discordId?: string | null
   discordUsername?: string | null
+  approvedMiddle?: boolean
   createdAt?: Date | string
   lastSeenAt?: Date | string
   preferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutUserInput
@@ -1132,28 +1168,28 @@ export type UserUncheckedCreateWithoutKarmaLogsInput = {
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
-export type UserCreateOrConnectWithoutKarmaLogsInput = {
+export type UserCreateOrConnectWithoutCtrLogsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutKarmaLogsInput, Prisma.UserUncheckedCreateWithoutKarmaLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
 }
 
-export type UserUpsertWithoutKarmaLogsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutKarmaLogsInput, Prisma.UserUncheckedUpdateWithoutKarmaLogsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutKarmaLogsInput, Prisma.UserUncheckedCreateWithoutKarmaLogsInput>
+export type UserUpsertWithoutCtrLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCtrLogsInput, Prisma.UserUncheckedUpdateWithoutCtrLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutKarmaLogsInput = {
+export type UserUpdateToOneWithWhereWithoutCtrLogsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutKarmaLogsInput, Prisma.UserUncheckedUpdateWithoutKarmaLogsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCtrLogsInput, Prisma.UserUncheckedUpdateWithoutCtrLogsInput>
 }
 
-export type UserUpdateWithoutKarmaLogsInput = {
+export type UserUpdateWithoutCtrLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1165,6 +1201,7 @@ export type UserUpdateWithoutKarmaLogsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUpdateManyWithoutUserNestedInput
@@ -1172,12 +1209,12 @@ export type UserUpdateWithoutKarmaLogsInput = {
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
 }
 
-export type UserUncheckedUpdateWithoutKarmaLogsInput = {
+export type UserUncheckedUpdateWithoutCtrLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
   combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1189,6 +1226,7 @@ export type UserUncheckedUpdateWithoutKarmaLogsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
@@ -1203,14 +1241,14 @@ export type UserUncheckedUpdateWithoutKarmaLogsInput = {
 
 export type UserCountOutputType = {
   preferences: number
-  karmaLogs: number
+  ctrLogs: number
   lotsOwned: number
   lotsPurchased: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preferences?: boolean | UserCountOutputTypeCountPreferencesArgs
-  karmaLogs?: boolean | UserCountOutputTypeCountKarmaLogsArgs
+  ctrLogs?: boolean | UserCountOutputTypeCountCtrLogsArgs
   lotsOwned?: boolean | UserCountOutputTypeCountLotsOwnedArgs
   lotsPurchased?: boolean | UserCountOutputTypeCountLotsPurchasedArgs
 }
@@ -1235,8 +1273,8 @@ export type UserCountOutputTypeCountPreferencesArgs<ExtArgs extends runtime.Type
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountKarmaLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserKarmaLogWhereInput
+export type UserCountOutputTypeCountCtrLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChainTrustRatingLogWhereInput
 }
 
 /**
@@ -1259,7 +1297,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   displayName?: boolean
   anonid?: boolean
-  karma?: boolean
+  ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
   passwordHash?: boolean
@@ -1271,10 +1309,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   avatarUrl?: boolean
   discordId?: boolean
   discordUsername?: boolean
+  approvedMiddle?: boolean
   createdAt?: boolean
   lastSeenAt?: boolean
   preferences?: boolean | Prisma.User$preferencesArgs<ExtArgs>
-  karmaLogs?: boolean | Prisma.User$karmaLogsArgs<ExtArgs>
+  ctrLogs?: boolean | Prisma.User$ctrLogsArgs<ExtArgs>
   lotsOwned?: boolean | Prisma.User$lotsOwnedArgs<ExtArgs>
   lotsPurchased?: boolean | Prisma.User$lotsPurchasedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1285,7 +1324,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   displayName?: boolean
   anonid?: boolean
-  karma?: boolean
+  ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
   passwordHash?: boolean
@@ -1297,6 +1336,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   avatarUrl?: boolean
   discordId?: boolean
   discordUsername?: boolean
+  approvedMiddle?: boolean
   createdAt?: boolean
   lastSeenAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1306,7 +1346,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   displayName?: boolean
   anonid?: boolean
-  karma?: boolean
+  ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
   passwordHash?: boolean
@@ -1318,6 +1358,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   avatarUrl?: boolean
   discordId?: boolean
   discordUsername?: boolean
+  approvedMiddle?: boolean
   createdAt?: boolean
   lastSeenAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1327,7 +1368,7 @@ export type UserSelectScalar = {
   name?: boolean
   displayName?: boolean
   anonid?: boolean
-  karma?: boolean
+  ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
   passwordHash?: boolean
@@ -1339,14 +1380,15 @@ export type UserSelectScalar = {
   avatarUrl?: boolean
   discordId?: boolean
   discordUsername?: boolean
+  approvedMiddle?: boolean
   createdAt?: boolean
   lastSeenAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "anonid" | "karma" | "combineId" | "combineScopes" | "passwordHash" | "role" | "banned" | "bannedReason" | "bannedUntil" | "bannedById" | "avatarUrl" | "discordId" | "discordUsername" | "createdAt" | "lastSeenAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "anonid" | "ctr" | "combineId" | "combineScopes" | "passwordHash" | "role" | "banned" | "bannedReason" | "bannedUntil" | "bannedById" | "avatarUrl" | "discordId" | "discordUsername" | "approvedMiddle" | "createdAt" | "lastSeenAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preferences?: boolean | Prisma.User$preferencesArgs<ExtArgs>
-  karmaLogs?: boolean | Prisma.User$karmaLogsArgs<ExtArgs>
+  ctrLogs?: boolean | Prisma.User$ctrLogsArgs<ExtArgs>
   lotsOwned?: boolean | Prisma.User$lotsOwnedArgs<ExtArgs>
   lotsPurchased?: boolean | Prisma.User$lotsPurchasedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1358,7 +1400,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     preferences: Prisma.$UserPreferencePayload<ExtArgs>[]
-    karmaLogs: Prisma.$UserKarmaLogPayload<ExtArgs>[]
+    ctrLogs: Prisma.$ChainTrustRatingLogPayload<ExtArgs>[]
     lotsOwned: Prisma.$LotPayload<ExtArgs>[]
     lotsPurchased: Prisma.$LotPayload<ExtArgs>[]
   }
@@ -1367,7 +1409,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     displayName: string
     anonid: string
-    karma: number
+    ctr: number
     combineId: string | null
     combineScopes: string[]
     passwordHash: string | null
@@ -1379,6 +1421,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     avatarUrl: string | null
     discordId: string | null
     discordUsername: string | null
+    approvedMiddle: boolean
     createdAt: Date
     lastSeenAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1776,7 +1819,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   preferences<T extends Prisma.User$preferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$preferencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  karmaLogs<T extends Prisma.User$karmaLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$karmaLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserKarmaLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ctrLogs<T extends Prisma.User$ctrLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ctrLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChainTrustRatingLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lotsOwned<T extends Prisma.User$lotsOwnedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lotsOwnedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lotsPurchased<T extends Prisma.User$lotsPurchasedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lotsPurchasedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1812,7 +1855,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly displayName: Prisma.FieldRef<"User", 'String'>
   readonly anonid: Prisma.FieldRef<"User", 'String'>
-  readonly karma: Prisma.FieldRef<"User", 'Int'>
+  readonly ctr: Prisma.FieldRef<"User", 'Int'>
   readonly combineId: Prisma.FieldRef<"User", 'String'>
   readonly combineScopes: Prisma.FieldRef<"User", 'String[]'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
@@ -1824,6 +1867,7 @@ export interface UserFieldRefs {
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly discordId: Prisma.FieldRef<"User", 'String'>
   readonly discordUsername: Prisma.FieldRef<"User", 'String'>
+  readonly approvedMiddle: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastSeenAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -2238,27 +2282,27 @@ export type User$preferencesArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * User.karmaLogs
+ * User.ctrLogs
  */
-export type User$karmaLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$ctrLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserKarmaLog
+   * Select specific fields to fetch from the ChainTrustRatingLog
    */
-  select?: Prisma.UserKarmaLogSelect<ExtArgs> | null
+  select?: Prisma.ChainTrustRatingLogSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserKarmaLog
+   * Omit specific fields from the ChainTrustRatingLog
    */
-  omit?: Prisma.UserKarmaLogOmit<ExtArgs> | null
+  omit?: Prisma.ChainTrustRatingLogOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserKarmaLogInclude<ExtArgs> | null
-  where?: Prisma.UserKarmaLogWhereInput
-  orderBy?: Prisma.UserKarmaLogOrderByWithRelationInput | Prisma.UserKarmaLogOrderByWithRelationInput[]
-  cursor?: Prisma.UserKarmaLogWhereUniqueInput
+  include?: Prisma.ChainTrustRatingLogInclude<ExtArgs> | null
+  where?: Prisma.ChainTrustRatingLogWhereInput
+  orderBy?: Prisma.ChainTrustRatingLogOrderByWithRelationInput | Prisma.ChainTrustRatingLogOrderByWithRelationInput[]
+  cursor?: Prisma.ChainTrustRatingLogWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserKarmaLogScalarFieldEnum | Prisma.UserKarmaLogScalarFieldEnum[]
+  distinct?: Prisma.ChainTrustRatingLogScalarFieldEnum | Prisma.ChainTrustRatingLogScalarFieldEnum[]
 }
 
 /**

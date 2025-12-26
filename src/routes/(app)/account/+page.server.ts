@@ -7,7 +7,7 @@ export const load = async ({ locals, depends }) => {
     where: { id: locals.user.id },
     include: {
       preferences: true,
-      karmaLogs: {
+      ctrLogs: {
         orderBy: { createdAt: 'desc' }
       }
     },

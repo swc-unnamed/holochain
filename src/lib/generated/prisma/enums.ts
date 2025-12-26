@@ -9,33 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
-export const LotType = {
-  LOT: 'LOT',
-  TEMPLATE: 'TEMPLATE'
-} as const
-
-export type LotType = (typeof LotType)[keyof typeof LotType]
-
-
 export const LotStatus = {
-  DRAFT: 'DRAFT',
-  COMPLETED: 'COMPLETED',
-  LISTED: 'LISTED',
+  SUBMITTED: 'SUBMITTED',
   SCHEDULED: 'SCHEDULED',
   SOLD: 'SOLD',
+  COMPLETED: 'COMPLETED',
   WITHDRAWN: 'WITHDRAWN'
 } as const
 
 export type LotStatus = (typeof LotStatus)[keyof typeof LotStatus]
-
-
-export const AuctionType = {
-  LIVE: 'LIVE',
-  SEALED: 'SEALED',
-  TIMED: 'TIMED'
-} as const
-
-export type AuctionType = (typeof AuctionType)[keyof typeof AuctionType]
 
 
 export const AuctionStatus = {

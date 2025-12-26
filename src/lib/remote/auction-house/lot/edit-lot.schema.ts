@@ -1,4 +1,4 @@
-import { LotStatus, LotType } from '$lib/generated/prisma/enums';
+import { LotStatus } from '$lib/generated/prisma/enums';
 import { z } from 'zod/v4';
 
 export const editLotSchema = z.object({
@@ -11,7 +11,6 @@ export const editLotSchema = z.object({
   location: z.string().max(500, { error: 'Location must be at most 500 characters' }),
   anonLot: z.boolean(),
   status: z.enum(LotStatus, { error: 'Invalid lot status' }),
-  type: z.enum(LotType, { error: 'Invalid lot type' }),
   startPrice: z.preprocess(
     (value) => (typeof value === 'number' ? value.toString() : value),
     z.string().regex(/^\d+(\.\d{1,2})?$/, { message: 'Invalid start price format' }),

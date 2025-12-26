@@ -5,6 +5,7 @@ import { nanoid } from '../../src/lib/utils/helpers/shared/nanoid';
 import { hash } from '../../src/lib/utils/encryption/hash';
 import { PrismaPg } from '@prisma/adapter-pg';
 import combineData from './entities.json' with { type: 'json' };
+import { cwd } from 'node:process';
 
 type CombineDataImport = {
   combine_entities: any[];
@@ -107,4 +108,68 @@ async function seed() {
   await prisma.$disconnect();
 }
 
-seed();
+async function seedPrices() {
+
+  console.log('Seeding price data from CSV...');
+
+  const path = cwd() + '/prisma/seed/price_seed.csv';
+  const text = await Bun.file(path).text();
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+  const toNum = (s?: string) => {
+    if (s == null) return null;
+    const cleaned = s.trim().replace(/[^0-9.-]/g, '');
+    if (cleaned === '') return null;
+    const n = Number(cleaned);
+    return Number.isFinite(n) ? n : null;
+  };
+
+  const rows = lines.map(line => {
+    const parts = line.split(',').map(p => p.trim());
+    const uid = parts[0] ?? '';
+    const name = parts[1] ?? '';
+
+    const avg = toNum(parts[2]);
+    const min = toNum(parts[3]);
+    const max = toNum(parts[4]);
+    const last = toNum(parts[5]);
+
+    return { uid, name, avg, min, max, last };
+  });
+
+  console.log(`Seeding ${rows.length} price records...`);
+
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+  const prisma = new PrismaClient({ adapter });
+
+  for (const row of rows) {
+    try {
+      const entity = await prisma.entity.findUnique({
+        where: {
+          combineUid: row.uid
+        }
+      });
+      if (!entity) {
+        console.error(`Entity with combine_uid ${row.uid} not found. Skipping price seed.`);
+        continue;
+
+      }
+      await prisma.entityTransaction.create({
+        data: {
+          entityId: entity.id,
+          type: 'MARKETPLACE_PURCHASE',
+          value: row.last?.toString() ?? '0',
+          timestamp: new Date(),
+        }
+      });
+
+      console.log(`Seeded last price for ${row.name} (${entity.id})`)
+    } catch {
+      console.error(`Failed to seed price for entity with combine_uid ${row.uid}`);
+    }
+  }
+}
+
+seed().then(() => {
+  seedPrices();
+})

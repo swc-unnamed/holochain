@@ -113,8 +113,8 @@ export async function upsertUserAccount(authenticatedCharacter: AuthenticatedCha
           ]
         }
       },
-      karma: 50,
-      karmaLogs: {
+      ctr: 50,
+      ctrLogs: {
         create: {
           delta: 50,
           reason: 'Initial account creation with Combine authentication',

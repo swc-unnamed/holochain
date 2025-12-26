@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.0
- * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+ * Prisma Client JS version: 7.2.0
+ * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.0",
-  engine: "0c19ccc313cf9911a90d99d2ac2eb0280c76c513"
+  client: "7.2.0",
+  engine: "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3"
 }
 
 /**
@@ -388,6 +388,7 @@ export const ModelName = {
   AssetImage: 'AssetImage',
   Auction: 'Auction',
   Lot: 'Lot',
+  LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
   Entity: 'Entity',
@@ -395,7 +396,7 @@ export const ModelName = {
   SiteConfiguration: 'SiteConfiguration',
   User: 'User',
   UserPreference: 'UserPreference',
-  UserKarmaLog: 'UserKarmaLog'
+  ChainTrustRatingLog: 'ChainTrustRatingLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotItem" | "auctionConfiguration" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "userKarmaLog"
+    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "chainTrustRatingLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -708,6 +709,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LotCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LotCountAggregateOutputType> | number
+        }
+      }
+    }
+    LotHistory: {
+      payload: Prisma.$LotHistoryPayload<ExtArgs>
+      fields: Prisma.LotHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LotHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LotHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.LotHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LotHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.LotHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.LotHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.LotHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LotHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.LotHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        update: {
+          args: Prisma.LotHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.LotHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LotHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LotHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.LotHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.LotHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLotHistory>
+        }
+        groupBy: {
+          args: Prisma.LotHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LotHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LotHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LotHistoryCountAggregateOutputType> | number
         }
       }
     }
@@ -1229,77 +1304,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    UserKarmaLog: {
-      payload: Prisma.$UserKarmaLogPayload<ExtArgs>
-      fields: Prisma.UserKarmaLogFieldRefs
+    ChainTrustRatingLog: {
+      payload: Prisma.$ChainTrustRatingLogPayload<ExtArgs>
+      fields: Prisma.ChainTrustRatingLogFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.UserKarmaLogFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload> | null
+          args: Prisma.ChainTrustRatingLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.UserKarmaLogFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         findFirst: {
-          args: Prisma.UserKarmaLogFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload> | null
+          args: Prisma.ChainTrustRatingLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.UserKarmaLogFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         findMany: {
-          args: Prisma.UserKarmaLogFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>[]
+          args: Prisma.ChainTrustRatingLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
         }
         create: {
-          args: Prisma.UserKarmaLogCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         createMany: {
-          args: Prisma.UserKarmaLogCreateManyArgs<ExtArgs>
+          args: Prisma.ChainTrustRatingLogCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.UserKarmaLogCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>[]
+          args: Prisma.ChainTrustRatingLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
         }
         delete: {
-          args: Prisma.UserKarmaLogDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         update: {
-          args: Prisma.UserKarmaLogUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         deleteMany: {
-          args: Prisma.UserKarmaLogDeleteManyArgs<ExtArgs>
+          args: Prisma.ChainTrustRatingLogDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.UserKarmaLogUpdateManyArgs<ExtArgs>
+          args: Prisma.ChainTrustRatingLogUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.UserKarmaLogUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>[]
+          args: Prisma.ChainTrustRatingLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
         }
         upsert: {
-          args: Prisma.UserKarmaLogUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserKarmaLogPayload>
+          args: Prisma.ChainTrustRatingLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
         }
         aggregate: {
-          args: Prisma.UserKarmaLogAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUserKarmaLog>
+          args: Prisma.ChainTrustRatingLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChainTrustRatingLog>
         }
         groupBy: {
-          args: Prisma.UserKarmaLogGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserKarmaLogGroupByOutputType>[]
+          args: Prisma.ChainTrustRatingLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogGroupByOutputType>[]
         }
         count: {
-          args: Prisma.UserKarmaLogCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserKarmaLogCountAggregateOutputType> | number
+          args: Prisma.ChainTrustRatingLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogCountAggregateOutputType> | number
         }
       }
     }
@@ -1368,13 +1443,10 @@ export const AuctionScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  organizationId: 'organizationId',
-  type: 'type',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  start: 'start',
-  end: 'end'
+  start: 'start'
 } as const
 
 export type AuctionScalarFieldEnum = (typeof AuctionScalarFieldEnum)[keyof typeof AuctionScalarFieldEnum]
@@ -1384,22 +1456,31 @@ export const LotScalarFieldEnum = {
   id: 'id',
   lotNumber: 'lotNumber',
   auctionId: 'auctionId',
-  type: 'type',
   title: 'title',
   details: 'details',
   location: 'location',
   status: 'status',
   createdById: 'createdById',
   purchasedById: 'purchasedById',
-  organizationId: 'organizationId',
   startPrice: 'startPrice',
   purchasePrice: 'purchasePrice',
   anonLot: 'anonLot',
+  creditsTo: 'creditsTo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type LotScalarFieldEnum = (typeof LotScalarFieldEnum)[keyof typeof LotScalarFieldEnum]
+
+
+export const LotHistoryScalarFieldEnum = {
+  id: 'id',
+  lotId: 'lotId',
+  event: 'event',
+  createdAt: 'createdAt'
+} as const
+
+export type LotHistoryScalarFieldEnum = (typeof LotHistoryScalarFieldEnum)[keyof typeof LotHistoryScalarFieldEnum]
 
 
 export const LotItemScalarFieldEnum = {
@@ -1409,6 +1490,7 @@ export const LotItemScalarFieldEnum = {
   quantity: 'quantity',
   batch: 'batch',
   custom: 'custom',
+  customImageUrl: 'customImageUrl',
   uuu: 'uuu',
   entityId: 'entityId',
   assetId: 'assetId',
@@ -1434,6 +1516,7 @@ export const EntityScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  enabled: 'enabled',
   combineUid: 'combineUid',
   combineHref: 'combineHref',
   combineData: 'combineData',
@@ -1471,7 +1554,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   displayName: 'displayName',
   anonid: 'anonid',
-  karma: 'karma',
+  ctr: 'ctr',
   combineId: 'combineId',
   combineScopes: 'combineScopes',
   passwordHash: 'passwordHash',
@@ -1483,6 +1566,7 @@ export const UserScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   discordId: 'discordId',
   discordUsername: 'discordUsername',
+  approvedMiddle: 'approvedMiddle',
   createdAt: 'createdAt',
   lastSeenAt: 'lastSeenAt'
 } as const
@@ -1500,7 +1584,7 @@ export const UserPreferenceScalarFieldEnum = {
 export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
 
 
-export const UserKarmaLogScalarFieldEnum = {
+export const ChainTrustRatingLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   delta: 'delta',
@@ -1508,7 +1592,7 @@ export const UserKarmaLogScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type UserKarmaLogScalarFieldEnum = (typeof UserKarmaLogScalarFieldEnum)[keyof typeof UserKarmaLogScalarFieldEnum]
+export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1586,20 +1670,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'AuctionType'
- */
-export type EnumAuctionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionType'>
-    
-
-
-/**
- * Reference to a field of type 'AuctionType[]'
- */
-export type ListEnumAuctionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionType[]'>
-    
-
-
-/**
  * Reference to a field of type 'AuctionStatus'
  */
 export type EnumAuctionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionStatus'>
@@ -1624,20 +1694,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'LotType'
- */
-export type EnumLotTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LotType'>
-    
-
-
-/**
- * Reference to a field of type 'LotType[]'
- */
-export type ListEnumLotTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LotType[]'>
     
 
 
@@ -1808,7 +1864,7 @@ export type PrismaClientOptions = ({
    *  { emit: 'stdout', level: 'error' }
    * 
    * ```
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+   * Read more in our [docs](https://pris.ly/d/logging).
    */
   log?: (LogLevel | LogDefinition)[]
   /**
@@ -1836,12 +1892,29 @@ export type PrismaClientOptions = ({
    * ```
    */
   omit?: GlobalOmitConfig
+  /**
+   * SQL commenter plugins that add metadata to SQL queries as comments.
+   * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   comments: [
+   *     traceContext(),
+   *     queryInsights(),
+   *   ],
+   * })
+   * ```
+   */
+  comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
   asset?: Prisma.AssetOmit
   assetImage?: Prisma.AssetImageOmit
   auction?: Prisma.AuctionOmit
   lot?: Prisma.LotOmit
+  lotHistory?: Prisma.LotHistoryOmit
   lotItem?: Prisma.LotItemOmit
   auctionConfiguration?: Prisma.AuctionConfigurationOmit
   entity?: Prisma.EntityOmit
@@ -1849,7 +1922,7 @@ export type GlobalOmitConfig = {
   siteConfiguration?: Prisma.SiteConfigurationOmit
   user?: Prisma.UserOmit
   userPreference?: Prisma.UserPreferenceOmit
-  userKarmaLog?: Prisma.UserKarmaLogOmit
+  chainTrustRatingLog?: Prisma.ChainTrustRatingLogOmit
 }
 
 /* Types for Logging */

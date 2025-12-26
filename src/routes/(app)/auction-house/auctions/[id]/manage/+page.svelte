@@ -1,171 +1,178 @@
 <script lang="ts">
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
-	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
-	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
-	import TextareaInput from '$lib/components/custom/fields/textarea-input/textarea-input.svelte';
-	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
-	import { getAuctionManage } from '$lib/remote/auction-house/auctions/manage/get-auction-manage.remote.js';
-	import { CommandForm } from '@akcodeworks/svelte-command-form';
-	import { updateAuctionSchema } from '$lib/remote/auction-house/auctions/manage/update-auction.schema.js';
-	import { updateAuction } from '$lib/remote/auction-house/auctions/manage/update-auction.remote.js';
-	import { toast } from 'svelte-sonner';
-	import { dateToDateInputValue } from '$lib/utils/helpers/shared/date-formatter.js';
-	import { AuctionStatus } from '$lib/generated/prisma/enums.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Spinner } from '$lib/components/ui/spinner/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
-	import {
-		Radio,
-		SaveIcon,
-		Eye,
-		Package,
-		ChevronLeft,
-		ChevronRight,
-		Settings,
-		Layers,
-		MapPin,
-		CircleDot,
-		EyeOff,
-		Gavel,
-		Hash,
-		Coins,
-		User,
-		UserX,
-		Send
-	} from '@lucide/svelte';
+	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
+	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Empty from '$lib/components/custom/empty/empty.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { CircleDot, Gavel, Layers, Package, Coins, Calendar } from '@lucide/svelte';
 	import { toAbbrCurrency } from '$lib/utils/helpers/shared/currency.js';
-	import { invalidate } from '$app/navigation';
+	import Icon from '@iconify/svelte';
+	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
+	import { auctionStatusSelect } from '$lib/types/auction-house/auction-status.js';
+	import { CommandForm } from '@akcodeworks/svelte-command-form';
+	import { updateAuctionStatusSchema } from '$lib/remote/auction-house/auctions/manage/update-auction.schema.js';
+	import { updateAuctionStatus } from '$lib/remote/auction-house/auctions/manage/update-auction.remote.js';
+	import * as Alert from '$lib/components/ui/alert';
+	import { toast } from 'svelte-sonner';
+	import { Spinner } from '$lib/components/ui/spinner/index.js';
 
-	const { data } = $props();
-	let auction = $state(await getAuctionManage({ id: data.auctionId }));
+	let { data } = $props();
+	let auction = $derived(data.auction);
+
+	// Lot navigation state
 	let currentLotIndex = $state(0);
-	let showSettings = $state(false);
+	let currentLot = $derived(auction.lots[currentLotIndex]);
+	let hasPrev = $derived(currentLotIndex > 0);
+	let hasNext = $derived(currentLotIndex < auction.lots.length - 1);
 
-	const currentLot = $derived(auction.lots[currentLotIndex]);
-	const hasNext = $derived(currentLotIndex < auction.lots.length - 1);
-	const hasPrev = $derived(currentLotIndex > 0);
-
-	const statusRecords = Object.entries(AuctionStatus).map(([key, value]) => ({
-		label: key,
-		value: value
-	}));
-
-	const cmd = new CommandForm(updateAuctionSchema, {
-		command: updateAuction,
-		invalidate: 'auction:manage',
-		initial: () => ({
-			id: data.auctionId,
-			title: auction.title,
-			description: auction.description,
-			start: auction.start ? dateToDateInputValue(auction.start) : '',
-			end: auction.end ? dateToDateInputValue(auction.end) : '',
-			status: auction.status
-		}),
-		onSuccess: async () => {
-			toast.success('Auction updated successfully');
-			await invalidate('auction:manage');
-		},
-		onError: () => {
-			toast.error('Failed to update auction');
-		}
-	});
-
-	function handleBroadcast() {
-		toast.info('Broadcast feature coming soon!');
-	}
-
-	function handleBroadcastLot(lot: (typeof auction.lots)[0]) {
-		toast.info(`Broadcasting Lot #${lot.lotNumber} - ${lot.title}`, {
-			description: 'This will send the lot to Discord (coming soon!)'
-		});
+	function prevLot() {
+		if (hasPrev) currentLotIndex--;
 	}
 
 	function nextLot() {
 		if (hasNext) currentLotIndex++;
 	}
 
-	function prevLot() {
-		if (hasPrev) currentLotIndex--;
-	}
-
 	function selectLot(index: number) {
 		currentLotIndex = index;
 	}
+
+	const statusUpdateCmd = new CommandForm(updateAuctionStatusSchema, {
+		command: updateAuctionStatus,
+		initial: () => ({
+			id: auction.id,
+			status: auction.status
+		}),
+		onSuccess: () => {
+			toast.success('Status updated successfully');
+		},
+		onError: () => {
+			toast.error('Failed to update status');
+		},
+		invalidate: 'ah:auction:manage'
+	});
 </script>
 
-<PageWrapper title="Auction Control" crumbOverrides={[[auction.id, auction.title]]}>
-	<!-- Control Bar - Always visible at top -->
-	<div
-		class="sticky top-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-background/95 px-4 py-3 backdrop-blur-sm"
-	>
-		<div class="flex items-center gap-3">
-			<Badge
-				variant={auction.status === 'ACTIVE' ? 'default' : 'secondary'}
-				class="px-3 py-1 text-sm"
-			>
-				<CircleDot class="mr-1 size-3" />
-				{auction.status}
-			</Badge>
-			<span class="flex items-center gap-1 text-sm text-muted-foreground">
-				<Gavel class="size-3" />
-				{auction.lots.length} lots · {currentLotIndex + 1} of {auction.lots.length}
-			</span>
-		</div>
-		<div class="flex items-center gap-2">
-			<Button variant="outline" size="sm" onclick={() => (showSettings = !showSettings)}>
-				{#if showSettings}
-					<EyeOff class="size-4" />
-					<span class="hidden sm:inline">Hide Settings</span>
-				{:else}
-					<Settings class="size-4" />
-					<span class="hidden sm:inline">Show Settings</span>
+<PageWrapper title="Auction Details" crumbOverrides={[[auction.id, auction.title]]}>
+	{#if statusUpdateCmd.form.status === 'CANCELLED' && auction.status !== 'CANCELLED'}
+		<Alert.Root>
+			<Alert.Description class="text-destructive">
+				Changing the Auction Status to "CANCELLED" will move all lots back to Submitted status and
+				notify all participants. This action cannot be undone.
+			</Alert.Description>
+		</Alert.Root>
+	{/if}
+
+	<!-- Auction Header Card -->
+	<div class="rounded-xl border border-border/60 bg-card p-6">
+		<div class="flex flex-wrap items-start justify-between gap-4">
+			<div class="space-y-2">
+				<div class="flex items-center gap-3">
+					<h1 class="text-2xl font-bold">{auction.title}</h1>
+					<Badge
+						variant={auction.status === 'ACTIVE' ? 'default' : 'secondary'}
+						class="px-3 py-1 text-sm"
+					>
+						<CircleDot class="mr-1 size-3" />
+						{auction.status}
+					</Badge>
+				</div>
+				{#if auction.description}
+					<p class="max-w-2xl text-muted-foreground">{auction.description}</p>
 				{/if}
-			</Button>
-			<Button onclick={handleBroadcast} variant="default" size="sm">
-				<Radio class="size-4" />
-				<span>Broadcast</span>
-			</Button>
+			</div>
+			<div class="flex items-end gap-2">
+				<div class="min-w-48">
+					<SelectInput
+						label="Status"
+						records={auctionStatusSelect}
+						labelKey="label"
+						valueKey="value"
+						type="single"
+						disabled={auction.status === 'COMPLETED' || auction.status === 'CANCELLED'}
+						bind:value={statusUpdateCmd.form.status}
+						issues={statusUpdateCmd.errors.status?.message}
+					/>
+				</div>
+				<Button
+					variant="secondary"
+					onclick={statusUpdateCmd.submit}
+					disabled={statusUpdateCmd.submitting}
+				>
+					{#if statusUpdateCmd.submitting}
+						<Spinner />
+					{:else}
+						<Icon icon="mdi:content-save" />
+					{/if}
+					Update Status
+				</Button>
+			</div>
+		</div>
+
+		<!-- Auction Stats -->
+		<div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Calendar class="size-3" />
+					Starts
+				</p>
+				<p class="mt-1 text-lg font-semibold">
+					{auction.start ? standardDateFormat(auction.start) : 'Not scheduled'}
+				</p>
+			</div>
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Gavel class="size-3" />
+					Total Lots
+				</p>
+				<p class="mt-1 text-lg font-semibold">{auction.lots.length}</p>
+			</div>
+			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
+				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
+					<Package class="size-3" />
+					Total Items
+				</p>
+				<p class="mt-1 text-lg font-semibold">
+					{auction.lots.reduce((sum, lot) => sum + (lot.items?.length ?? 0), 0)}
+				</p>
+			</div>
 		</div>
 	</div>
 
 	{#if auction.lots.length === 0}
 		<Empty description="No lots assigned to this auction yet." />
 	{:else}
-		<!-- Main Layout: Current Lot + Queue -->
+		<!-- Lots Browser -->
 		<div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
 			<!-- Current Lot Spotlight (3 cols) -->
 			<div class="space-y-4 lg:col-span-3">
 				<!-- Lot Navigation -->
 				<div class="flex items-center justify-between">
 					<Button variant="outline" size="sm" onclick={prevLot} disabled={!hasPrev}>
-						<ChevronLeft class="size-4" />
+						<Icon icon="mdi:chevron-left" class="size-4" />
 						<span>Previous</span>
 					</Button>
 					<div class="text-center">
 						<p class="flex items-center justify-center gap-1 text-2xl font-bold">
-							<Hash class="size-5" />
 							Lot {currentLot.lotNumber}
 						</p>
 						<p class="text-sm text-muted-foreground">{currentLot.title}</p>
 					</div>
 					<Button variant="outline" size="sm" onclick={nextLot} disabled={!hasNext}>
 						<span>Next</span>
-						<ChevronRight class="size-4" />
+						<Icon icon="mdi:chevron-right" class="size-4" />
 					</Button>
 				</div>
 
 				<!-- Current Lot Details Card -->
 				<div class="rounded-xl border-2 border-primary/50 bg-card p-6">
-					<!-- Lot Header with Broadcast Button -->
-					<div
-						class="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4"
-					>
-						<div class="flex flex-wrap items-center gap-2">
+					<!-- Lot Header -->
+					<div class="mb-4 flex items-center justify-between border-b border-border/60 pb-4">
+						<div class=" flex flex-wrap items-center gap-2">
 							<Badge variant="outline" class="text-sm">{currentLot.status}</Badge>
 							{#if currentLot.anonLot}
 								<Badge variant="secondary" class="text-sm">
-									<UserX class="mr-1 size-3" />
+									<Icon icon="mdi:user-card-details-outline" class="size-4" />
 									Anonymous
 								</Badge>
 							{/if}
@@ -173,29 +180,31 @@
 							{#if currentLot.createdBy}
 								<Badge variant="outline" class="text-sm">
 									{#if currentLot.anonLot}
-										<UserX class="mr-1 size-3" />
+										<Icon icon="mdi:user-card-details-outline" class="size-4" />
 										{currentLot.createdBy.anonid}
 									{:else}
-										<User class="mr-1 size-3" />
+										<Icon icon="mdi:user" class="size-4" />
 										{currentLot.createdBy.displayName}
 									{/if}
 								</Badge>
 							{/if}
 						</div>
-						<Button onclick={() => handleBroadcastLot(currentLot)} variant="default" size="sm">
-							<Send class="size-4" />
-							<span>Broadcast Lot</span>
-						</Button>
+
+						<div class="flex items-center gap-2">
+							<Button size="sm" variant="outline" href={`/auction-house/lots/${currentLot.id}`}
+								>View Lot</Button
+							>
+						</div>
 					</div>
 
 					<div class="mb-4 flex flex-wrap items-start justify-between gap-4">
 						<div>
-							<p class="text-muted-foreground">
+							<p class="whitespace-pre-wrap">
 								{currentLot.details || 'No details provided'}
 							</p>
 							{#if currentLot.location}
-								<p class="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
-									<MapPin class="size-3" />
+								<p class="mt-1 flex items-center gap-1 text-sm whitespace-pre-wrap">
+									<span>MAP_ICON</span>
 									{currentLot.location}
 								</p>
 							{/if}
@@ -265,21 +274,13 @@
 						{/if}
 					</div>
 				</div>
-
-				<!-- Quick Actions for Current Lot -->
-				<div class="flex flex-wrap gap-2">
-					<Button variant="outline" size="sm" href="/auction-house/lots/{currentLot.id}/edit">
-						<Eye class="size-4" />
-						<span>Edit Lot</span>
-					</Button>
-				</div>
 			</div>
 
 			<!-- Lot Queue Sidebar (1 col) -->
 			<div class="lg:col-span-1">
 				<div class="sticky top-20 space-y-3">
 					<div class="flex items-center justify-between">
-						<h3 class="font-semibold">Lot Queue</h3>
+						<h3 class="font-semibold">All Lots</h3>
 						<span class="text-xs text-muted-foreground">{auction.lots.length} total</span>
 					</div>
 
@@ -299,7 +300,7 @@
 											? 'bg-primary text-primary-foreground'
 											: ''}"
 									>
-										{lot.lotNumber}
+										<Icon icon="mdi:webpack" class="size-6" />
 									</div>
 									<div class="min-w-0 flex-1">
 										<p class="truncate text-sm font-medium">{lot.title}</p>
@@ -335,68 +336,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	{/if}
-
-	<!-- Settings Panel (collapsible) -->
-	{#if showSettings}
-		<div class="mt-6 border-t border-border/60 pt-6">
-			<CardWrapper title="Auction Settings" description="Update auction details">
-				{#snippet header()}
-					<Button variant="outline" size="sm" onclick={cmd.submit} disabled={cmd.submitting}>
-						{#if cmd.submitting}
-							<Spinner />
-						{:else}
-							<SaveIcon class="size-4" />
-						{/if}
-						<span>Save</span>
-					</Button>
-				{/snippet}
-
-				<div class="grid gap-4 md:grid-cols-2">
-					<FieldInput
-						label="Title"
-						placeholder="Enter auction title"
-						bind:value={cmd.form.title}
-						issues={cmd.errors.title?.message}
-						required
-					/>
-
-					<SelectInput
-						label="Status"
-						type="single"
-						records={statusRecords}
-						labelKey="label"
-						valueKey="value"
-						bind:value={cmd.form.status}
-						issues={cmd.errors.status?.message}
-						required
-					/>
-
-					<div class="md:col-span-2">
-						<TextareaInput
-							label="Description"
-							placeholder="Enter auction description"
-							bind:value={cmd.form.description}
-							issues={cmd.errors.description?.message}
-						/>
-					</div>
-
-					<FieldInput
-						label="Start Date"
-						type="datetime-local"
-						bind:value={cmd.form.start}
-						issues={cmd.errors.start?.message}
-					/>
-
-					<FieldInput
-						label="End Date"
-						type="datetime-local"
-						bind:value={cmd.form.end}
-						issues={cmd.errors.end?.message}
-					/>
-				</div>
-			</CardWrapper>
 		</div>
 	{/if}
 </PageWrapper>

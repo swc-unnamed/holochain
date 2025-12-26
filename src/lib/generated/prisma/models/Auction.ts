@@ -28,39 +28,30 @@ export type AuctionMinAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
-  organizationId: string | null
-  type: $Enums.AuctionType | null
   status: $Enums.AuctionStatus | null
   createdAt: Date | null
   updatedAt: Date | null
   start: Date | null
-  end: Date | null
 }
 
 export type AuctionMaxAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
-  organizationId: string | null
-  type: $Enums.AuctionType | null
   status: $Enums.AuctionStatus | null
   createdAt: Date | null
   updatedAt: Date | null
   start: Date | null
-  end: Date | null
 }
 
 export type AuctionCountAggregateOutputType = {
   id: number
   title: number
   description: number
-  organizationId: number
-  type: number
   status: number
   createdAt: number
   updatedAt: number
   start: number
-  end: number
   _all: number
 }
 
@@ -69,39 +60,30 @@ export type AuctionMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  organizationId?: true
-  type?: true
   status?: true
   createdAt?: true
   updatedAt?: true
   start?: true
-  end?: true
 }
 
 export type AuctionMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  organizationId?: true
-  type?: true
   status?: true
   createdAt?: true
   updatedAt?: true
   start?: true
-  end?: true
 }
 
 export type AuctionCountAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  organizationId?: true
-  type?: true
   status?: true
   createdAt?: true
   updatedAt?: true
   start?: true
-  end?: true
   _all?: true
 }
 
@@ -181,13 +163,10 @@ export type AuctionGroupByOutputType = {
   id: string
   title: string
   description: string | null
-  organizationId: string | null
-  type: $Enums.AuctionType
   status: $Enums.AuctionStatus
   createdAt: Date
   updatedAt: Date
   start: Date | null
-  end: Date | null
   _count: AuctionCountAggregateOutputType | null
   _min: AuctionMinAggregateOutputType | null
   _max: AuctionMaxAggregateOutputType | null
@@ -215,13 +194,10 @@ export type AuctionWhereInput = {
   id?: Prisma.StringFilter<"Auction"> | string
   title?: Prisma.StringFilter<"Auction"> | string
   description?: Prisma.StringNullableFilter<"Auction"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"Auction"> | string | null
-  type?: Prisma.EnumAuctionTypeFilter<"Auction"> | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFilter<"Auction"> | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
-  end?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
   lots?: Prisma.LotListRelationFilter
 }
 
@@ -229,13 +205,10 @@ export type AuctionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrderInput | Prisma.SortOrder
-  end?: Prisma.SortOrderInput | Prisma.SortOrder
   lots?: Prisma.LotOrderByRelationAggregateInput
 }
 
@@ -246,13 +219,10 @@ export type AuctionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AuctionWhereInput | Prisma.AuctionWhereInput[]
   title?: Prisma.StringFilter<"Auction"> | string
   description?: Prisma.StringNullableFilter<"Auction"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"Auction"> | string | null
-  type?: Prisma.EnumAuctionTypeFilter<"Auction"> | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFilter<"Auction"> | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
-  end?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
   lots?: Prisma.LotListRelationFilter
 }, "id">
 
@@ -260,13 +230,10 @@ export type AuctionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrderInput | Prisma.SortOrder
-  end?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AuctionCountOrderByAggregateInput
   _max?: Prisma.AuctionMaxOrderByAggregateInput
   _min?: Prisma.AuctionMinOrderByAggregateInput
@@ -279,26 +246,20 @@ export type AuctionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Auction"> | string
   title?: Prisma.StringWithAggregatesFilter<"Auction"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Auction"> | string | null
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"Auction"> | string | null
-  type?: Prisma.EnumAuctionTypeWithAggregatesFilter<"Auction"> | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusWithAggregatesFilter<"Auction"> | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableWithAggregatesFilter<"Auction"> | Date | string | null
-  end?: Prisma.DateTimeNullableWithAggregatesFilter<"Auction"> | Date | string | null
 }
 
 export type AuctionCreateInput = {
   id?: string
   title: string
   description?: string | null
-  organizationId?: string | null
-  type?: $Enums.AuctionType
   status?: $Enums.AuctionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
-  end?: Date | string | null
   lots?: Prisma.LotCreateNestedManyWithoutAuctionInput
 }
 
@@ -306,13 +267,10 @@ export type AuctionUncheckedCreateInput = {
   id?: string
   title: string
   description?: string | null
-  organizationId?: string | null
-  type?: $Enums.AuctionType
   status?: $Enums.AuctionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
-  end?: Date | string | null
   lots?: Prisma.LotUncheckedCreateNestedManyWithoutAuctionInput
 }
 
@@ -320,13 +278,10 @@ export type AuctionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lots?: Prisma.LotUpdateManyWithoutAuctionNestedInput
 }
 
@@ -334,13 +289,10 @@ export type AuctionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lots?: Prisma.LotUncheckedUpdateManyWithoutAuctionNestedInput
 }
 
@@ -348,78 +300,60 @@ export type AuctionCreateManyInput = {
   id?: string
   title: string
   description?: string | null
-  organizationId?: string | null
-  type?: $Enums.AuctionType
   status?: $Enums.AuctionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
-  end?: Date | string | null
 }
 
 export type AuctionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
-  end?: Prisma.SortOrder
 }
 
 export type AuctionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
-  end?: Prisma.SortOrder
 }
 
 export type AuctionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
-  end?: Prisma.SortOrder
 }
 
 export type AuctionNullableScalarRelationFilter = {
@@ -429,10 +363,6 @@ export type AuctionNullableScalarRelationFilter = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
-}
-
-export type EnumAuctionTypeFieldUpdateOperationsInput = {
-  set?: $Enums.AuctionType
 }
 
 export type EnumAuctionStatusFieldUpdateOperationsInput = {
@@ -463,26 +393,20 @@ export type AuctionCreateWithoutLotsInput = {
   id?: string
   title: string
   description?: string | null
-  organizationId?: string | null
-  type?: $Enums.AuctionType
   status?: $Enums.AuctionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
-  end?: Date | string | null
 }
 
 export type AuctionUncheckedCreateWithoutLotsInput = {
   id?: string
   title: string
   description?: string | null
-  organizationId?: string | null
-  type?: $Enums.AuctionType
   status?: $Enums.AuctionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
-  end?: Date | string | null
 }
 
 export type AuctionCreateOrConnectWithoutLotsInput = {
@@ -505,26 +429,20 @@ export type AuctionUpdateWithoutLotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionUncheckedUpdateWithoutLotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumAuctionTypeFieldUpdateOperationsInput | $Enums.AuctionType
   status?: Prisma.EnumAuctionStatusFieldUpdateOperationsInput | $Enums.AuctionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  end?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -562,13 +480,10 @@ export type AuctionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   title?: boolean
   description?: boolean
-  organizationId?: boolean
-  type?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
-  end?: boolean
   lots?: boolean | Prisma.Auction$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.AuctionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["auction"]>
@@ -577,42 +492,33 @@ export type AuctionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
-  organizationId?: boolean
-  type?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
-  end?: boolean
 }, ExtArgs["result"]["auction"]>
 
 export type AuctionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   description?: boolean
-  organizationId?: boolean
-  type?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
-  end?: boolean
 }, ExtArgs["result"]["auction"]>
 
 export type AuctionSelectScalar = {
   id?: boolean
   title?: boolean
   description?: boolean
-  organizationId?: boolean
-  type?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
-  end?: boolean
 }
 
-export type AuctionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "organizationId" | "type" | "status" | "createdAt" | "updatedAt" | "start" | "end", ExtArgs["result"]["auction"]>
+export type AuctionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "updatedAt" | "start", ExtArgs["result"]["auction"]>
 export type AuctionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lots?: boolean | Prisma.Auction$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.AuctionCountOutputTypeDefaultArgs<ExtArgs>
@@ -629,13 +535,10 @@ export type $AuctionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     title: string
     description: string | null
-    organizationId: string | null
-    type: $Enums.AuctionType
     status: $Enums.AuctionStatus
     createdAt: Date
     updatedAt: Date
     start: Date | null
-    end: Date | null
   }, ExtArgs["result"]["auction"]>
   composites: {}
 }
@@ -1063,13 +966,10 @@ export interface AuctionFieldRefs {
   readonly id: Prisma.FieldRef<"Auction", 'String'>
   readonly title: Prisma.FieldRef<"Auction", 'String'>
   readonly description: Prisma.FieldRef<"Auction", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Auction", 'String'>
-  readonly type: Prisma.FieldRef<"Auction", 'AuctionType'>
   readonly status: Prisma.FieldRef<"Auction", 'AuctionStatus'>
   readonly createdAt: Prisma.FieldRef<"Auction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Auction", 'DateTime'>
   readonly start: Prisma.FieldRef<"Auction", 'DateTime'>
-  readonly end: Prisma.FieldRef<"Auction", 'DateTime'>
 }
     
 

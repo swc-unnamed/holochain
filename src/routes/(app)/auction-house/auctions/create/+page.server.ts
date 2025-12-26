@@ -9,15 +9,13 @@ export const load = async ({ locals }) => {
     // Anonymous lots - only fetch anonid and karma
     db.lot.findMany({
       where: {
-        status: 'LISTED',
-        type: 'LOT',
+        status: 'SUBMITTED',
         anonLot: true
       },
       include: {
         createdBy: {
           select: {
             anonid: true,
-            karma: true
           }
         },
         items: {
@@ -30,11 +28,11 @@ export const load = async ({ locals }) => {
         }
       }
     }),
+
     // Public lots - fetch full user data
     db.lot.findMany({
       where: {
-        status: 'LISTED',
-        type: 'LOT',
+        status: 'SUBMITTED',
         anonLot: false
       },
       include: {
@@ -43,7 +41,7 @@ export const load = async ({ locals }) => {
             id: true,
             displayName: true,
             avatarUrl: true,
-            karma: true
+            ctr: true
           }
         },
         items: {
@@ -62,7 +60,6 @@ export const load = async ({ locals }) => {
   const mappedAnonLots = anonLots.map((lot) => ({
     ...lot,
     anonid: lot.createdBy?.anonid ?? '',
-    creatorKarma: lot.createdBy?.karma ?? 0,
     createdBy: null
   }));
 

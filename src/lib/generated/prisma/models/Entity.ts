@@ -28,6 +28,7 @@ export type EntityMinAggregateOutputType = {
   id: string | null
   name: string | null
   type: string | null
+  enabled: boolean | null
   combineUid: string | null
   combineHref: string | null
   imageSmall: string | null
@@ -38,6 +39,7 @@ export type EntityMaxAggregateOutputType = {
   id: string | null
   name: string | null
   type: string | null
+  enabled: boolean | null
   combineUid: string | null
   combineHref: string | null
   imageSmall: string | null
@@ -48,6 +50,7 @@ export type EntityCountAggregateOutputType = {
   id: number
   name: number
   type: number
+  enabled: number
   combineUid: number
   combineHref: number
   combineData: number
@@ -61,6 +64,7 @@ export type EntityMinAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  enabled?: true
   combineUid?: true
   combineHref?: true
   imageSmall?: true
@@ -71,6 +75,7 @@ export type EntityMaxAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  enabled?: true
   combineUid?: true
   combineHref?: true
   imageSmall?: true
@@ -81,6 +86,7 @@ export type EntityCountAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  enabled?: true
   combineUid?: true
   combineHref?: true
   combineData?: true
@@ -165,6 +171,7 @@ export type EntityGroupByOutputType = {
   id: string
   name: string
   type: string
+  enabled: boolean
   combineUid: string
   combineHref: string
   combineData: runtime.JsonValue
@@ -197,6 +204,7 @@ export type EntityWhereInput = {
   id?: Prisma.StringFilter<"Entity"> | string
   name?: Prisma.StringFilter<"Entity"> | string
   type?: Prisma.StringFilter<"Entity"> | string
+  enabled?: Prisma.BoolFilter<"Entity"> | boolean
   combineUid?: Prisma.StringFilter<"Entity"> | string
   combineHref?: Prisma.StringFilter<"Entity"> | string
   combineData?: Prisma.JsonFilter<"Entity">
@@ -211,6 +219,7 @@ export type EntityOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  enabled?: Prisma.SortOrder
   combineUid?: Prisma.SortOrder
   combineHref?: Prisma.SortOrder
   combineData?: Prisma.SortOrder
@@ -229,6 +238,7 @@ export type EntityWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EntityWhereInput | Prisma.EntityWhereInput[]
   name?: Prisma.StringFilter<"Entity"> | string
   type?: Prisma.StringFilter<"Entity"> | string
+  enabled?: Prisma.BoolFilter<"Entity"> | boolean
   combineHref?: Prisma.StringFilter<"Entity"> | string
   combineData?: Prisma.JsonFilter<"Entity">
   imageSmall?: Prisma.StringFilter<"Entity"> | string
@@ -242,6 +252,7 @@ export type EntityOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  enabled?: Prisma.SortOrder
   combineUid?: Prisma.SortOrder
   combineHref?: Prisma.SortOrder
   combineData?: Prisma.SortOrder
@@ -259,6 +270,7 @@ export type EntityScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Entity"> | string
   name?: Prisma.StringWithAggregatesFilter<"Entity"> | string
   type?: Prisma.StringWithAggregatesFilter<"Entity"> | string
+  enabled?: Prisma.BoolWithAggregatesFilter<"Entity"> | boolean
   combineUid?: Prisma.StringWithAggregatesFilter<"Entity"> | string
   combineHref?: Prisma.StringWithAggregatesFilter<"Entity"> | string
   combineData?: Prisma.JsonWithAggregatesFilter<"Entity">
@@ -270,6 +282,7 @@ export type EntityCreateInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -284,6 +297,7 @@ export type EntityUncheckedCreateInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -298,6 +312,7 @@ export type EntityUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -312,6 +327,7 @@ export type EntityUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -326,6 +342,7 @@ export type EntityCreateManyInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -337,6 +354,7 @@ export type EntityUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -348,6 +366,7 @@ export type EntityUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -364,6 +383,7 @@ export type EntityCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  enabled?: Prisma.SortOrder
   combineUid?: Prisma.SortOrder
   combineHref?: Prisma.SortOrder
   combineData?: Prisma.SortOrder
@@ -375,6 +395,7 @@ export type EntityMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  enabled?: Prisma.SortOrder
   combineUid?: Prisma.SortOrder
   combineHref?: Prisma.SortOrder
   imageSmall?: Prisma.SortOrder
@@ -385,6 +406,7 @@ export type EntityMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  enabled?: Prisma.SortOrder
   combineUid?: Prisma.SortOrder
   combineHref?: Prisma.SortOrder
   imageSmall?: Prisma.SortOrder
@@ -437,6 +459,7 @@ export type EntityCreateWithoutAssetsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -450,6 +473,7 @@ export type EntityUncheckedCreateWithoutAssetsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -479,6 +503,7 @@ export type EntityUpdateWithoutAssetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -492,6 +517,7 @@ export type EntityUncheckedUpdateWithoutAssetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -505,6 +531,7 @@ export type EntityCreateWithoutLotItemsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -518,6 +545,7 @@ export type EntityUncheckedCreateWithoutLotItemsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -547,6 +575,7 @@ export type EntityUpdateWithoutLotItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -560,6 +589,7 @@ export type EntityUncheckedUpdateWithoutLotItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -573,6 +603,7 @@ export type EntityCreateWithoutTransactionsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -586,6 +617,7 @@ export type EntityUncheckedCreateWithoutTransactionsInput = {
   id?: string
   name: string
   type: string
+  enabled?: boolean
   combineUid: string
   combineHref: string
   combineData: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -615,6 +647,7 @@ export type EntityUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -628,6 +661,7 @@ export type EntityUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   combineUid?: Prisma.StringFieldUpdateOperationsInput | string
   combineHref?: Prisma.StringFieldUpdateOperationsInput | string
   combineData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -690,6 +724,7 @@ export type EntitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   name?: boolean
   type?: boolean
+  enabled?: boolean
   combineUid?: boolean
   combineHref?: boolean
   combineData?: boolean
@@ -705,6 +740,7 @@ export type EntitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   type?: boolean
+  enabled?: boolean
   combineUid?: boolean
   combineHref?: boolean
   combineData?: boolean
@@ -716,6 +752,7 @@ export type EntitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   type?: boolean
+  enabled?: boolean
   combineUid?: boolean
   combineHref?: boolean
   combineData?: boolean
@@ -727,6 +764,7 @@ export type EntitySelectScalar = {
   id?: boolean
   name?: boolean
   type?: boolean
+  enabled?: boolean
   combineUid?: boolean
   combineHref?: boolean
   combineData?: boolean
@@ -734,7 +772,7 @@ export type EntitySelectScalar = {
   imageLarge?: boolean
 }
 
-export type EntityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "combineUid" | "combineHref" | "combineData" | "imageSmall" | "imageLarge", ExtArgs["result"]["entity"]>
+export type EntityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "enabled" | "combineUid" | "combineHref" | "combineData" | "imageSmall" | "imageLarge", ExtArgs["result"]["entity"]>
 export type EntityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transactions?: boolean | Prisma.Entity$transactionsArgs<ExtArgs>
   lotItems?: boolean | Prisma.Entity$lotItemsArgs<ExtArgs>
@@ -755,6 +793,7 @@ export type $EntityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     name: string
     type: string
+    enabled: boolean
     combineUid: string
     combineHref: string
     combineData: runtime.JsonValue
@@ -1189,6 +1228,7 @@ export interface EntityFieldRefs {
   readonly id: Prisma.FieldRef<"Entity", 'String'>
   readonly name: Prisma.FieldRef<"Entity", 'String'>
   readonly type: Prisma.FieldRef<"Entity", 'String'>
+  readonly enabled: Prisma.FieldRef<"Entity", 'Boolean'>
   readonly combineUid: Prisma.FieldRef<"Entity", 'String'>
   readonly combineHref: Prisma.FieldRef<"Entity", 'String'>
   readonly combineData: Prisma.FieldRef<"Entity", 'Json'>

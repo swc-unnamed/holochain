@@ -1,4 +1,3 @@
-export * from './field-wrapper';
 export * from './field-input';
 export * from './file-input';
 export * from './select-input';

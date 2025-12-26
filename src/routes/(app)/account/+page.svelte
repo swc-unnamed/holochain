@@ -17,7 +17,7 @@
 	import { commandForm } from '$lib/utils/remote/command-form.svelte';
 	import { toast } from 'svelte-sonner';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
-	import * as Tabs from '$lib/components/ui/tabs/index.js';
+	import * as Tabs from '$lib/components/custom/underline-tabs/index.js';
 	import { ItemSwitch } from '$lib/components/custom/item-switch/index.js';
 	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
 	import { UserPreferences } from '$lib/types/user-preference-detail.js';
@@ -30,6 +30,7 @@
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
 	import Item from '$lib/components/custom/item/item.svelte';
 	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
+	import Empty from '$lib/components/custom/empty/empty.svelte';
 
 	let { data } = $props();
 	let account = $derived(data.account);
@@ -84,7 +85,7 @@
 					<span>
 						{account.role}
 					</span>
-					<UserKarma karma={account.karma} />
+					<UserKarma karma={account.ctr} />
 				</div>
 			</div>
 		</div>
@@ -93,7 +94,7 @@
 		<Tabs.List class="w-full">
 			<Tabs.Trigger value="details">Account Details</Tabs.Trigger>
 			<Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
-			<Tabs.Trigger value="karma_logs">Karma Logs</Tabs.Trigger>
+			<Tabs.Trigger value="karma_logs">Chain Trust Rating Changes</Tabs.Trigger>
 		</Tabs.List>
 		<Tabs.Content value="details">
 			<CardWrapper title="Account Details">
@@ -133,7 +134,11 @@
 		<Tabs.Content value="preferences">
 			<CardWrapper title="Preferences">
 				<div class="grid gap-4">
-					{#each account.preferences as pref}
+					<Empty
+						title="Coming Soon"
+						description="Account preference management is under development and will be available soon."
+					/>
+					<!-- {#each account.preferences as pref}
 						{@const prefDetails = UserPreferences[pref.key]}
 						{#if pref.key === 'GLOBAL_THEME_MODE'}
 							<SelectInput
@@ -170,16 +175,16 @@
 								}}
 							/>
 						{/if}
-					{/each}
+					{/each} -->
 				</div>
 			</CardWrapper>
 		</Tabs.Content>
 
 		<Tabs.Content value="karma_logs">
-			<CardWrapper title="Karma Logs">
+			<CardWrapper title="Chain Trust Rating Changes">
 				{#if mobile.current}
 					<div class="grid gap-3">
-						{#each account.karmaLogs as log}
+						{#each account.ctrLogs as log}
 							<Item
 								variant="outline"
 								title={`${log.delta > 0 ? '+' : ''}${log.delta} Karma`}
@@ -189,7 +194,7 @@
 						{/each}
 					</div>
 				{:else}
-					<DataTable data={account.karmaLogs} columns={karmaLogColumns} />
+					<DataTable data={account.ctrLogs} columns={karmaLogColumns} />
 				{/if}
 			</CardWrapper>
 		</Tabs.Content>

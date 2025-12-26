@@ -21,6 +21,7 @@
 		UserX
 	} from '@lucide/svelte';
 	import { toAbbrCurrency } from '$lib/utils/helpers/shared/currency.js';
+	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -70,7 +71,7 @@
 		</div>
 
 		<!-- Auction Stats -->
-		<div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+		<div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
 			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
 				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
 					<Calendar class="size-3" />
@@ -78,15 +79,6 @@
 				</p>
 				<p class="mt-1 text-lg font-semibold">
 					{auction.start ? standardDateFormat(auction.start) : 'Not scheduled'}
-				</p>
-			</div>
-			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
-				<p class="flex items-center gap-1 text-xs text-muted-foreground uppercase">
-					<Calendar class="size-3" />
-					Ends
-				</p>
-				<p class="mt-1 text-lg font-semibold">
-					{auction.end ? standardDateFormat(auction.end) : 'Not scheduled'}
 				</p>
 			</div>
 			<div class="rounded-lg border border-border/60 bg-muted/20 p-4">
@@ -118,55 +110,62 @@
 				<!-- Lot Navigation -->
 				<div class="flex items-center justify-between">
 					<Button variant="outline" size="sm" onclick={prevLot} disabled={!hasPrev}>
-						<ChevronLeft class="size-4" />
+						<Icon icon="mdi:chevron-left" class="size-4" />
 						<span>Previous</span>
 					</Button>
 					<div class="text-center">
 						<p class="flex items-center justify-center gap-1 text-2xl font-bold">
-							<Hash class="size-5" />
 							Lot {currentLot.lotNumber}
 						</p>
 						<p class="text-sm text-muted-foreground">{currentLot.title}</p>
 					</div>
 					<Button variant="outline" size="sm" onclick={nextLot} disabled={!hasNext}>
 						<span>Next</span>
-						<ChevronRight class="size-4" />
+						<Icon icon="mdi:chevron-right" class="size-4" />
 					</Button>
 				</div>
 
 				<!-- Current Lot Details Card -->
 				<div class="rounded-xl border-2 border-primary/50 bg-card p-6">
 					<!-- Lot Header -->
-					<div class="mb-4 flex flex-wrap items-center gap-2 border-b border-border/60 pb-4">
-						<Badge variant="outline" class="text-sm">{currentLot.status}</Badge>
-						{#if currentLot.anonLot}
-							<Badge variant="secondary" class="text-sm">
-								<UserX class="mr-1 size-3" />
-								Anonymous
-							</Badge>
-						{/if}
-						<!-- Seller Info -->
-						{#if currentLot.createdBy}
-							<Badge variant="outline" class="text-sm">
-								{#if currentLot.anonLot}
-									<UserX class="mr-1 size-3" />
-									{currentLot.createdBy.anonid}
-								{:else}
-									<User class="mr-1 size-3" />
-									{currentLot.createdBy.displayName}
-								{/if}
-							</Badge>
-						{/if}
+					<div class="mb-4 flex items-center justify-between border-b border-border/60 pb-4">
+						<div class=" flex flex-wrap items-center gap-2">
+							<Badge variant="outline" class="text-sm">{currentLot.status}</Badge>
+							{#if currentLot.anonLot}
+								<Badge variant="secondary" class="text-sm">
+									<Icon icon="mdi:user-card-details-outline" class="size-4" />
+									Anonymous
+								</Badge>
+							{/if}
+							<!-- Seller Info -->
+							{#if currentLot.createdBy}
+								<Badge variant="outline" class="text-sm">
+									{#if currentLot.anonLot}
+										<Icon icon="mdi:user-card-details-outline" class="size-4" />
+										{currentLot.createdBy.anonid}
+									{:else}
+										<Icon icon="mdi:user" class="size-4" />
+										{currentLot.createdBy.displayName}
+									{/if}
+								</Badge>
+							{/if}
+						</div>
+
+						<div class="flex items-center gap-2">
+							<Button size="sm" variant="outline" href={`/auction-house/lots/${currentLot.id}`}
+								>View Lot</Button
+							>
+						</div>
 					</div>
 
 					<div class="mb-4 flex flex-wrap items-start justify-between gap-4">
 						<div>
-							<p class="text-muted-foreground">
+							<p class="whitespace-pre-wrap">
 								{currentLot.details || 'No details provided'}
 							</p>
 							{#if currentLot.location}
-								<p class="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
-									<MapPin class="size-3" />
+								<p class="mt-1 flex items-center gap-1 text-sm whitespace-pre-wrap">
+									<span>MAP_ICON</span>
 									{currentLot.location}
 								</p>
 							{/if}
@@ -262,7 +261,7 @@
 											? 'bg-primary text-primary-foreground'
 											: ''}"
 									>
-										{lot.lotNumber}
+										<Icon icon="mdi:webpack" class="size-6" />
 									</div>
 									<div class="min-w-0 flex-1">
 										<p class="truncate text-sm font-medium">{lot.title}</p>

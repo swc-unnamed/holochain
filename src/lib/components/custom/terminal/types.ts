@@ -5,6 +5,7 @@ export type TerminalRootProps = WithChildren<{
   class?: string;
   delay?: number;
   speed?: number;
+  title?: string;
   onComplete?: () => void;
 }>;
 

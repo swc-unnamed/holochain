@@ -87,13 +87,6 @@ export type StringNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringNullableFilter<$PrismaModel> | string | null
 }
 
-export type EnumAuctionTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuctionType | Prisma.EnumAuctionTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel> | $Enums.AuctionType
-}
-
 export type EnumAuctionStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AuctionStatus | Prisma.EnumAuctionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AuctionStatus[] | Prisma.ListEnumAuctionStatusFieldRefInput<$PrismaModel>
@@ -135,16 +128,6 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
-export type EnumAuctionTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuctionType | Prisma.EnumAuctionTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuctionTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuctionType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel>
-}
-
 export type EnumAuctionStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.AuctionStatus | Prisma.EnumAuctionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AuctionStatus[] | Prisma.ListEnumAuctionStatusFieldRefInput<$PrismaModel>
@@ -180,13 +163,6 @@ export type IntFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntFilter<$PrismaModel> | number
 }
 
-export type EnumLotTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LotType | Prisma.EnumLotTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLotTypeFilter<$PrismaModel> | $Enums.LotType
-}
-
 export type EnumLotStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
@@ -213,16 +189,6 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedIntFilter<$PrismaModel>
   _max?: Prisma.NestedIntFilter<$PrismaModel>
-}
-
-export type EnumLotTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LotType | Prisma.EnumLotTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLotTypeWithAggregatesFilter<$PrismaModel> | $Enums.LotType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLotTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLotTypeFilter<$PrismaModel>
 }
 
 export type EnumLotStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -460,13 +426,6 @@ export type NestedStringNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedStringNullableFilter<$PrismaModel> | string | null
 }
 
-export type NestedEnumAuctionTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuctionType | Prisma.EnumAuctionTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel> | $Enums.AuctionType
-}
-
 export type NestedEnumAuctionStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AuctionStatus | Prisma.EnumAuctionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AuctionStatus[] | Prisma.ListEnumAuctionStatusFieldRefInput<$PrismaModel>
@@ -513,16 +472,6 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
-export type NestedEnumAuctionTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.AuctionType | Prisma.EnumAuctionTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.AuctionType[] | Prisma.ListEnumAuctionTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumAuctionTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuctionType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumAuctionTypeFilter<$PrismaModel>
-}
-
 export type NestedEnumAuctionStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.AuctionStatus | Prisma.EnumAuctionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AuctionStatus[] | Prisma.ListEnumAuctionStatusFieldRefInput<$PrismaModel>
@@ -545,13 +494,6 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
-}
-
-export type NestedEnumLotTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LotType | Prisma.EnumLotTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLotTypeFilter<$PrismaModel> | $Enums.LotType
 }
 
 export type NestedEnumLotStatusFilter<$PrismaModel = never> = {
@@ -591,16 +533,6 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
-}
-
-export type NestedEnumLotTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LotType | Prisma.EnumLotTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LotType[] | Prisma.ListEnumLotTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLotTypeWithAggregatesFilter<$PrismaModel> | $Enums.LotType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLotTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLotTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumLotStatusWithAggregatesFilter<$PrismaModel = never> = {

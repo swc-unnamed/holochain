@@ -15,9 +15,9 @@
 	let { image = $bindable(), fallback = '?', class: className }: Props = $props();
 </script>
 
-<Avatar.Root class={cn('size-12 rounded-xl', className)}>
+<Avatar.Root class={cn('size-12 rounded-md', className)}>
 	{#if typeof image === 'string'}
-		<Avatar.Image class="rounded-xl" src={image} alt="Avatar" />
+		<Avatar.Image class="rounded-md" src={image} alt="Avatar" />
 	{:else}
 		{@render image?.()}
 	{/if}

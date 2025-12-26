@@ -2,6 +2,7 @@ model Entity {
   id           String              @id @default(cuid())
   name         String
   type         String
+  enabled      Boolean             @default(true)
   combineUid   String              @unique @map("combine_uid")
   combineHref  String              @map("combine_href")
   combineData  Json                @map("combine_data") @db.JsonB

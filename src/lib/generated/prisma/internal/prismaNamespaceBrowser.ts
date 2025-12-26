@@ -55,6 +55,7 @@ export const ModelName = {
   AssetImage: 'AssetImage',
   Auction: 'Auction',
   Lot: 'Lot',
+  LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
   Entity: 'Entity',
@@ -62,7 +63,7 @@ export const ModelName = {
   SiteConfiguration: 'SiteConfiguration',
   User: 'User',
   UserPreference: 'UserPreference',
-  UserKarmaLog: 'UserKarmaLog'
+  ChainTrustRatingLog: 'ChainTrustRatingLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -107,13 +108,10 @@ export const AuctionScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  organizationId: 'organizationId',
-  type: 'type',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  start: 'start',
-  end: 'end'
+  start: 'start'
 } as const
 
 export type AuctionScalarFieldEnum = (typeof AuctionScalarFieldEnum)[keyof typeof AuctionScalarFieldEnum]
@@ -123,22 +121,31 @@ export const LotScalarFieldEnum = {
   id: 'id',
   lotNumber: 'lotNumber',
   auctionId: 'auctionId',
-  type: 'type',
   title: 'title',
   details: 'details',
   location: 'location',
   status: 'status',
   createdById: 'createdById',
   purchasedById: 'purchasedById',
-  organizationId: 'organizationId',
   startPrice: 'startPrice',
   purchasePrice: 'purchasePrice',
   anonLot: 'anonLot',
+  creditsTo: 'creditsTo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type LotScalarFieldEnum = (typeof LotScalarFieldEnum)[keyof typeof LotScalarFieldEnum]
+
+
+export const LotHistoryScalarFieldEnum = {
+  id: 'id',
+  lotId: 'lotId',
+  event: 'event',
+  createdAt: 'createdAt'
+} as const
+
+export type LotHistoryScalarFieldEnum = (typeof LotHistoryScalarFieldEnum)[keyof typeof LotHistoryScalarFieldEnum]
 
 
 export const LotItemScalarFieldEnum = {
@@ -148,6 +155,7 @@ export const LotItemScalarFieldEnum = {
   quantity: 'quantity',
   batch: 'batch',
   custom: 'custom',
+  customImageUrl: 'customImageUrl',
   uuu: 'uuu',
   entityId: 'entityId',
   assetId: 'assetId',
@@ -173,6 +181,7 @@ export const EntityScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  enabled: 'enabled',
   combineUid: 'combineUid',
   combineHref: 'combineHref',
   combineData: 'combineData',
@@ -210,7 +219,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   displayName: 'displayName',
   anonid: 'anonid',
-  karma: 'karma',
+  ctr: 'ctr',
   combineId: 'combineId',
   combineScopes: 'combineScopes',
   passwordHash: 'passwordHash',
@@ -222,6 +231,7 @@ export const UserScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   discordId: 'discordId',
   discordUsername: 'discordUsername',
+  approvedMiddle: 'approvedMiddle',
   createdAt: 'createdAt',
   lastSeenAt: 'lastSeenAt'
 } as const
@@ -239,7 +249,7 @@ export const UserPreferenceScalarFieldEnum = {
 export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
 
 
-export const UserKarmaLogScalarFieldEnum = {
+export const ChainTrustRatingLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   delta: 'delta',
@@ -247,7 +257,7 @@ export const UserKarmaLogScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type UserKarmaLogScalarFieldEnum = (typeof UserKarmaLogScalarFieldEnum)[keyof typeof UserKarmaLogScalarFieldEnum]
+export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const SortOrder = {

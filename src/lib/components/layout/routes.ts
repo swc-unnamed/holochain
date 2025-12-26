@@ -1,16 +1,16 @@
 import type { NavigationRoute } from "$lib/types/general/navigation-route.type";
 
 export const NAVIGATION_ROUTES: NavigationRoute[] = [
-  {
-    title: "Main Sector",
-    icon: "",
-    items: [
-      {
-        title: "Home",
-        url: "/home"
-      }
-    ]
-  },
+  // {
+  //   title: "Main Sector",
+  //   icon: "",
+  //   items: [
+  //     {
+  //       title: "Home",
+  //       url: "/home"
+  //     }
+  //   ]
+  // },
   {
     title: "Auction House",
     icon: "lucide:gavel",
@@ -20,17 +20,18 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         url: "/auction-house/auctions"
       },
       {
+        title: "Lot Profile",
+        url: "/auction-house/lots"
+      },
+      {
         title: "Create Auction",
         url: "/auction-house/auctions/create",
         role: ['AUCTIONEER']
       },
       {
-        title: "Open Lots",
-        url: "/auction-house/lots"
-      },
-      {
-        title: "My Lots",
-        url: "/auction-house/lots/me"
+        title: "Pending Lots",
+        url: "/auction-house/lots/pending",
+        role: ['AUCTIONEER']
       },
       {
         title: "Configuration",
@@ -120,33 +121,33 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
   }
 ]
 
-export const getOrganizationNavigationRoutes = ({ name, slug }: { name: string; slug: string }): NavigationRoute[] => {
-  return [
-    {
-      title: name,
-      icon: "",
-      items: [
-        {
-          title: "Overview",
-          url: `/o/${slug}/organization/overview`
-        },
-        {
-          title: "Members",
-          url: `/o/${slug}/organization/members`
-        },
-        {
-          title: "Assets",
-          url: `/o/${slug}/organization/assets`
-        },
-        {
-          title: "Invitations",
-          url: `/o/${slug}/organization/invitations`
-        },
-        {
-          title: "Settings",
-          url: `/o/${slug}/organization/settings`
-        }
-      ]
-    }
-  ]
-}
+// export const getOrganizationNavigationRoutes = ({ name, slug }: { name: string; slug: string }): NavigationRoute[] => {
+//   return [
+//     {
+//       title: name,
+//       icon: "",
+//       items: [
+//         {
+//           title: "Overview",
+//           url: `/o/${slug}/organization/overview`
+//         },
+//         {
+//           title: "Members",
+//           url: `/o/${slug}/organization/members`
+//         },
+//         {
+//           title: "Assets",
+//           url: `/o/${slug}/organization/assets`
+//         },
+//         {
+//           title: "Invitations",
+//           url: `/o/${slug}/organization/invitations`
+//         },
+//         {
+//           title: "Settings",
+//           url: `/o/${slug}/organization/settings`
+//         }
+//       ]
+//     }
+//   ]
+// }

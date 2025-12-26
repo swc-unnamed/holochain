@@ -38,6 +38,11 @@ export type Auction = Prisma.AuctionModel
  */
 export type Lot = Prisma.LotModel
 /**
+ * Model LotHistory
+ * 
+ */
+export type LotHistory = Prisma.LotHistoryModel
+/**
  * Model LotItem
  * 
  */
@@ -73,7 +78,7 @@ export type User = Prisma.UserModel
  */
 export type UserPreference = Prisma.UserPreferenceModel
 /**
- * Model UserKarmaLog
+ * Model ChainTrustRatingLog
  * 
  */
-export type UserKarmaLog = Prisma.UserKarmaLogModel
+export type ChainTrustRatingLog = Prisma.ChainTrustRatingLogModel
