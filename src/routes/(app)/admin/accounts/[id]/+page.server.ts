@@ -10,7 +10,7 @@ export const load = async ({ locals, params, depends }) => {
       id: params.id
     },
     include: {
-      karmaLogs: true,
+      ctrLogs: true,
       preferences: true
     },
     omit: {

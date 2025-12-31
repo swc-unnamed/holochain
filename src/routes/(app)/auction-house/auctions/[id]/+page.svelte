@@ -22,6 +22,7 @@
 	} from '@lucide/svelte';
 	import { toAbbrCurrency } from '$lib/utils/helpers/shared/currency.js';
 	import Icon from '@iconify/svelte';
+	import { able } from '$lib/utils/auth/able.svelte.js';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -64,10 +65,12 @@
 					<p class="max-w-2xl text-muted-foreground">{auction.description}</p>
 				{/if}
 			</div>
-			<Button size="sm" variant="outline" href={`/auction-house/auctions/${auction.id}/manage`}>
-				<Pencil class="size-4" />
-				<span>Manage</span>
-			</Button>
+			{#if able('AUCTIONEER')}
+				<Button size="sm" variant="outline" href={`/auction-house/auctions/${auction.id}/manage`}>
+					<Pencil class="size-4" />
+					<span>Manage</span>
+				</Button>
+			{/if}
 		</div>
 
 		<!-- Auction Stats -->

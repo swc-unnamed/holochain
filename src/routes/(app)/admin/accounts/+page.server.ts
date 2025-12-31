@@ -9,7 +9,7 @@ export const load = async ({ locals }) => {
       id: true,
       name: true,
       displayName: true,
-      karma: true,
+      ctr: true,
       avatarUrl: true,
       role: true,
       anonid: true,

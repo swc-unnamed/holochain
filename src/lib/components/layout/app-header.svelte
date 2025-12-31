@@ -6,6 +6,8 @@
 	import { type Snippet } from 'svelte';
 	import Button from '../ui/button/button.svelte';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
+	import Badge from '../ui/badge/badge.svelte';
+	import Icon from '@iconify/svelte';
 
 	interface SiteHeaderProps {
 		crumbPageTitle?: string;
@@ -50,38 +52,21 @@
 </script>
 
 <header
-	class=" flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)"
+	class="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear"
 >
 	<div class="flex w-full items-center gap-1 px-4 lg:gap-2">
 		<Sidebar.Trigger class="-ml-1" />
 		<Separator orientation="vertical" class="mx-2 data-[orientation=vertical]:h-4" />
-		<!-- {#if !mobile.current}
-			<Breadcrumb.Root>
-				<Breadcrumb.List>
-					{#each prevSegments as seg, i}
-						<Breadcrumb.Item>
-							<Breadcrumb.Link href={crumbTrail(i)}>{labelFor(seg)}</Breadcrumb.Link>
-						</Breadcrumb.Item>
-						<Breadcrumb.Separator />
-					{/each}
-
-					<Breadcrumb.Item>
-						<Breadcrumb.Page class="font-bold">
-							{typeof currentLabel === 'string' ? currentLabel.toUpperCase() : currentLabel}
-						</Breadcrumb.Page>
-					</Breadcrumb.Item>
-				</Breadcrumb.List>
-			</Breadcrumb.Root>
-		{/if} -->
 
 		{#if mobile.current}
 			<div class="flex w-full items-center justify-start gap-2">
 				<img src="/images/uim-18.png" class="size-6" alt="logo" />
-				<span class="font-bold"> Unnamed Holochain </span>
+				<span class="font-bold">Unnamed Holochain</span>
 			</div>
 		{/if}
 
 		<div class="ml-auto flex items-center gap-2">
+			<Badge variant="destructive">ALPHA 2</Badge>
 			{@render header?.()}
 		</div>
 	</div>

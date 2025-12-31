@@ -8,6 +8,5 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: ['host.docker.internal'],
-    hmr: false
   }
 });

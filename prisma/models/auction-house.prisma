@@ -6,6 +6,7 @@ model Auction {
   createdAt   DateTime      @default(now()) @map("created_at")
   updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
   start       DateTime?     @map("start_date")
+  completedAt DateTime?     @map("completed_at")
   lots        Lot[]
 
   @@map("auctions")

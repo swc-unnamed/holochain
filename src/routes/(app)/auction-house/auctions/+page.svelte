@@ -12,7 +12,6 @@
 
 	let { data } = $props();
 
-	const auctions = $derived(data.auctions ?? []);
 	const now = new Date();
 	const nowTime = now.getTime();
 
@@ -23,23 +22,9 @@
 		return parsed ? standardDateFormat(parsed) : null;
 	};
 
-	const currentAuctions = $derived(auctions.filter((x) => x.status === 'ACTIVE'));
-
-	const upcomingAuctions = $derived(auctions.filter((x) => x.status === 'PENDING'));
-
-	const firstCurrentAuction = $derived(currentAuctions.length ? currentAuctions[0] : null);
-	const firstUpcomingAuction = $derived(upcomingAuctions.length ? upcomingAuctions[0] : null);
-
-	const stats = $derived({
-		total: auctions.length,
-		current: currentAuctions.length,
-		upcoming: upcomingAuctions.length,
-		liveLots: currentAuctions.reduce((sum, auction) => sum + auction._count.lots, 0)
-	});
-
-	const nextUpcomingStart = $derived(
-		firstUpcomingAuction ? formatDate(firstUpcomingAuction.start) : null
-	);
+	const currentAuctions = $derived(data.activeAuctions);
+	const upcomingAuctions = $derived(data.upcomingAuctions);
+	const last4Auctions = $derived(data.previousAuctions);
 
 	const statusBadgeVariant = (status: AuctionStatus): BadgeVariant => {
 		switch (status) {
@@ -168,10 +153,46 @@
 		</div>
 
 		<CardWrapper title="Recently closed" description="Last four completed auctions">
-			<Empty
-				title="Recently Closed Update"
-				description="Completed auctions will appear here once available."
-			/>
+			{#if last4Auctions.length === 0}
+				<Empty title="No completed auctions" description="Completed auctions will appear here." />
+			{:else}
+				<div class="grid gap-3">
+					{#each last4Auctions as auction}
+						<Item variant="outline">
+							{#snippet header()}
+								<div class="flex flex-wrap items-center gap-2 text-xs">
+									<Badge variant={statusBadgeVariant(auction.status)}>
+										{humanize(auction.status)}
+									</Badge>
+								</div>
+							{/snippet}
+
+							{#snippet title()}
+								<div class="flex flex-col gap-1">
+									<span class="text-base font-semibold">{auction.title}</span>
+								</div>
+							{/snippet}
+
+							{#snippet footer()}
+								<div class="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+									<span class="font-medium text-foreground"
+										>Lots: {lotsLabel(auction._count.lots)}</span
+									>
+									{#if auction.completedAt}
+										<span>Completed {formatDate(auction.completedAt)}</span>
+									{/if}
+								</div>
+							{/snippet}
+
+							{#snippet actionSnippet()}
+								<Button variant="link" href={`/auction-house/auctions/${auction.id}`}>
+									Details
+								</Button>
+							{/snippet}
+						</Item>
+					{/each}
+				</div>
+			{/if}
 		</CardWrapper>
 	</div>
 </PageWrapper>

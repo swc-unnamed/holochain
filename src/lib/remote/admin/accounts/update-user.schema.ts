@@ -6,4 +6,5 @@ export const updateUserSchema = z.object({
   role: z.enum(AppRole),
   name: z.string(),
   displayName: z.string(),
+  approvedMiddle: z.boolean(),
 });

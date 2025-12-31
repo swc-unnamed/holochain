@@ -9,7 +9,6 @@
 	import { STYLES } from '$lib/components/custom/fields/styles.js';
 	import Empty from '$lib/components/custom/empty/empty.svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import TextareaInput from '$lib/components/custom/fields/textarea-input/textarea-input.svelte';
 	import { banUser } from '$lib/remote/admin/accounts/ban-user.remote.js';
 	import { toast } from 'svelte-sonner';
@@ -24,6 +23,7 @@
 	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
 	import { AppRole } from '$lib/generated/prisma/enums.js';
 	import { Spinner } from '$lib/components/ui/spinner/index.js';
+	import CheckboxInput from '$lib/components/custom/fields/checkbox-input/checkbox-input.svelte';
 
 	const { data } = $props();
 	const user = $derived(data.userDetails);
@@ -54,7 +54,8 @@
 			userId: user.id,
 			displayName: user.displayName,
 			name: user.name,
-			role: user.role
+			role: user.role,
+			approvedMiddle: user.approvedMiddle
 		}),
 		onSuccess: () => {
 			toast.success('User updated successfully.');
@@ -74,7 +75,7 @@
 					<span>{user.displayName}</span>
 					<div class="flex items-center gap-2 text-sm">
 						<span>{user.role}</span>
-						<UserKarma karma={user.karma} />
+						<UserKarma karma={user.ctr} />
 					</div>
 				</div>
 			</div>
@@ -158,6 +159,13 @@
 					valueKey="value"
 				/>
 				<FieldInput label="ANONID" value={user.anonid} readonly />
+
+				<CheckboxInput
+					label="Approved Middle"
+					description="Mark this user as an Approved Holochain Middle"
+					bind:checked={updateUserCmd.form.approvedMiddle}
+					issues={updateUserCmd.errors.approvedMiddle?.message}
+				/>
 			</div>
 			<div class="w-full">
 				<Button

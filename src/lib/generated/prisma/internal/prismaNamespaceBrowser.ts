@@ -111,7 +111,8 @@ export const AuctionScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  start: 'start'
+  start: 'start',
+  completedAt: 'completedAt'
 } as const
 
 export type AuctionScalarFieldEnum = (typeof AuctionScalarFieldEnum)[keyof typeof AuctionScalarFieldEnum]

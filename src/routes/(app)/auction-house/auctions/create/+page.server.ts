@@ -65,6 +65,9 @@ export const load = async ({ locals }) => {
 
   const availableLots = [...mappedAnonLots, ...publicLots];
 
+  // order the lots by lotNumber ascending
+  availableLots.sort((a, b) => a.lotNumber - b.lotNumber);
+
   return {
     lots: availableLots
   };

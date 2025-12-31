@@ -29,6 +29,10 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         role: ['AUCTIONEER']
       },
       {
+        title: "Auction Archive",
+        url: "/auction-house/auctions/archive",
+      },
+      {
         title: "Pending Lots",
         url: "/auction-house/lots/pending",
         role: ['AUCTIONEER']
@@ -37,6 +41,16 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         title: "Configuration",
         url: "/auction-house/config",
         role: ['DEVELOPER', 'TZAR']
+      }
+    ]
+  },
+  {
+    title: 'Docs',
+    icon: 'mdi:book-open-page-variant',
+    items: [
+      {
+        title: 'Documentation',
+        url: '/docs'
       }
     ]
   },

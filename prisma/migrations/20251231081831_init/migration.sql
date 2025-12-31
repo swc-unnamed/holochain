@@ -53,6 +53,7 @@ CREATE TABLE "auctions" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "start_date" TIMESTAMP(3),
+    "completed_at" TIMESTAMP(3),
 
     CONSTRAINT "auctions_pkey" PRIMARY KEY ("id")
 );
@@ -96,6 +97,7 @@ CREATE TABLE "lot_items" (
     "quantity" INTEGER NOT NULL,
     "batch" BOOLEAN NOT NULL DEFAULT false,
     "custom" BOOLEAN NOT NULL DEFAULT false,
+    "custom_image_url" TEXT,
     "uuu" BOOLEAN NOT NULL DEFAULT true,
     "entity_id" TEXT NOT NULL,
     "asset_id" TEXT,
@@ -121,6 +123,7 @@ CREATE TABLE "entities" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "type" TEXT NOT NULL,
+    "enabled" BOOLEAN NOT NULL DEFAULT true,
     "combine_uid" TEXT NOT NULL,
     "combine_href" TEXT NOT NULL,
     "combine_data" JSONB NOT NULL,
@@ -158,7 +161,7 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "display_name" TEXT NOT NULL,
     "anonid" TEXT NOT NULL,
-    "karma" INTEGER NOT NULL DEFAULT 0,
+    "ctr" INTEGER NOT NULL DEFAULT 0,
     "combine_id" TEXT,
     "combine_scopes" TEXT[] DEFAULT ARRAY['character_read']::TEXT[],
     "password_hash" TEXT,
@@ -188,14 +191,14 @@ CREATE TABLE "user_preferences" (
 );
 
 -- CreateTable
-CREATE TABLE "user_karma_logs" (
+CREATE TABLE "chain_trust_rating_logs" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "delta" INTEGER NOT NULL,
     "reason" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "user_karma_logs_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "chain_trust_rating_logs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -259,4 +262,4 @@ ALTER TABLE "entity_transactions" ADD CONSTRAINT "entity_transactions_entity_id_
 ALTER TABLE "user_preferences" ADD CONSTRAINT "user_preferences_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user_karma_logs" ADD CONSTRAINT "user_karma_logs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "chain_trust_rating_logs" ADD CONSTRAINT "chain_trust_rating_logs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

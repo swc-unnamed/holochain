@@ -31,9 +31,7 @@ export const createAuction = command(createAuctionSchema, async (data) => {
     data: {
       title: data.title,
       description: data.description,
-      type: data.type,
       start: toUTCDate(data.start),
-      end: toUTCDate(data.end),
     }
   });
 

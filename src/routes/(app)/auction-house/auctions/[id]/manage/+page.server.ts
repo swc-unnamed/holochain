@@ -1,9 +1,10 @@
 import { db } from '$lib/db/prisma';
+import { guard } from '$lib/utils/auth/server-guard.js';
 import { error } from '@sveltejs/kit';
 
-export const load = async ({ params, depends }) => {
+export const load = async ({ locals, params, depends }) => {
+  guard(locals, ['AUCTIONEER']);
   const { id } = params;
-
   depends('ah:auction:manage')
 
   const auction = await db.auction.findUnique({

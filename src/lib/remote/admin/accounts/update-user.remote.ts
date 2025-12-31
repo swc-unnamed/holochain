@@ -14,6 +14,7 @@ export const updateUser = command(updateUserSchema, async (data) => {
         role: data.role,
         name: data.name,
         displayName: data.displayName,
+        approvedMiddle: data.approvedMiddle,
       }
     })
   } catch (err) {

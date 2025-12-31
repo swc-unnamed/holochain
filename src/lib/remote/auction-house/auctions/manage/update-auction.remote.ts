@@ -83,9 +83,22 @@ export const updateAuctionStatus = command(updateAuctionStatusSchema, async (dat
   if (data.status === 'COMPLETED') {
     // Ensure all lots are in SOLD status before completing the auction
 
-    throw error(400, {
-      message: 'Not implemented'
-    });
+    const unsoldLots = auction.lots.filter(lot => lot.status !== 'SOLD');
+    if (unsoldLots.length > 0) {
+      throw error(400, {
+        message: 'Cannot complete auction with unsold lots.'
+      });
+    }
+
+    await db.auction.update({
+      where: {
+        id: data.id
+      },
+      data: {
+        status: 'COMPLETED',
+        completedAt: new Date()
+      }
+    })
   }
 
   await db.auction.update({

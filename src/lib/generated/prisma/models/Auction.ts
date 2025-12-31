@@ -32,6 +32,7 @@ export type AuctionMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   start: Date | null
+  completedAt: Date | null
 }
 
 export type AuctionMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type AuctionMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   start: Date | null
+  completedAt: Date | null
 }
 
 export type AuctionCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type AuctionCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   start: number
+  completedAt: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type AuctionMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   start?: true
+  completedAt?: true
 }
 
 export type AuctionMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type AuctionMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   start?: true
+  completedAt?: true
 }
 
 export type AuctionCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type AuctionCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   start?: true
+  completedAt?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type AuctionGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   start: Date | null
+  completedAt: Date | null
   _count: AuctionCountAggregateOutputType | null
   _min: AuctionMinAggregateOutputType | null
   _max: AuctionMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type AuctionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
+  completedAt?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
   lots?: Prisma.LotListRelationFilter
 }
 
@@ -209,6 +217,7 @@ export type AuctionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrderInput | Prisma.SortOrder
+  completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lots?: Prisma.LotOrderByRelationAggregateInput
 }
 
@@ -223,6 +232,7 @@ export type AuctionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
+  completedAt?: Prisma.DateTimeNullableFilter<"Auction"> | Date | string | null
   lots?: Prisma.LotListRelationFilter
 }, "id">
 
@@ -234,6 +244,7 @@ export type AuctionOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrderInput | Prisma.SortOrder
+  completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AuctionCountOrderByAggregateInput
   _max?: Prisma.AuctionMaxOrderByAggregateInput
   _min?: Prisma.AuctionMinOrderByAggregateInput
@@ -250,6 +261,7 @@ export type AuctionScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Auction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Auction"> | Date | string
   start?: Prisma.DateTimeNullableWithAggregatesFilter<"Auction"> | Date | string | null
+  completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Auction"> | Date | string | null
 }
 
 export type AuctionCreateInput = {
@@ -260,6 +272,7 @@ export type AuctionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
+  completedAt?: Date | string | null
   lots?: Prisma.LotCreateNestedManyWithoutAuctionInput
 }
 
@@ -271,6 +284,7 @@ export type AuctionUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
+  completedAt?: Date | string | null
   lots?: Prisma.LotUncheckedCreateNestedManyWithoutAuctionInput
 }
 
@@ -282,6 +296,7 @@ export type AuctionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lots?: Prisma.LotUpdateManyWithoutAuctionNestedInput
 }
 
@@ -293,6 +308,7 @@ export type AuctionUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lots?: Prisma.LotUncheckedUpdateManyWithoutAuctionNestedInput
 }
 
@@ -304,6 +320,7 @@ export type AuctionCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
+  completedAt?: Date | string | null
 }
 
 export type AuctionUpdateManyMutationInput = {
@@ -314,6 +331,7 @@ export type AuctionUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionUncheckedUpdateManyInput = {
@@ -324,6 +342,7 @@ export type AuctionUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionCountOrderByAggregateInput = {
@@ -334,6 +353,7 @@ export type AuctionCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
+  completedAt?: Prisma.SortOrder
 }
 
 export type AuctionMaxOrderByAggregateInput = {
@@ -344,6 +364,7 @@ export type AuctionMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
+  completedAt?: Prisma.SortOrder
 }
 
 export type AuctionMinOrderByAggregateInput = {
@@ -354,6 +375,7 @@ export type AuctionMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   start?: Prisma.SortOrder
+  completedAt?: Prisma.SortOrder
 }
 
 export type AuctionNullableScalarRelationFilter = {
@@ -397,6 +419,7 @@ export type AuctionCreateWithoutLotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
+  completedAt?: Date | string | null
 }
 
 export type AuctionUncheckedCreateWithoutLotsInput = {
@@ -407,6 +430,7 @@ export type AuctionUncheckedCreateWithoutLotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   start?: Date | string | null
+  completedAt?: Date | string | null
 }
 
 export type AuctionCreateOrConnectWithoutLotsInput = {
@@ -433,6 +457,7 @@ export type AuctionUpdateWithoutLotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AuctionUncheckedUpdateWithoutLotsInput = {
@@ -443,6 +468,7 @@ export type AuctionUncheckedUpdateWithoutLotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   start?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -484,6 +510,7 @@ export type AuctionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
+  completedAt?: boolean
   lots?: boolean | Prisma.Auction$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.AuctionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["auction"]>
@@ -496,6 +523,7 @@ export type AuctionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
+  completedAt?: boolean
 }, ExtArgs["result"]["auction"]>
 
 export type AuctionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -506,6 +534,7 @@ export type AuctionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
+  completedAt?: boolean
 }, ExtArgs["result"]["auction"]>
 
 export type AuctionSelectScalar = {
@@ -516,9 +545,10 @@ export type AuctionSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   start?: boolean
+  completedAt?: boolean
 }
 
-export type AuctionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "updatedAt" | "start", ExtArgs["result"]["auction"]>
+export type AuctionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "updatedAt" | "start" | "completedAt", ExtArgs["result"]["auction"]>
 export type AuctionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lots?: boolean | Prisma.Auction$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.AuctionCountOutputTypeDefaultArgs<ExtArgs>
@@ -539,6 +569,7 @@ export type $AuctionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdAt: Date
     updatedAt: Date
     start: Date | null
+    completedAt: Date | null
   }, ExtArgs["result"]["auction"]>
   composites: {}
 }
@@ -970,6 +1001,7 @@ export interface AuctionFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Auction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Auction", 'DateTime'>
   readonly start: Prisma.FieldRef<"Auction", 'DateTime'>
+  readonly completedAt: Prisma.FieldRef<"Auction", 'DateTime'>
 }
     
 

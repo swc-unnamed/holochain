@@ -37,48 +37,44 @@
 	<title>Unnamed Market</title>
 </svelte:head>
 
-<div class="grid min-h-svh lg:grid-cols-2">
-	<div class="flex flex-col gap-4 bg-black p-6 md:p-10">
-		<div class="flex flex-1 items-center justify-center">
-			<div class="w-full max-w-xl">
-				<CardWrapper>
-					<div class="grid gap-3">
-						<div class="flex items-center justify-center">
-							<div class="grid gap-3">
-								<img src="/images/unnamed-banner.png" alt="logo" class="-mt-3" />
-							</div>
-						</div>
+<div class="relative flex min-h-svh items-center justify-center bg-black p-6 md:p-10">
+	<img
+		src="/images/uim-animated.gif"
+		alt=""
+		aria-hidden="true"
+		class="pointer-events-none absolute inset-0 m-auto max-h-full max-w-full object-contain opacity-75 brightness-[0.25] grayscale select-none"
+	/>
 
-						{#if !data.requireCombineAuth}
-							<form class="grid gap-3" onsubmit={submit}>
-								<FieldInput label="Name" bind:value={form.name} />
-								<FieldInput label="Password" type="password" bind:value={form.password} />
-								<div class="grid grid-cols-2 gap-3">
-									<Button class="w-full" type="submit" onclick={submit}>Login</Button>
-									<Button href={data.combineAuthUrl} class="w-full" variant="outline">
-										<Icon icon="mdi:fingerprint" />
-										<span>Login with Combine</span>
-									</Button>
-								</div>
-							</form>
-						{:else}
-							<div class="grid gap-3">
-								<Button href={data.combineAuthUrl} class="w-full" variant="outline">
-									<Icon icon="mdi:fingerprint" />
-									<span>Login with Combine</span>
-								</Button>
-							</div>
-						{/if}
+	<div class="relative w-full max-w-xl">
+		<CardWrapper>
+			<div class="grid gap-3">
+				<div class="flex items-center justify-center">
+					<div class="grid gap-3">
+						<img src="/images/unnamed-banner.png" alt="logo" class="-mt-3" />
 					</div>
-				</CardWrapper>
+				</div>
+
+				{#if !data.requireCombineAuth}
+					<form class="grid gap-3" onsubmit={submit}>
+						<FieldInput label="Name" bind:value={form.name} />
+						<FieldInput label="Password" type="password" bind:value={form.password} />
+						<div class="grid grid-cols-2 gap-3">
+							<Button class="w-full" type="submit" onclick={submit}>Login</Button>
+							<Button href={data.combineAuthUrl} class="w-full" variant="outline">
+								<Icon icon="mdi:fingerprint" />
+								<span>Login with Combine</span>
+							</Button>
+						</div>
+					</form>
+				{:else}
+					<div class="grid gap-3">
+						<Button href={data.combineAuthUrl} class="w-full" variant="outline">
+							<Icon icon="mdi:fingerprint" />
+							<span>Login with Combine</span>
+						</Button>
+					</div>
+				{/if}
 			</div>
-		</div>
-	</div>
-	<div class="relative hidden bg-black lg:block">
-		<img
-			src="/images/uim-animated.gif"
-			alt="placeholder"
-			class="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-		/>
+		</CardWrapper>
 	</div>
 </div>

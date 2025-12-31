@@ -97,45 +97,27 @@
 		title="Create a new Auction"
 		description="Fill out the details below, keep in mind this is for Live Auctions only."
 	>
-		<div class="grid gap-4">
-			<div class="space-y-4">
-				<div class="grid gap-4 sm:grid-cols-2">
-					<div class="sm:col-span-2">
-						<FieldInput
-							label="Auction Title"
-							placeholder="Enter a descriptive title..."
-							bind:value={cmd.form.title}
-							issues={cmd.errors.title?.message}
-							required
-						/>
-					</div>
-
-					<div class="sm:col-span-2">
-						<TextareaInput
-							label="Description"
-							placeholder="Provide details about this auction..."
-							bind:value={cmd.form.description}
-							issues={cmd.errors.description?.message}
-							required
-						/>
-					</div>
-
-					<FieldInput
-						label="Start Date & Time"
-						type="datetime-local"
-						bind:value={cmd.form.start}
-						issues={cmd.errors.start?.message}
-					/>
-
-					<FieldInput
-						label="End Date & Time"
-						type="datetime-local"
-						bind:value={cmd.form.end}
-						issues={cmd.errors.end?.message}
-					/>
-				</div>
-			</div>
-
+		<div class="grid gap-3">
+			<FieldInput
+				label="Auction Title"
+				placeholder="Enter a descriptive title..."
+				bind:value={cmd.form.title}
+				issues={cmd.errors.title?.message}
+				required
+			/>
+			<TextareaInput
+				label="Description"
+				placeholder="Provide details about this auction..."
+				bind:value={cmd.form.description}
+				issues={cmd.errors.description?.message}
+				required
+			/>
+			<FieldInput
+				label="Start Date & Time"
+				type="datetime-local"
+				bind:value={cmd.form.start}
+				issues={cmd.errors.start?.message}
+			/>
 			<Separator />
 
 			<!-- Lot Selection -->
@@ -159,90 +141,87 @@
 				</div>
 
 				<!-- Lots List -->
-				<ScrollArea class="h-[400px] rounded-md border p-4">
-					<div class="space-y-3">
-						{#if filteredLots.length === 0}
-							<Empty title="No Lots Found" />
-						{:else}
-							{#each filteredLots as lot (lot.id)}
-								{@const itemCount = lot.items.reduce((sum, item) => sum + item.quantity, 0)}
-								{@const isSelected = isLotSelected(lot.id)}
-								<button
-									type="button"
-									onclick={() => toggleLot(lot.id)}
-									class="flex w-full items-start gap-4 rounded-lg border bg-card p-4 text-left transition-all hover:bg-accent/50 {isSelected
-										? 'border-primary bg-accent/30'
-										: ''}"
-								>
-									<Checkbox checked={isSelected} class="mt-1" />
+				<div class="space-y-3">
+					{#if filteredLots.length === 0}
+						<Empty title="No Lots Found" />
+					{:else}
+						{#each filteredLots as lot (lot.id)}
+							{@const itemCount = lot.items.reduce((sum, item) => sum + item.quantity, 0)}
+							{@const isSelected = isLotSelected(lot.id)}
+							<button
+								type="button"
+								onclick={() => toggleLot(lot.id)}
+								class="flex w-full items-start gap-4 rounded-lg border bg-card p-4 text-left transition-all hover:border-primary {isSelected
+									? 'border-primary bg-accent/30'
+									: ''}"
+							>
+								<Checkbox checked={isSelected} class="mt-1" />
 
-									<div class="min-w-0 flex-1 space-y-3">
-										<div class="flex flex-wrap items-start justify-between gap-2">
-											<div class="flex items-center gap-2">
-												<Badge variant="outline" class="gap-1 whitespace-nowrap">
-													<Hash class="size-3" />
-													{lot.lotNumber}
-												</Badge>
-												<h4 class="line-clamp-1 text-sm font-semibold">{lot.title}</h4>
-											</div>
-											<Badge variant="secondary" class="gap-1 whitespace-nowrap">
-												<Package class="size-3" />
-												{itemCount}
-												{itemCount === 1 ? 'item' : 'items'}
+								<div class="min-w-0 flex-1 space-y-3">
+									<div class="flex flex-wrap items-start justify-between gap-2">
+										<div class="flex items-center gap-2">
+											<Badge variant="outline">
+												{lot.lotNumber}
 											</Badge>
+											<h4 class="line-clamp-1 text-sm font-semibold">{lot.title}</h4>
+										</div>
+										<Badge variant="secondary" class="gap-1 whitespace-nowrap">
+											<Package class="size-3" />
+											{itemCount}
+											{itemCount === 1 ? 'item' : 'items'}
+										</Badge>
+									</div>
+
+									<div class="space-y-2">
+										<div>
+											<p class="text-xs font-medium text-muted-foreground">Description:</p>
+											<p class="text-xs whitespace-pre-wrap">{lot.details}</p>
 										</div>
 
-										<div class="space-y-2">
-											<div>
-												<p class="text-xs font-medium text-muted-foreground">Description:</p>
-												<p class="text-xs whitespace-pre-wrap">{lot.details}</p>
-											</div>
-
-											<div>
-												<p class="text-xs font-medium text-muted-foreground">Location:</p>
-												<p class="text-xs whitespace-pre-wrap">{lot.location}</p>
-											</div>
-
-											<div>
-												<p class="text-xs font-medium text-muted-foreground">Items:</p>
-												<ul class="ml-4 list-disc space-y-0.5 text-xs">
-													{#each lot.items as item (item.id)}
-														<li>
-															{#if item.batch}
-																{item.quantity}
-																{item.quantity === 1 ? 'batch' : 'batches'} of {item.name}
-															{:else}
-																{item.quantity} × {item.name}
-															{/if}
-														</li>
-													{/each}
-												</ul>
-											</div>
+										<div>
+											<p class="text-xs font-medium text-muted-foreground">Location:</p>
+											<p class="text-xs whitespace-pre-wrap">{lot.location}</p>
 										</div>
 
-										<div class="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-											<div class="flex items-center gap-1.5">
-												<Coins class="size-3.5" />
-												<span>{toLocalCurrency(lot.startPrice)} credits</span>
-											</div>
-											{#if isAnonLot(lot)}
-												<div class="flex items-center gap-1.5">
-													<Eye class="size-3.5" />
-													<span>Anon: {lot.anonid}</span>
-												</div>
-											{:else if lot.createdBy?.displayName}
-												<div class="flex items-center gap-1.5">
-													<User class="size-3.5" />
-													<span>{lot.createdBy.displayName}</span>
-												</div>
-											{/if}
+										<div>
+											<p class="text-xs font-medium text-muted-foreground">Items:</p>
+											<ul class="ml-4 list-disc space-y-0.5 text-xs">
+												{#each lot.items as item (item.id)}
+													<li>
+														{#if item.batch}
+															{item.quantity}
+															{item.quantity === 1 ? 'batch' : 'batches'} of {item.name}
+														{:else}
+															{item.quantity} × {item.name}
+														{/if}
+													</li>
+												{/each}
+											</ul>
 										</div>
 									</div>
-								</button>
-							{/each}
-						{/if}
-					</div>
-				</ScrollArea>
+
+									<div class="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+										<div class="flex items-center gap-1.5">
+											<Coins class="size-3.5" />
+											<span>{toLocalCurrency(lot.startPrice)} credits</span>
+										</div>
+										{#if isAnonLot(lot)}
+											<div class="flex items-center gap-1.5">
+												<Eye class="size-3.5" />
+												<span>Anon: {lot.anonid}</span>
+											</div>
+										{:else if lot.createdBy?.displayName}
+											<div class="flex items-center gap-1.5">
+												<User class="size-3.5" />
+												<span>{lot.createdBy.displayName}</span>
+											</div>
+										{/if}
+									</div>
+								</div>
+							</button>
+						{/each}
+					{/if}
+				</div>
 			</div>
 		</div>
 

@@ -15,15 +15,28 @@
 	import * as Alert from '$lib/components/ui/alert';
 	import { toast } from 'svelte-sonner';
 	import { Spinner } from '$lib/components/ui/spinner/index.js';
+	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
+	import CreditInput from '$lib/components/custom/fields/credit-input/credit-input.svelte';
+	import { getUserList } from '$lib/remote/users/get-user-list.remote.js';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { goto } from '$app/navigation';
+	import { recordSale } from '$lib/remote/auction-house/auctions/manage/record-sale.remote.js';
+	import { recordSaleSchema } from '$lib/remote/auction-house/auctions/manage/record-sale.schema.js';
+	import { cn } from '$lib/utils.js';
+	import Item from '$lib/components/custom/item/item.svelte';
+	import { broadcastAuction } from '$lib/remote/auction-house/auctions/manage/broadcast-auction.remote.js';
+	import { broadcastLot } from '$lib/remote/auction-house/auctions/manage/broadcast-lot.remote.js';
+	import type { HttpError } from '@sveltejs/kit';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
 
-	// Lot navigation state
 	let currentLotIndex = $state(0);
 	let currentLot = $derived(auction.lots[currentLotIndex]);
 	let hasPrev = $derived(currentLotIndex > 0);
 	let hasNext = $derived(currentLotIndex < auction.lots.length - 1);
+	let showLotSoldDialog = $state(false);
+	let users = $state(await getUserList());
 
 	function prevLot() {
 		if (hasPrev) currentLotIndex--;
@@ -46,10 +59,31 @@
 		onSuccess: () => {
 			toast.success('Status updated successfully');
 		},
-		onError: () => {
-			toast.error('Failed to update status');
+		onError: (err) => {
+			const errMessage = (err as HttpError).body.message || 'Unknown error';
+
+			toast.error('Failed to update status', {
+				description: errMessage
+			});
 		},
 		invalidate: 'ah:auction:manage'
+	});
+
+	const recordSaleCmd = new CommandForm(recordSaleSchema, {
+		command: recordSale,
+		reset: 'onSuccess',
+		invalidate: 'ah:auction:manage',
+		initial: () => ({
+			winnerId: null,
+			winnerMiddleId: null
+		}),
+		onSuccess: () => {
+			toast.success('Sale recorded successfully');
+			showLotSoldDialog = false;
+		},
+		onError: () => {
+			toast.error('Failed to record sale');
+		}
 	});
 </script>
 
@@ -82,6 +116,40 @@
 				{/if}
 			</div>
 			<div class="flex items-end gap-2">
+				{#if auction.status === 'ACTIVE'}
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} variant="outline">
+									<Icon icon="mdi:dots-vertical" class="size-5" />
+									<span>Actions</span>
+								</Button>
+							{/snippet}
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content class="max-w-48">
+							<DropdownMenu.Group>
+								<DropdownMenu.Item
+									onclick={async () => {
+										await broadcastAuction({ id: auction.id });
+										toast.success('Auction broadcast initiated');
+									}}
+								>
+									<Icon icon="mdi:discord" />
+									<span>Broadcast to Discord</span>
+								</DropdownMenu.Item>
+								<DropdownMenu.Item
+									onclick={async () => {
+										toast.success('coming soon');
+									}}
+								>
+									<Icon icon="mdi:plus" />
+									<span>Add Lot</span>
+								</DropdownMenu.Item>
+							</DropdownMenu.Group>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
+				{/if}
+
 				<div class="min-w-48">
 					<SelectInput
 						label="Status"
@@ -94,18 +162,20 @@
 						issues={statusUpdateCmd.errors.status?.message}
 					/>
 				</div>
-				<Button
-					variant="secondary"
-					onclick={statusUpdateCmd.submit}
-					disabled={statusUpdateCmd.submitting}
-				>
-					{#if statusUpdateCmd.submitting}
-						<Spinner />
-					{:else}
-						<Icon icon="mdi:content-save" />
-					{/if}
-					Update Status
-				</Button>
+				{#if auction.status == 'ACTIVE' || auction.status == 'PENDING'}
+					<Button
+						variant="secondary"
+						onclick={statusUpdateCmd.submit}
+						disabled={statusUpdateCmd.submitting}
+					>
+						{#if statusUpdateCmd.submitting}
+							<Spinner />
+						{:else}
+							<Icon icon="mdi:content-save" />
+						{/if}
+						Update Status
+					</Button>
+				{/if}
 			</div>
 		</div>
 
@@ -141,10 +211,15 @@
 
 	{#if auction.lots.length === 0}
 		<Empty description="No lots assigned to this auction yet." />
+	{:else if auction.status !== 'ACTIVE'}
+		<Empty
+			title="Post Auction Editing Coming Soon"
+			description="The ability to edit and manage lots will be available in future updates. Please check back later. I'm on a time crunch right now. -Marc"
+		/>
 	{:else}
 		<!-- Lots Browser -->
 		<div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
-			<!-- Current Lot Spotlight (3 cols) -->
+			<!-- Current Lot Spotlight -->
 			<div class="space-y-4 lg:col-span-3">
 				<!-- Lot Navigation -->
 				<div class="flex items-center justify-between">
@@ -165,61 +240,136 @@
 				</div>
 
 				<!-- Current Lot Details Card -->
-				<div class="rounded-xl border-2 border-primary/50 bg-card p-6">
+				<div class="grid gap-3 rounded-xl border-2 border-primary/50 bg-card p-6">
 					<!-- Lot Header -->
+					{#if currentLot.anonLot}
+						<div class="grid w-full gap-1 text-center font-bold text-primary">
+							<span>
+								The seller of this lot has chosen to remain anonymous. Ensure you respect their
+								privacy during the auction process.
+							</span>
+							<span class="text-xs text-muted-foreground">
+								You can hover over the Seller name to reveal the seller.
+							</span>
+						</div>
+					{/if}
+
 					<div class="mb-4 flex items-center justify-between border-b border-border/60 pb-4">
+						<!-- Lot attributes -->
 						<div class=" flex flex-wrap items-center gap-2">
 							<Badge variant="outline" class="text-sm">{currentLot.status}</Badge>
-							{#if currentLot.anonLot}
-								<Badge variant="secondary" class="text-sm">
-									<Icon icon="mdi:user-card-details-outline" class="size-4" />
-									Anonymous
-								</Badge>
-							{/if}
-							<!-- Seller Info -->
 							{#if currentLot.createdBy}
 								<Badge variant="outline" class="text-sm">
-									{#if currentLot.anonLot}
-										<Icon icon="mdi:user-card-details-outline" class="size-4" />
-										{currentLot.createdBy.anonid}
-									{:else}
-										<Icon icon="mdi:user" class="size-4" />
-										{currentLot.createdBy.displayName}
-									{/if}
+									<Icon icon="mdi:user" class="size-4" />
+									<span class={cn(currentLot.anonLot ? 'blur-md hover:blur-none' : '')}>
+										Seller: {currentLot.createdBy.displayName}
+									</span>
 								</Badge>
 							{/if}
+
+							<Badge variant="outline" class="text-sm">Credits: {currentLot.creditsTo}</Badge>
 						</div>
 
+						<!-- Lot Action Dropdown -->
 						<div class="flex items-center gap-2">
-							<Button size="sm" variant="outline" href={`/auction-house/lots/${currentLot.id}`}
-								>View Lot</Button
-							>
+							<DropdownMenu.Root>
+								<DropdownMenu.Trigger>
+									{#snippet child({ props })}
+										<Button {...props} size="sm" variant="outline">
+											<Icon icon="mdi:dots-vertical" class="size-5" />
+											<span>Actions</span>
+										</Button>
+									{/snippet}
+								</DropdownMenu.Trigger>
+								<DropdownMenu.Content class="max-w-48">
+									<DropdownMenu.Group>
+										<DropdownMenu.Item
+											onclick={async () => {
+												await broadcastLot({
+													id: currentLot.id
+												});
+												toast.success('Lot broadcast initiated');
+											}}
+											disabled={currentLot.status !== 'SCHEDULED'}
+										>
+											<Icon icon="mdi:discord" />
+											<span>Push to Discord</span>
+										</DropdownMenu.Item>
+										<DropdownMenu.Item
+											onclick={async () => {
+												await goto(`/auction-house/lots/${currentLot.id}`);
+											}}
+										>
+											<Icon icon="mdi:eye" />
+											<span>View Lot</span>
+										</DropdownMenu.Item>
+										<DropdownMenu.Item
+											onclick={() => {
+												recordSaleCmd.form.lotId = currentLot.id;
+												showLotSoldDialog = true;
+											}}
+											disabled={currentLot.status !== 'SCHEDULED'}
+										>
+											<Icon icon="mdi:check-circle-outline" />
+											<span>Mark as Sold</span>
+										</DropdownMenu.Item>
+									</DropdownMenu.Group>
+								</DropdownMenu.Content>
+							</DropdownMenu.Root>
 						</div>
 					</div>
 
-					<div class="mb-4 flex flex-wrap items-start justify-between gap-4">
-						<div>
-							<p class="whitespace-pre-wrap">
-								{currentLot.details || 'No details provided'}
-							</p>
+					<!-- Details and Location -->
+					<div class="flex w-full justify-between">
+						<div class="grid w-full gap-4">
+							<Item title="Details" variant="outline">
+								{#snippet footer()}
+									<span class="whitespace-pre-wrap">
+										{currentLot.details}
+									</span>
+								{/snippet}
+							</Item>
 							{#if currentLot.location}
-								<p class="mt-1 flex items-center gap-1 text-sm whitespace-pre-wrap">
-									<span>MAP_ICON</span>
-									{currentLot.location}
-								</p>
+								<Item title="Location" variant="outline">
+									{#snippet footer()}
+										<span class="whitespace-pre-wrap">
+											{currentLot.location}
+										</span>
+									{/snippet}
+								</Item>
+							{:else}
+								<Empty
+									title="No Location Provided"
+									description="Guess this is just a magical lot?"
+								/>
 							{/if}
 						</div>
-						<div class="text-right">
-							<p
-								class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
-							>
-								<Coins class="size-3" />
-								Starting Bid
-							</p>
-							<p class="text-3xl font-bold text-primary">
-								{toAbbrCurrency(currentLot.startPrice)}
-							</p>
-							<p class="text-sm text-muted-foreground">credits</p>
+
+						<div class="grid min-w-48 gap-3 text-right">
+							<div>
+								<p
+									class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
+								>
+									<Coins class="size-3" />
+									Starting Bid
+								</p>
+								<p class="text-3xl font-bold text-primary">
+									{toAbbrCurrency(currentLot.startPrice)}
+								</p>
+								<p class="text-sm text-muted-foreground">credits</p>
+							</div>
+							{#if currentLot.purchasePrice}
+								<p
+									class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
+								>
+									<Coins class="size-3" />
+									Purchased for
+								</p>
+								<p class="text-3xl font-bold text-primary">
+									{toAbbrCurrency(currentLot.purchasePrice)}
+								</p>
+								<p class="text-sm text-muted-foreground">credits</p>
+							{/if}
 						</div>
 					</div>
 
@@ -338,4 +488,74 @@
 			</div>
 		</div>
 	{/if}
+
+	{@render lotSoldDialog()}
 </PageWrapper>
+
+{#snippet lotSoldDialog()}
+	<ResponsiveDialog title="Mark Lot as Sold" bind:open={showLotSoldDialog}>
+		<div class="grid gap-3">
+			<p class="text-sm text-muted-foreground">
+				If the lot was won by a middle, select the approved middle below. Otherwise, select the
+				winning bidder directly. Then, enter the winning bid amount to finalize the sale of the lot.
+			</p>
+
+			<SelectInput
+				label="Winning Bidder"
+				records={users}
+				labelKey="displayName"
+				valueKey="id"
+				type="single"
+				searchable
+				allowDeselect
+				bind:value={recordSaleCmd.form.winnerId}
+				issues={recordSaleCmd.errors.winnerId?.message}
+				onValueChange={(v) => {
+					if (v === '') recordSaleCmd.form.winnerId = null;
+				}}
+			/>
+			<SelectInput
+				label="Winning Bidder (Middle)"
+				records={users}
+				labelKey="displayName"
+				valueKey="id"
+				type="single"
+				searchable
+				allowDeselect
+				bind:value={recordSaleCmd.form.winnerMiddleId}
+				issues={recordSaleCmd.errors.winnerMiddleId?.message}
+				onValueChange={(v) => {
+					if (v === '') recordSaleCmd.form.winnerMiddleId = null;
+				}}
+			/>
+			<CreditInput
+				label="Winning Bid"
+				bind:value={recordSaleCmd.form.winningAmount}
+				issues={recordSaleCmd.errors.winningAmount?.message}
+			/>
+		</div>
+
+		{#snippet footer()}
+			<div class="flex items-center gap-3">
+				<Button size="sm" variant="secondary" onclick={() => (showLotSoldDialog = false)}>
+					Cancel
+				</Button>
+				<Button
+					size="sm"
+					onclick={recordSaleCmd.submit}
+					disabled={recordSaleCmd.submitting ||
+						(!recordSaleCmd.form.winnerId &&
+							!recordSaleCmd.form.winnerMiddleId &&
+							!recordSaleCmd.form.winningAmount)}
+				>
+					{#if recordSaleCmd.submitting}
+						<Spinner />
+					{:else}
+						<Icon icon="mdi:check-circle-outline" />
+					{/if}
+					<span>Record Sale</span>
+				</Button>
+			</div>
+		{/snippet}
+	</ResponsiveDialog>
+{/snippet}
