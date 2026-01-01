@@ -8,13 +8,13 @@ export const load = async ({ locals }) => {
 
   const combineClientId = config.find(c => c.key === 'COMBINE_CLIENT_ID')?.value || '';
   const combineClientSecret = config.find(c => c.key === 'COMBINE_CLIENT_SECRET')?.value || '';
-  const globalRequireCombineAuth = config.find(c => c.key === 'GLOBAL_REQUIRE_COMBINE_AUTHENTICATION')?.value === 'true';
-  const globalDisableNameVerification = config.find(c => c.key === 'GLOBAL_DISABLE_NAME_VERIFICATION')?.value === 'true';
+  const discordClientId = config.find(c => c.key === 'DISCORD_CLIENT_ID')?.value || '';
+  const discordClientSecret = config.find(c => c.key === 'DISCORD_CLIENT_SECRET')?.value || '';
 
   return {
     combineClientId,
     combineClientSecret,
-    globalRequireCombineAuth,
-    globalDisableNameVerification
+    discordClientId,
+    discordClientSecret
   }
 }

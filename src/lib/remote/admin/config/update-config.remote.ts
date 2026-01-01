@@ -11,8 +11,8 @@ export const updateAdminConfig = command(updateAdminConfigSchema, async (data) =
   const configUpdates: Record<string, string> = {
     'COMBINE_CLIENT_ID': data.combineClientId || '',
     'COMBINE_CLIENT_SECRET': data.combineClientSecret || '',
-    'GLOBAL_REQUIRE_COMBINE_AUTHENTICATION': data.globalRequireCombineAuth ? 'true' : 'false',
-    'GLOBAL_DISABLE_NAME_VERIFICATION': data.globalDisableNameVerification ? 'true' : 'false',
+    'DISCORD_CLIENT_ID': data.discordClientId || '',
+    'DISCORD_CLIENT_SECRET': data.discordClientSecret || ''
   };
 
   const upserts = Object.entries(configUpdates).map(([key, value]) =>

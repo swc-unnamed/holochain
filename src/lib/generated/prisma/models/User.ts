@@ -41,7 +41,6 @@ export type UserMinAggregateOutputType = {
   anonid: string | null
   ctr: number | null
   combineId: string | null
-  passwordHash: string | null
   role: $Enums.AppRole | null
   banned: boolean | null
   bannedReason: string | null
@@ -62,7 +61,6 @@ export type UserMaxAggregateOutputType = {
   anonid: string | null
   ctr: number | null
   combineId: string | null
-  passwordHash: string | null
   role: $Enums.AppRole | null
   banned: boolean | null
   bannedReason: string | null
@@ -84,7 +82,6 @@ export type UserCountAggregateOutputType = {
   ctr: number
   combineId: number
   combineScopes: number
-  passwordHash: number
   role: number
   banned: number
   bannedReason: number
@@ -115,7 +112,6 @@ export type UserMinAggregateInputType = {
   anonid?: true
   ctr?: true
   combineId?: true
-  passwordHash?: true
   role?: true
   banned?: true
   bannedReason?: true
@@ -136,7 +132,6 @@ export type UserMaxAggregateInputType = {
   anonid?: true
   ctr?: true
   combineId?: true
-  passwordHash?: true
   role?: true
   banned?: true
   bannedReason?: true
@@ -158,7 +153,6 @@ export type UserCountAggregateInputType = {
   ctr?: true
   combineId?: true
   combineScopes?: true
-  passwordHash?: true
   role?: true
   banned?: true
   bannedReason?: true
@@ -265,9 +259,8 @@ export type UserGroupByOutputType = {
   displayName: string
   anonid: string
   ctr: number
-  combineId: string | null
+  combineId: string
   combineScopes: string[]
-  passwordHash: string | null
   role: $Enums.AppRole
   banned: boolean
   bannedReason: string | null
@@ -310,9 +303,8 @@ export type UserWhereInput = {
   displayName?: Prisma.StringFilter<"User"> | string
   anonid?: Prisma.StringFilter<"User"> | string
   ctr?: Prisma.IntFilter<"User"> | number
-  combineId?: Prisma.StringNullableFilter<"User"> | string | null
+  combineId?: Prisma.StringFilter<"User"> | string
   combineScopes?: Prisma.StringNullableListFilter<"User">
-  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumAppRoleFilter<"User"> | $Enums.AppRole
   banned?: Prisma.BoolFilter<"User"> | boolean
   bannedReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -336,9 +328,8 @@ export type UserOrderByWithRelationInput = {
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
   ctr?: Prisma.SortOrder
-  combineId?: Prisma.SortOrderInput | Prisma.SortOrder
+  combineId?: Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
   bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -367,7 +358,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   displayName?: Prisma.StringFilter<"User"> | string
   ctr?: Prisma.IntFilter<"User"> | number
   combineScopes?: Prisma.StringNullableListFilter<"User">
-  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumAppRoleFilter<"User"> | $Enums.AppRole
   banned?: Prisma.BoolFilter<"User"> | boolean
   bannedReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -391,9 +381,8 @@ export type UserOrderByWithAggregationInput = {
   displayName?: Prisma.SortOrder
   anonid?: Prisma.SortOrder
   ctr?: Prisma.SortOrder
-  combineId?: Prisma.SortOrderInput | Prisma.SortOrder
+  combineId?: Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
   bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -421,9 +410,8 @@ export type UserScalarWhereWithAggregatesInput = {
   displayName?: Prisma.StringWithAggregatesFilter<"User"> | string
   anonid?: Prisma.StringWithAggregatesFilter<"User"> | string
   ctr?: Prisma.IntWithAggregatesFilter<"User"> | number
-  combineId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  combineId?: Prisma.StringWithAggregatesFilter<"User"> | string
   combineScopes?: Prisma.StringNullableListFilter<"User">
-  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumAppRoleWithAggregatesFilter<"User"> | $Enums.AppRole
   banned?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   bannedReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -443,9 +431,8 @@ export type UserCreateInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -469,9 +456,8 @@ export type UserUncheckedCreateInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -495,9 +481,8 @@ export type UserUpdateInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -521,9 +506,8 @@ export type UserUncheckedUpdateInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -547,9 +531,8 @@ export type UserCreateManyInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -569,9 +552,8 @@ export type UserUpdateManyMutationInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -591,9 +573,8 @@ export type UserUncheckedUpdateManyInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -628,7 +609,6 @@ export type UserCountOrderByAggregateInput = {
   ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
   combineScopes?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
   bannedReason?: Prisma.SortOrder
@@ -653,7 +633,6 @@ export type UserMaxOrderByAggregateInput = {
   anonid?: Prisma.SortOrder
   ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
   bannedReason?: Prisma.SortOrder
@@ -674,7 +653,6 @@ export type UserMinOrderByAggregateInput = {
   anonid?: Prisma.SortOrder
   ctr?: Prisma.SortOrder
   combineId?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
   banned?: Prisma.SortOrder
   bannedReason?: Prisma.SortOrder
@@ -776,9 +754,8 @@ export type UserCreateWithoutLotsOwnedInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -801,9 +778,8 @@ export type UserUncheckedCreateWithoutLotsOwnedInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -831,9 +807,8 @@ export type UserCreateWithoutLotsPurchasedInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -856,9 +831,8 @@ export type UserUncheckedCreateWithoutLotsPurchasedInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -897,9 +871,8 @@ export type UserUpdateWithoutLotsOwnedInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -922,9 +895,8 @@ export type UserUncheckedUpdateWithoutLotsOwnedInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -958,9 +930,8 @@ export type UserUpdateWithoutLotsPurchasedInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -983,9 +954,8 @@ export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1008,9 +978,8 @@ export type UserCreateWithoutPreferencesInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -1033,9 +1002,8 @@ export type UserUncheckedCreateWithoutPreferencesInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -1074,9 +1042,8 @@ export type UserUpdateWithoutPreferencesInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1099,9 +1066,8 @@ export type UserUncheckedUpdateWithoutPreferencesInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1124,9 +1090,8 @@ export type UserCreateWithoutCtrLogsInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -1149,9 +1114,8 @@ export type UserUncheckedCreateWithoutCtrLogsInput = {
   displayName: string
   anonid: string
   ctr?: number
-  combineId?: string | null
+  combineId?: string
   combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  passwordHash?: string | null
   role?: $Enums.AppRole
   banned?: boolean
   bannedReason?: string | null
@@ -1190,9 +1154,8 @@ export type UserUpdateWithoutCtrLogsInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1215,9 +1178,8 @@ export type UserUncheckedUpdateWithoutCtrLogsInput = {
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   anonid?: Prisma.StringFieldUpdateOperationsInput | string
   ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
   combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
   banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1300,7 +1262,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
-  passwordHash?: boolean
   role?: boolean
   banned?: boolean
   bannedReason?: boolean
@@ -1327,7 +1288,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
-  passwordHash?: boolean
   role?: boolean
   banned?: boolean
   bannedReason?: boolean
@@ -1349,7 +1309,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
-  passwordHash?: boolean
   role?: boolean
   banned?: boolean
   bannedReason?: boolean
@@ -1371,7 +1330,6 @@ export type UserSelectScalar = {
   ctr?: boolean
   combineId?: boolean
   combineScopes?: boolean
-  passwordHash?: boolean
   role?: boolean
   banned?: boolean
   bannedReason?: boolean
@@ -1385,7 +1343,7 @@ export type UserSelectScalar = {
   lastSeenAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "anonid" | "ctr" | "combineId" | "combineScopes" | "passwordHash" | "role" | "banned" | "bannedReason" | "bannedUntil" | "bannedById" | "avatarUrl" | "discordId" | "discordUsername" | "approvedMiddle" | "createdAt" | "lastSeenAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "displayName" | "anonid" | "ctr" | "combineId" | "combineScopes" | "role" | "banned" | "bannedReason" | "bannedUntil" | "bannedById" | "avatarUrl" | "discordId" | "discordUsername" | "approvedMiddle" | "createdAt" | "lastSeenAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preferences?: boolean | Prisma.User$preferencesArgs<ExtArgs>
   ctrLogs?: boolean | Prisma.User$ctrLogsArgs<ExtArgs>
@@ -1410,9 +1368,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     displayName: string
     anonid: string
     ctr: number
-    combineId: string | null
+    combineId: string
     combineScopes: string[]
-    passwordHash: string | null
     role: $Enums.AppRole
     banned: boolean
     bannedReason: string | null
@@ -1858,7 +1815,6 @@ export interface UserFieldRefs {
   readonly ctr: Prisma.FieldRef<"User", 'Int'>
   readonly combineId: Prisma.FieldRef<"User", 'String'>
   readonly combineScopes: Prisma.FieldRef<"User", 'String[]'>
-  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'AppRole'>
   readonly banned: Prisma.FieldRef<"User", 'Boolean'>
   readonly bannedReason: Prisma.FieldRef<"User", 'String'>

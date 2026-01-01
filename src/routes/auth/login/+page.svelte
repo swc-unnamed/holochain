@@ -1,8 +1,5 @@
 <script lang="ts">
-	import * as Tabs from '$lib/components/ui/tabs';
-	import RegisterForm from '$lib/components/auth/register-form.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
-	import { FieldSeparator } from '$lib/components/ui/field';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
 	import { loginSchema } from '$lib/remote/auth/login.schema';
@@ -11,8 +8,6 @@
 	import { goto } from '$app/navigation';
 	import type { HttpError } from '@sveltejs/kit';
 	import * as Terminal from '$lib/components/custom/terminal';
-	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
-	import Icon from '@iconify/svelte';
 	import { fade } from 'svelte/transition';
 	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
 

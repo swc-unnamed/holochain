@@ -7,12 +7,13 @@
 		ctr: number;
 		class?: string;
 		iconClass?: string;
+		rootClass?: string;
 	};
 
-	let { ctr, class: className, iconClass }: Props = $props();
+	let { ctr, class: className, iconClass, rootClass }: Props = $props();
 </script>
 
-<div class={cn('flex items-center gap-0.5')}>
+<div class={cn('flex items-center gap-0.5', rootClass)}>
 	<Icon
 		icon={ctr > 0 ? 'mdi:chevron-double-up' : 'mdi:chevron-double-down'}
 		class={cn(ctr > 0 ? 'text-primary' : 'text-destructive', iconClass)}

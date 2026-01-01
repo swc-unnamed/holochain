@@ -13,9 +13,6 @@ export const load = async ({ locals, params, depends }) => {
       ctrLogs: true,
       preferences: true
     },
-    omit: {
-      passwordHash: true,
-    }
   });
 
   if (!user) {

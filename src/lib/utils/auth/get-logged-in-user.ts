@@ -10,7 +10,6 @@ export async function getLoggedInUser(token: string): Promise<User | null> {
     const decoded = jwt.verify(token, env.JWT_SECRET) as { id: string };
     const user = await db.user.findUnique({
       where: { id: decoded.id },
-      omit: { passwordHash: true },
       include: {
         preferences: true,
       }

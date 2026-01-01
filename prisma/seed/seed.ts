@@ -2,7 +2,6 @@
 import 'dotenv/config';
 import { PrismaClient } from '../../src/lib/generated/prisma/client';
 import { nanoid } from '../../src/lib/utils/helpers/shared/nanoid';
-import { hash } from '../../src/lib/utils/encryption/hash';
 import { PrismaPg } from '@prisma/adapter-pg';
 import combineData from './entities.json' with { type: 'json' };
 import { cwd } from 'node:process';
@@ -65,7 +64,6 @@ async function seed() {
     if (!process.env.SUPER_ADMIN_PASSWORD) {
       throw new Error('SUPER_ADMIN_PASSWORD is not set in environment variables.');
     }
-    const passwordHash = hash(process.env.SUPER_ADMIN_PASSWORD);
     await prisma.user.upsert({
       where: {
         name: 'um_admin',
@@ -75,7 +73,6 @@ async function seed() {
         name: 'um_admin',
         displayName: 'Unnamed Admin',
         role: 'TZAR',
-        passwordHash: passwordHash,
         preferences: {
           createMany: {
             data: [
@@ -95,9 +92,7 @@ async function seed() {
           }
         }
       },
-      update: {
-        passwordHash: passwordHash
-      }
+      update: {}
     });
 
     console.log('Admin user "um_admin" has been created or updated.');

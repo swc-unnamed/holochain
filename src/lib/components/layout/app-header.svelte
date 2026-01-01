@@ -66,7 +66,7 @@
 		{/if}
 
 		<div class="ml-auto flex items-center gap-2">
-			<Badge variant="destructive">ALPHA 2</Badge>
+			<Badge>OPEN BETA</Badge>
 			{@render header?.()}
 		</div>
 	</div>

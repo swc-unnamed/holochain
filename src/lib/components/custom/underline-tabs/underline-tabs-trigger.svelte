@@ -47,8 +47,6 @@
 				'absolute top-0 z-1 h-[calc(100%-3px)] w-full rounded-md bg-accent opacity-0 transition-opacity duration-300 peer-focus-visible:opacity-100',
 				state.rootState.isHovered && 'opacity-100'
 			)}
-			in:receive={{ key: `${state.rootState.opts.id.current}-tab-hover`, duration: 300 }}
-			out:send={{ key: `${state.rootState.opts.id.current}-tab-hover`, duration: 300 }}
 		></div>
 	{/if}
 	{#if state.rootState.opts.value.current === value}

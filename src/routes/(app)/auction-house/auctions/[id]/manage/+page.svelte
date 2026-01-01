@@ -27,6 +27,7 @@
 	import { broadcastAuction } from '$lib/remote/auction-house/auctions/manage/broadcast-auction.remote.js';
 	import { broadcastLot } from '$lib/remote/auction-house/auctions/manage/broadcast-lot.remote.js';
 	import type { HttpError } from '@sveltejs/kit';
+	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -211,11 +212,6 @@
 
 	{#if auction.lots.length === 0}
 		<Empty description="No lots assigned to this auction yet." />
-	{:else if auction.status !== 'ACTIVE'}
-		<Empty
-			title="Post Auction Editing Coming Soon"
-			description="The ability to edit and manage lots will be available in future updates. Please check back later. I'm on a time crunch right now. -Marc"
-		/>
 	{:else}
 		<!-- Lots Browser -->
 		<div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
@@ -514,6 +510,12 @@
 					if (v === '') recordSaleCmd.form.winnerId = null;
 				}}
 			/>
+
+			<SwitchInput
+				label="Purchased via Middle"
+				description="Select this if the Lot was sold via a Middle. If selected, it will indicate that the Winning Bidder is a Middle and the purchase was made on behalf of another user. This will not increase the Middle's total purchases count."
+			/>
+
 			<SelectInput
 				label="Winning Bidder (Middle)"
 				records={users}

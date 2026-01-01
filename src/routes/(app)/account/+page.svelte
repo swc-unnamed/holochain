@@ -30,11 +30,30 @@
 	import Item from '$lib/components/custom/item/item.svelte';
 	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
 	import Empty from '$lib/components/custom/empty/empty.svelte';
+	import Badge from '$lib/components/ui/badge/badge.svelte';
+	import Icon from '@iconify/svelte';
+	import { unlinkDiscordAccount } from '$lib/remote/auth/unlink-discord.remote.js';
+	import { QueryState } from '$lib/remote/query-state/query-state.svelte.js';
+	import { getCtrLogs } from '$lib/remote/account/get-ctr-logs.remote.js';
+	import type { ChainTrustRatingLog } from '$lib/generated/prisma/client.js';
+	import * as Table from '$lib/components/ui/table';
+	import Pagination from '$lib/components/custom/pagination/pagination.svelte';
+	import { UserInfoCard } from '$lib/components/custom/user-info/index.js';
+
+	const ctrQuery = new QueryState<ChainTrustRatingLog>({
+		pagination: {
+			take: 50,
+			skip: 0,
+			mode: 'offset'
+		}
+	});
 
 	let { data } = $props();
 	let account = $derived(data.account);
+	let ctrLogs = $derived(await getCtrLogs(ctrQuery.current));
 	let selectedTab = $state('details');
 	let blurAnonId = $state(true);
+
 	let { form, submit } = $derived(
 		new CommandForm(updateAccountSchema, {
 			initial: () => ({
@@ -48,6 +67,12 @@
 			}
 		})
 	);
+
+	$effect(() => {
+		if (ctrLogs.totalCount) {
+			ctrQuery.setCount(ctrLogs.totalCount);
+		}
+	});
 
 	const mobile = new IsMobile();
 
@@ -90,79 +115,201 @@
 			</div>
 		</div>
 	</CardWrapper>
+
 	<Tabs.Root bind:value={selectedTab}>
 		<Tabs.List class="w-full">
 			<Tabs.Trigger value="details">Account Details</Tabs.Trigger>
-			<Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
 			<Tabs.Trigger value="karma_logs">Chain Trust Rating Changes</Tabs.Trigger>
+			<Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
 		</Tabs.List>
+
 		<Tabs.Content value="details">
-			<CardWrapper title="Account Details">
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-					<FieldInput label="Name" value={account.name} readonly />
-					<FieldInput label="Display Name" bind:value={form.displayName} />
-					<FieldInput
-						label="ANONID"
-						class={cn(blurAnonId && 'blur-sm', 'w-full transition-all')}
-						bind:value={account.anonid}
-						readonly
-					>
-						{#snippet descriptionSnippet()}
-							<div class="grid gap-1">
-								<span>
-									This is used as your Display Name when you have Anonymous mode enabled. It is
-									randomly generated and cannot be manually changed, but you can reset it to get a
-									new one.
-								</span>
-								<div class="flex items-center gap-2">
-									<Button size="sm" variant="ghost" onclick={resetAnonymousId}>Reset</Button>
-									<SwitchInput label="Blur ANONID" bind:checked={blurAnonId} class="w-48" />
-								</div>
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+				<div class="grid gap-3">
+					<CardWrapper title="Account Details">
+						<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+							<FieldInput label="Name" value={account.name} readonly />
+							<FieldInput label="Display Name" bind:value={form.displayName} />
+							<FieldInput
+								label="ANONID"
+								class={cn(blurAnonId && 'blur-xs', 'w-full transition-all')}
+								bind:value={account.anonid}
+								readonly
+							>
+								{#snippet descriptionSnippet()}
+									<div class="grid gap-1">
+										<span>
+											This is used as your Display Name when you have Anonymous mode enabled. It is
+											randomly generated and cannot be manually changed, but you can reset it to get
+											a new one.
+										</span>
+										<div class="flex items-center gap-2">
+											<Button size="sm" variant="ghost" onclick={resetAnonymousId}>Reset</Button>
+											<SwitchInput label="Blur ANONID" bind:checked={blurAnonId} class="w-48" />
+										</div>
+									</div>
+								{/snippet}
+							</FieldInput>
+							<FieldInput label="Avatar URL" bind:value={form.avatarUrl} />
+						</div>
+
+						{#snippet footer()}
+							<div class="flex w-full justify-end">
+								<Button onclick={submit}>Save Changes</Button>
 							</div>
 						{/snippet}
-					</FieldInput>
-					<FieldInput label="Avatar URL" bind:value={form.avatarUrl} />
+					</CardWrapper>
+
+					<CardWrapper
+						title="Account Info Card"
+						description="In certain parts of the Holochain, your account info will be displayed in a card format like this."
+					>
+						<UserInfoCard id={account.id} />
+					</CardWrapper>
 				</div>
 
-				<Separator class="my-3" />
-				<div class="flex justify-end">
-					<Button onclick={submit}>Save Changes</Button>
+				<div>
+					<CardWrapper title="Account Status">
+						<div class="grid gap-3">
+							<Item title="Combine Biometrics" variant="outline">
+								{#snippet footer()}
+									<div class="grid gap-2">
+										<div class="grid grid-cols-2 gap-2">
+											<p>Combine ID</p>
+											<p>{account.combineId}</p>
+										</div>
+										<div class="grid grid-cols-2 gap-2">
+											<p>Combine Scopes</p>
+											<div class="flex flex-wrap items-center">
+												{#each account.combineScopes as scope}
+													<Badge variant="outline">{scope}</Badge>
+												{/each}
+											</div>
+										</div>
+									</div>
+								{/snippet}
+							</Item>
+
+							<Item title="Discord Biometrics" variant="outline">
+								{#snippet footer()}
+									{#if !data.discordOAuthUrl}
+										<Empty
+											title="Discord Biometrics Not Configured"
+											description="There's nothing for you to do, the Holochain has not been configured for Discord Biometrics linking yet."
+										/>
+									{:else if !account.discordId}
+										<Empty
+											title="Not Linked"
+											description="You have not linked your Discord account."
+										>
+											{#snippet iconSnippet()}
+												<Icon icon="line-md:discord" />
+											{/snippet}
+
+											{#snippet content()}
+												<Button size="sm" variant="outline" href={data.discordOAuthUrl}>
+													Link Now
+												</Button>
+											{/snippet}
+										</Empty>
+									{:else}
+										<div class="grid gap-2">
+											<div class="grid grid-cols-2 gap-2">
+												<p>Discord ID</p>
+												<p>{account.discordId}</p>
+											</div>
+											<div class="grid grid-cols-2 gap-2">
+												<p>Discord Username</p>
+												<p>{account.discordUsername}</p>
+											</div>
+										</div>
+									{/if}
+								{/snippet}
+
+								{#snippet actionSnippet()}
+									{#if account.discordId}
+										<Button
+											size="sm"
+											variant="outline"
+											onclick={async () => {
+												const res = await unlinkDiscordAccount();
+												if (res.success) {
+													toast.success('Discord account unlinked successfully.');
+													await invalidate('app:account');
+												} else {
+													toast.error('Failed to unlink Discord account.', {
+														description: 'Contact Holochain support for assistance.'
+													});
+												}
+											}}
+										>
+											<Icon icon="mingcute:unlink-2-line" />
+											Unlink Discord Account
+										</Button>
+									{/if}
+								{/snippet}
+							</Item>
+						</div>
+					</CardWrapper>
 				</div>
+			</div>
+		</Tabs.Content>
+
+		<Tabs.Content value="karma_logs">
+			<CardWrapper title="Chain Trust Rating Changes">
+				{#if mobile.current}
+					<div class="grid gap-3">
+						{#each ctrLogs.logs as log}
+							<Item
+								variant="outline"
+								title={`${log.delta > 0 ? '+' : ''}${log.delta} Karma`}
+								description={log.reason}
+								footer={`${standardDateFormat(log.createdAt)}`}
+							/>
+						{/each}
+					</div>
+				{:else}
+					<Table.Root>
+						<Table.Caption>
+							<Pagination query={ctrQuery} perPage={50} />
+						</Table.Caption>
+						<Table.Header>
+							<Table.Row>
+								<Table.Head class="w-48">Change Delta</Table.Head>
+								<Table.Head class="w-2/3">Reason</Table.Head>
+								<Table.Head>Date</Table.Head>
+							</Table.Row>
+						</Table.Header>
+
+						<Table.Body>
+							{#each ctrLogs.logs as log}
+								<Table.Row>
+									<Table.Cell class="flex items-center gap-2">
+										{#if log.delta > 0}
+											<Icon icon="bx:upvote" class="text-primary" />
+										{:else}
+											<Icon icon="bx:downvote" class="text-destructive" />
+										{/if}
+										<span>
+											{log.delta > 0 ? '+' : ''}{log.delta} Chain Trust
+										</span>
+									</Table.Cell>
+									<Table.Cell class="wrap-break-word">{log.reason}</Table.Cell>
+									<Table.Cell>{standardDateFormat(log.createdAt)}</Table.Cell>
+								</Table.Row>
+							{/each}
+						</Table.Body>
+					</Table.Root>
+				{/if}
 			</CardWrapper>
 		</Tabs.Content>
 
 		<Tabs.Content value="preferences">
 			<CardWrapper title="Preferences">
 				<div class="grid gap-4">
-					<Empty
-						title="Coming Soon"
-						description="Account preference management is under development and will be available soon."
-					/>
-					<!-- {#each account.preferences as pref}
+					{#each account.preferences as pref}
 						{@const prefDetails = UserPreferences[pref.key]}
-						{#if pref.key === 'GLOBAL_THEME_MODE'}
-							<SelectInput
-								label={prefDetails.name}
-								description={prefDetails.description}
-								type="single"
-								value={pref.value}
-								records={[
-									{ label: 'Light', value: 'light' },
-									{ label: 'Dark', value: 'dark' },
-									{ label: 'System', value: 'system' }
-								]}
-								labelKey="label"
-								valueKey="value"
-								onValueChange={async (val) => {
-									await updatePreference({
-										key: pref.key,
-										value: val || 'system'
-									});
-
-									setMode((val || 'system') as 'light' | 'dark' | 'system');
-								}}
-							/>
-						{:else}
+						{#if prefDetails.key === 'GLOBAL_ENABLE_NOTIFICATIONS'}
 							<ItemSwitch
 								label={prefDetails.name}
 								description={prefDetails.description}
@@ -175,27 +322,8 @@
 								}}
 							/>
 						{/if}
-					{/each} -->
+					{/each}
 				</div>
-			</CardWrapper>
-		</Tabs.Content>
-
-		<Tabs.Content value="karma_logs">
-			<CardWrapper title="Chain Trust Rating Changes">
-				{#if mobile.current}
-					<div class="grid gap-3">
-						{#each account.ctrLogs as log}
-							<Item
-								variant="outline"
-								title={`${log.delta > 0 ? '+' : ''}${log.delta} Karma`}
-								description={log.reason}
-								footer={`${standardDateFormat(log.createdAt)}`}
-							/>
-						{/each}
-					</div>
-				{:else}
-					<DataTable data={account.ctrLogs} columns={karmaLogColumns} />
-				{/if}
 			</CardWrapper>
 		</Tabs.Content>
 	</Tabs.Root>

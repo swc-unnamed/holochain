@@ -25,8 +25,8 @@
 		initial: () => ({
 			combineClientId: data.combineClientId,
 			combineClientSecret: data.combineClientSecret,
-			globalDisableNameVerification: data.globalDisableNameVerification,
-			globalRequireCombineAuth: data.globalRequireCombineAuth
+			discordClientId: data.discordClientId,
+			discordClientSecret: data.discordClientSecret
 		}),
 		onSuccess: () => {
 			toast.success('Configuration saved successfully');
@@ -44,8 +44,8 @@
 		<Alert.Title class="text-xl">Oy, read this!</Alert.Title>
 		<Alert.Description>
 			<p>
-				These settings are global and will affect <span class="text-destructive">all</span> users on
-				the platform. Be very when changing these settings.
+				These settings are global and will affect <span class="text-destructive">all</span> users on the
+				platform. Be very when changing these settings.
 			</p>
 		</Alert.Description>
 	</Alert.Root>
@@ -64,18 +64,6 @@
 				</Button>
 			</div>
 		{/snippet}
-		<div class="grid gap-4">
-			<ItemSwitch
-				label="Require Combine Authentication"
-				description="Require users to authenticate via the Combine for added security, enhancing trust and accountability on the platform. Only the accounts starting with um_ will be allowed to login without Combine authentication."
-				bind:checked={cmd.form.globalRequireCombineAuth}
-			/>
-			<ItemSwitch
-				label="Disable Name Verification"
-				description="Disable the name verification process during user registration and login, allowing users to choose any name without validation against the Combine database."
-				bind:checked={cmd.form.globalDisableNameVerification}
-			/>
-		</div>
 	</CardWrapper>
 
 	<CardWrapper title="Combine Settings">
@@ -83,12 +71,30 @@
 			<FieldInput
 				label="Combine Client ID"
 				bind:value={cmd.form.combineClientId}
-				class={cn(!showSecrets && 'blur-sm')}
+				class={cn(!showSecrets && 'blur-xs')}
 			/>
 			<FieldInput
 				label="Combine Client Secret"
 				bind:value={cmd.form.combineClientSecret}
-				class={cn(!showSecrets && 'blur-sm')}
+				class={cn(!showSecrets && 'blur-xs')}
+			/>
+		</div>
+	</CardWrapper>
+
+	<CardWrapper
+		title="Discord Settings"
+		description="Settings for Discord OAuth integration. This will allow users to sync their Holochain account with their Discord account, enabling features such as role assignment and notifications."
+	>
+		<div class="grid gap-4">
+			<FieldInput
+				label="Discord Client ID"
+				bind:value={cmd.form.discordClientId}
+				class={cn(!showSecrets && 'blur-xs')}
+			/>
+			<FieldInput
+				label="Discord Client Secret"
+				bind:value={cmd.form.discordClientSecret}
+				class={cn(!showSecrets && 'blur-xs')}
 			/>
 		</div>
 	</CardWrapper>

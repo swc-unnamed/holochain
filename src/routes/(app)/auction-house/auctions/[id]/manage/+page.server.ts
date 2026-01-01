@@ -1,6 +1,6 @@
 import { db } from '$lib/db/prisma';
 import { guard } from '$lib/utils/auth/server-guard.js';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals, params, depends }) => {
   guard(locals, ['AUCTIONEER']);
@@ -43,6 +43,10 @@ export const load = async ({ locals, params, depends }) => {
     throw error(404, {
       message: `Auction with ID ${id} not found`
     })
+  }
+
+  if (auction.status == 'COMPLETED') {
+    redirect(307, `/auction-house/auctions/${id}/results`);
   }
 
   return {
