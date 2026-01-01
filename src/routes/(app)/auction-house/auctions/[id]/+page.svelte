@@ -23,6 +23,7 @@
 	import { toAbbrCurrency } from '$lib/utils/helpers/shared/currency.js';
 	import Icon from '@iconify/svelte';
 	import { able } from '$lib/utils/auth/able.svelte.js';
+	import Item from '$lib/components/custom/item/item.svelte';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -161,29 +162,56 @@
 						</div>
 					</div>
 
-					<div class="mb-4 flex flex-wrap items-start justify-between gap-4">
-						<div>
-							<p class="whitespace-pre-wrap">
-								{currentLot.details || 'No details provided'}
-							</p>
+					<div class="flex w-full justify-between">
+						<div class="grid w-full gap-4">
+							<Item title="Details" variant="outline">
+								{#snippet footer()}
+									<span class="whitespace-pre-wrap">
+										{currentLot.details}
+									</span>
+								{/snippet}
+							</Item>
 							{#if currentLot.location}
-								<p class="mt-1 flex items-center gap-1 text-sm whitespace-pre-wrap">
-									<span>MAP_ICON</span>
-									{currentLot.location}
-								</p>
+								<Item title="Location" variant="outline">
+									{#snippet footer()}
+										<span class="whitespace-pre-wrap">
+											{currentLot.location}
+										</span>
+									{/snippet}
+								</Item>
+							{:else}
+								<Empty
+									title="No Location Provided"
+									description="Guess this is just a magical lot?"
+								/>
 							{/if}
 						</div>
-						<div class="text-right">
-							<p
-								class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
-							>
-								<Coins class="size-3" />
-								Starting Bid
-							</p>
-							<p class="text-3xl font-bold text-primary">
-								{toAbbrCurrency(currentLot.startPrice)}
-							</p>
-							<p class="text-sm text-muted-foreground">credits</p>
+
+						<div class="grid min-w-48 gap-3 text-right">
+							<div>
+								<p
+									class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
+								>
+									<Coins class="size-3" />
+									Starting Bid
+								</p>
+								<p class="text-3xl font-bold text-primary">
+									{toAbbrCurrency(currentLot.startPrice)}
+								</p>
+								<p class="text-sm text-muted-foreground">credits</p>
+							</div>
+							{#if currentLot.purchasePrice}
+								<p
+									class="flex items-center justify-end gap-1 text-xs text-muted-foreground uppercase"
+								>
+									<Coins class="size-3" />
+									Purchased for
+								</p>
+								<p class="text-3xl font-bold text-primary">
+									{toAbbrCurrency(currentLot.purchasePrice)}
+								</p>
+								<p class="text-sm text-muted-foreground">credits</p>
+							{/if}
 						</div>
 					</div>
 

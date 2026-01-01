@@ -29,7 +29,8 @@ export const broadcastAuctionLotEvent = inngest.createFunction(
             entity: {
               select: {
                 id: true,
-                name: true
+                name: true,
+                imageLarge: true
               }
             }
           }
@@ -40,6 +41,8 @@ export const broadcastAuctionLotEvent = inngest.createFunction(
     const startPrice = parseCurrency(lot.startPrice);
     const abbreviated = toAbbrCurrency(startPrice);
 
+    const firstItem = lot.items[0];
+
     const embed = new EmbedBuilder()
       .setAuthor({
         name: 'Unnamed Market',
@@ -47,7 +50,7 @@ export const broadcastAuctionLotEvent = inngest.createFunction(
         iconURL: `${env.ORIGIN}/images/uim-18.png`
       })
       .setURL(`${env.ORIGIN}/auction-house/lots/${lot.id}`)
-      .setImage(`${env.ORIGIN}/images/uim-18.png`)
+      .setImage(firstItem.entity?.imageLarge)
       .setFooter({
         text: `Powered by the Holochain`,
         iconURL: `${env.ORIGIN}/images/uim-18.png`

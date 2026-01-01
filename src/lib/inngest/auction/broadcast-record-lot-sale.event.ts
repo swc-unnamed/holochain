@@ -78,7 +78,6 @@ export const broadcastRecordLotSaleEvent = inngest.createFunction(
         url: env.ORIGIN,
         iconURL: `${env.ORIGIN}/images/uim-18.png`
       })
-      .setImage(`${env.ORIGIN}/images/uim-18.png`)
       .setFooter({
         text: `Powered by the Holochain`,
         iconURL: `${env.ORIGIN}/images/uim-18.png`

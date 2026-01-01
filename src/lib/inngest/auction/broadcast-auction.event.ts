@@ -51,7 +51,6 @@ export const broadcastAuctionEvent = inngest.createFunction(
         iconURL: `${env.ORIGIN}/images/uim-18.png`
       })
       .setURL(`${env.ORIGIN}/auction-house/auctions/${auction.id}`)
-      .setImage(`${env.ORIGIN}/images/uim-18.png`)
       .setFields([
         {
           name: 'Number of Lots',
