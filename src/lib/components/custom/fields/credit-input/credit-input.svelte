@@ -5,7 +5,6 @@
 		FieldError,
 		FieldDescription
 	} from '$lib/components/ui/field/index.js';
-	import { Input } from '$lib/components/ui/input';
 	import { STYLES } from '../styles';
 	import type { FieldInputProps } from '../field-input/field-input.types';
 	import * as InputGroup from '$lib/components/ui/input-group/index.js';
@@ -30,11 +29,16 @@
 	});
 
 	$effect(() => {
-		if (!value) return;
-		const clean = value.toString().replace(/,/g, '');
+		if (value === null || value === undefined) return;
+
+		const raw = value.toString();
+		const sanitized = raw.replace(/[^\d,]/g, '');
+		if (sanitized !== raw) value = sanitized;
+
+		const clean = sanitized.replace(/,/g, '');
 		if (clean === '' || Number.isNaN(Number(clean))) return;
 		const formatted = Number(clean).toLocaleString();
-		if (formatted !== value) value = formatted;
+		if (formatted !== sanitized) value = formatted;
 	});
 </script>
 
@@ -51,6 +55,8 @@
 	<InputGroup.Root>
 		<InputGroup.Input
 			aria-invalid={!!(issues?.length && issues.length > 0)}
+			inputmode="numeric"
+			pattern="[0-9,]*"
 			bind:value
 			{...props}
 		/>
