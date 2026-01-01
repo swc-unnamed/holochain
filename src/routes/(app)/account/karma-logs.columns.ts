@@ -1,10 +1,8 @@
-import UserKarma from "$lib/components/custom/user-karma/user-karma.svelte";
-import { renderComponent } from "$lib/components/ui/data-table";
-import type { UserKarmaLog } from "$lib/generated/prisma/client";
+import type { ChainTrustRatingLog } from "$lib/generated/prisma/client";
 import { standardDateFormat } from "$lib/utils/helpers/shared/date-formatter";
 import type { ColumnDef } from "@tanstack/table-core";
 
-export const karmaLogColumns: ColumnDef<UserKarmaLog>[] = [
+export const karmaLogColumns: ColumnDef<ChainTrustRatingLog>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Date',
@@ -16,10 +14,6 @@ export const karmaLogColumns: ColumnDef<UserKarmaLog>[] = [
   {
     accessorKey: 'delta',
     header: 'Change',
-    cell: ({ getValue }) => {
-      const delta = getValue<number>();
-      return renderComponent(UserKarma, { karma: delta });
-    }
   },
   {
     accessorKey: 'reason',

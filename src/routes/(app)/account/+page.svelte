@@ -5,7 +5,6 @@
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
 	import UserAvatar from '$lib/components/custom/user-avatar/user-avatar.svelte';
-	import UserKarma from '$lib/components/custom/user-karma/user-karma.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import { resetAnonId } from '$lib/remote/account/reset-anonid.remote.js';
@@ -85,7 +84,8 @@
 					<span>
 						{account.role}
 					</span>
-					<UserKarma karma={account.ctr} />
+					<span class="text-xs">•</span>
+					<span class="text-sm">CTR: {account.ctr}</span>
 				</div>
 			</div>
 		</div>

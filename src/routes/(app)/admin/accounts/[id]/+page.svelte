@@ -2,7 +2,6 @@
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import UserAvatar from '$lib/components/custom/user-avatar/user-avatar.svelte';
-	import UserKarma from '$lib/components/custom/user-karma/user-karma.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { FieldLabel } from '$lib/components/ui/field/index.js';
@@ -75,7 +74,8 @@
 					<span>{user.displayName}</span>
 					<div class="flex items-center gap-2 text-sm">
 						<span>{user.role}</span>
-						<UserKarma karma={user.ctr} />
+						<span class="text-xs">•</span>
+						<span class="text-sm">CTR: {user.ctr}</span>
 					</div>
 				</div>
 			</div>
