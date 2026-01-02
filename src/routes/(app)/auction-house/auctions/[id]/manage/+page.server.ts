@@ -12,6 +12,9 @@ export const load = async ({ locals, params, depends }) => {
     include: {
       lots: {
         orderBy: { lotNumber: 'asc' },
+        where: {
+          status: { not: 'WITHDRAWN' }
+        },
         include: {
           createdBy: {
             select: {

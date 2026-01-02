@@ -1,6 +1,9 @@
 import { db } from '$lib/db/prisma.js'
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params, locals, depends }) => {
+
+  depends('ah:lot:id');
+
   const lotCheck = await db.lot.findUniqueOrThrow({
     where: {
       id: params.id
