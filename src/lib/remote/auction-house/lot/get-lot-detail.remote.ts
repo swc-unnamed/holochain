@@ -11,7 +11,7 @@ export const getLotDetail = query(getLotDetailSchema, async (data) => {
         select: {
           id: true,
           displayName: true,
-          karma: true,
+          ctr: true,
           anonid: true
         }
       },
@@ -37,7 +37,7 @@ export const getLotDetail = query(getLotDetailSchema, async (data) => {
     const sanitizedCreator = selectedLot.createdBy ? {
       displayName: selectedLot.createdBy.displayName,
       id: selectedLot.createdBy.id,
-      karma: selectedLot.createdBy.karma,
+      karma: selectedLot.createdBy.ctr,
     } : {}
 
     return {

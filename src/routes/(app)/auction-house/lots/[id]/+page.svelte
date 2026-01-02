@@ -121,14 +121,7 @@
 									Withdraw Lot
 								</Button>
 							{/if}
-							<Button
-								size="sm"
-								onclick={() => {
-									toast.error('TODO: Implement edit lot functionality');
-								}}
-							>
-								Edit Lot
-							</Button>
+							<Button size="sm" href="/auction-house/lots/{lot.id}/edit">Edit Lot</Button>
 						</div>
 					{/if}
 				</div>

@@ -1,8 +1,9 @@
 import { db } from "$lib/db/prisma"
 import { guard } from "$lib/utils/auth/server-guard.js";
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, depends }) => {
   guard(locals, ['AUCTIONEER']);
+  depends('ah:lots:pending')
 
   const lots = await db.lot.findMany({
     where: {
