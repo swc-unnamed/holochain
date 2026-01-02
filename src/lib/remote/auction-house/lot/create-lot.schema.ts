@@ -18,5 +18,6 @@ export const createLotSchema = z.object({
     batch: z.boolean(),
     custom: z.boolean(),
     customImageUrl: z.url({ error: 'Image must be a valid URL' }).nullish(),
+    uuu: z.boolean().default(true),
   }))
 })

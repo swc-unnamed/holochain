@@ -23,7 +23,8 @@
 		quantity: 1,
 		batch: false,
 		custom: false,
-		customImageUrl: null as string | null
+		customImageUrl: null as string | null,
+		uuu: true
 	});
 
 	const createLotCmd = new CommandForm(createLotSchema, {
@@ -71,7 +72,8 @@
 			quantity: addLotItem.quantity,
 			batch: addLotItem.batch,
 			custom: addLotItem.custom,
-			customImageUrl: addLotItem.customImageUrl
+			customImageUrl: addLotItem.customImageUrl,
+			uuu: addLotItem.uuu
 		});
 
 		// Reset the add item form
@@ -81,7 +83,8 @@
 			quantity: 1,
 			batch: false,
 			custom: false,
-			customImageUrl: null
+			customImageUrl: null,
+			uuu: true
 		};
 	}
 </script>
@@ -137,6 +140,7 @@
 					<FieldInput type="number" label="Quantity" min="1" bind:value={addLotItem.quantity} />
 					<SwitchInput label="Batched Item" bind:checked={addLotItem.batch} />
 					<SwitchInput label="Custom Item" bind:checked={addLotItem.custom} />
+					<SwitchInput label="UUU" bind:checked={addLotItem.uuu} />
 
 					{#if addLotItem.custom}
 						<FieldInput
