@@ -5,7 +5,7 @@ import { db } from "$lib/db/prisma";
 
 export const updateAccount = command(updateAccountSchema, async (data) => {
   const { locals } = getRequestEvent();
-
+  console.log('Updating account with data:', data);
   try {
     await db.user.update({
       where: { id: locals.user.id },

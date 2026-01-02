@@ -13,7 +13,6 @@
 		updateAccountPreference
 	} from '$lib/remote/account/update-account.remote.js';
 	import { updateAccountSchema } from '$lib/remote/account/update-account.schema.js';
-	import { commandForm } from '$lib/utils/remote/command-form.svelte';
 	import { toast } from 'svelte-sonner';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
 	import * as Tabs from '$lib/components/custom/underline-tabs/index.js';
@@ -54,19 +53,17 @@
 	let selectedTab = $state('details');
 	let blurAnonId = $state(true);
 
-	let { form, submit } = $derived(
-		new CommandForm(updateAccountSchema, {
-			initial: () => ({
-				displayName: account.displayName,
-				avatarUrl: account.avatarUrl
-			}),
-			command: updateAccount,
-			invalidate: 'app:account',
-			onSuccess: () => {
-				toast.success('Account updated successfully.');
-			}
-		})
-	);
+	let { form, submit } = new CommandForm(updateAccountSchema, {
+		initial: () => ({
+			displayName: account.displayName,
+			avatarUrl: account.avatarUrl
+		}),
+		command: updateAccount,
+		invalidate: 'app:account',
+		onSuccess: () => {
+			toast.success('Account updated successfully.');
+		}
+	});
 
 	$effect(() => {
 		if (ctrLogs.totalCount) {
@@ -101,17 +98,24 @@
 
 <PageWrapper title="Account">
 	<CardWrapper>
-		<div class="flex items-center gap-3">
-			<UserAvatar id={account.id} />
-			<div class="flex flex-col gap-0">
-				<span>{account.displayName}</span>
-				<div class="flex items-center gap-2 text-sm">
-					<span>
-						{account.role}
-					</span>
-					<span class="text-xs">•</span>
-					<span class="text-sm">CTR: {account.ctr}</span>
+		<div class="flex items-center justify-between gap-3">
+			<div class="flex items-center gap-3">
+				<AvatarWrapper image={account.avatarUrl} />
+				<div class="flex flex-col gap-0">
+					<span>{account.displayName}</span>
+					<div class="flex items-center gap-2 text-sm">
+						<span>
+							{account.role}
+						</span>
+						<span class="text-xs">•</span>
+						<span class="text-sm">CTR: {account.ctr}</span>
+					</div>
 				</div>
+			</div>
+
+			<div class="flex items-center gap-2">
+				<Button size="sm" variant="ghost" onclick={resetAnonymousId}>Reset</Button>
+				<SwitchInput label="Blur ANONID" bind:checked={blurAnonId} class="w-48" />
 			</div>
 		</div>
 	</CardWrapper>
@@ -135,21 +139,7 @@
 								class={cn(blurAnonId && 'blur-xs', 'w-full transition-all')}
 								bind:value={account.anonid}
 								readonly
-							>
-								{#snippet descriptionSnippet()}
-									<div class="grid gap-1">
-										<span>
-											This is used as your Display Name when you have Anonymous mode enabled. It is
-											randomly generated and cannot be manually changed, but you can reset it to get
-											a new one.
-										</span>
-										<div class="flex items-center gap-2">
-											<Button size="sm" variant="ghost" onclick={resetAnonymousId}>Reset</Button>
-											<SwitchInput label="Blur ANONID" bind:checked={blurAnonId} class="w-48" />
-										</div>
-									</div>
-								{/snippet}
-							</FieldInput>
+							/>
 							<FieldInput label="Avatar URL" bind:value={form.avatarUrl} />
 						</div>
 
@@ -159,17 +149,10 @@
 							</div>
 						{/snippet}
 					</CardWrapper>
-
-					<CardWrapper
-						title="Account Info Card"
-						description="In certain parts of the Holochain, your account info will be displayed in a card format like this."
-					>
-						<UserInfoCard id={account.id} />
-					</CardWrapper>
 				</div>
 
 				<div>
-					<CardWrapper title="Account Status">
+					<CardWrapper title="Biometric Data">
 						<div class="grid gap-3">
 							<Item title="Combine Biometrics" variant="outline">
 								{#snippet footer()}
@@ -215,12 +198,12 @@
 									{:else}
 										<div class="grid gap-2">
 											<div class="grid grid-cols-2 gap-2">
-												<p>Discord ID</p>
-												<p>{account.discordId}</p>
+												<span>Discord ID</span>
+												<span>{account.discordId}</span>
 											</div>
 											<div class="grid grid-cols-2 gap-2">
-												<p>Discord Username</p>
-												<p>{account.discordUsername}</p>
+												<span>Discord Username</span>
+												<span>{account.discordUsername}</span>
 											</div>
 										</div>
 									{/if}

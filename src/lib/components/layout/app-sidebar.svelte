@@ -18,6 +18,7 @@
 	import { Badge } from '../ui/badge';
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
 	import { toast } from 'svelte-sonner';
+	import AvatarWrapper from '../custom/avatar-wrapper/avatar-wrapper.svelte';
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 	const url = $derived(new SvelteURL(page.url));
@@ -78,7 +79,9 @@
 			class="flex flex-col rounded-xl p-3 text-left hover:cursor-pointer hover:bg-background/50"
 		>
 			<div class="flex items-center gap-2">
-				<UserAvatar id={page.data.user.id} class="size-8" />
+				{#if page.data.user.avatarUrl}
+					<AvatarWrapper image={page.data.user.avatarUrl} class="size-8" />
+				{/if}
 				<div class="flex flex-col gap-0">
 					<span class="truncate">{page.data.user.displayName}</span>
 					<span class="text-xs text-muted-foreground">Personal Account</span>
