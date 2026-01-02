@@ -24,6 +24,10 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         url: "/auction-house/lots"
       },
       {
+        title: "Create Lot",
+        url: "/auction-house/lots/create",
+      },
+      {
         title: "Create Auction",
         url: "/auction-house/auctions/create",
         role: ['AUCTIONEER']

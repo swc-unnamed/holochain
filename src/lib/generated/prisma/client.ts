@@ -75,6 +75,11 @@ export type LotItem = Prisma.LotItemModel
  */
 export type AuctionConfiguration = Prisma.AuctionConfigurationModel
 /**
+ * Model ChainTrustRatingConfig
+ * 
+ */
+export type ChainTrustRatingConfig = Prisma.ChainTrustRatingConfigModel
+/**
  * Model Entity
  * 
  */
