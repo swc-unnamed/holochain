@@ -11,8 +11,10 @@ export const editLotSchema = z.object({
   location: z.string().max(500, { error: 'Location must be at most 500 characters' }),
   anonLot: z.boolean(),
   status: z.enum(LotStatus, { error: 'Invalid lot status' }),
-  startPrice: z.preprocess(
-    (value) => (typeof value === 'number' ? value.toString() : value),
-    z.string().regex(/^\d+(\.\d{1,2})?$/, { message: 'Invalid start price format' }),
-  ),
+  startPrice: z.string(),
+  createdById: z.cuid2({ error: 'Lot must have a creator' }),
+  creditsTo: z.string({ error: 'We have to know where to send the credits!' }),
+  purchasedById: z.cuid2().nullish(),
+  purchasedByMiddle: z.boolean().default(false),
+  purchasePrice: z.string().nullish()
 })

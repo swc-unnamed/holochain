@@ -226,6 +226,23 @@ export type EnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel = never
   _max?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
 }
 
+export type EnumChainTrustRatingKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChainTrustRatingKey | Prisma.EnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel> | $Enums.ChainTrustRatingKey
+}
+
+export type EnumChainTrustRatingKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChainTrustRatingKey | Prisma.EnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChainTrustRatingKeyWithAggregatesFilter<$PrismaModel> | $Enums.ChainTrustRatingKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel>
+}
+
 export type JsonFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -568,6 +585,23 @@ export type NestedEnumAuctionConfigurationKeyWithAggregatesFilter<$PrismaModel =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuctionConfigurationKeyFilter<$PrismaModel>
+}
+
+export type NestedEnumChainTrustRatingKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChainTrustRatingKey | Prisma.EnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel> | $Enums.ChainTrustRatingKey
+}
+
+export type NestedEnumChainTrustRatingKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChainTrustRatingKey | Prisma.EnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChainTrustRatingKey[] | Prisma.ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChainTrustRatingKeyWithAggregatesFilter<$PrismaModel> | $Enums.ChainTrustRatingKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChainTrustRatingKeyFilter<$PrismaModel>
 }
 
 export type NestedJsonFilter<$PrismaModel = never> =

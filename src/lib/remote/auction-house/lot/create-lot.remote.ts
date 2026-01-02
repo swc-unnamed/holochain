@@ -29,6 +29,7 @@ export const createLot = command(createLotSchema, async (data) => {
             batch: item.batch,
             custom: item.custom,
             customImageUrl: item.customImageUrl || null,
+            uuu: item.uuu,
           }))
         }
       },

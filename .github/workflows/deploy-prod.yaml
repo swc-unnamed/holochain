@@ -1,4 +1,4 @@
-name: Deploy - Dev
+name: Deploy - Prod
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: dev
+      name: prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/swc-unnamed/holochain:dev
+          tags: ghcr.io/swc-unnamed/holochain:latest
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2

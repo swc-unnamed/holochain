@@ -58,6 +58,7 @@ export const ModelName = {
   LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
+  ChainTrustRatingConfig: 'ChainTrustRatingConfig',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
@@ -177,6 +178,16 @@ export const AuctionConfigurationScalarFieldEnum = {
 } as const
 
 export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
+
+
+export const ChainTrustRatingConfigScalarFieldEnum = {
+  key: 'key',
+  points: 'points',
+  reason: 'reason',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChainTrustRatingConfigScalarFieldEnum = (typeof ChainTrustRatingConfigScalarFieldEnum)[keyof typeof ChainTrustRatingConfigScalarFieldEnum]
 
 
 export const EntityScalarFieldEnum = {

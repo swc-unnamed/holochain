@@ -10,6 +10,8 @@
 
 	const sidebar = useSidebar();
 	const mobile = new IsMobile();
+
+	const VERSION = 'v0.2.0';
 </script>
 
 <Sidebar.Menu>
@@ -19,7 +21,7 @@
 				<img src="/images/uim-18.png" alt="logo" class="size-10" />
 				<div class="flex flex-col gap-0 leading-0">
 					<span class="text-sm font-bold">Holochain</span>
-					<span class="text-xs text-muted-foreground"> v0.1.0 </span>
+					<span class="text-xs text-muted-foreground"> {VERSION} </span>
 				</div>
 			</div>
 			<div>

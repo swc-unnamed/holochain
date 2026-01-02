@@ -1,14 +1,10 @@
 <script lang="ts">
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
-	import { ItemSwitch } from '$lib/components/custom/item-switch/index.js';
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
-	import { SiteConfig } from '$lib/types/site-config-detail';
 	import * as Alert from '$lib/components/ui/alert';
-	import { commandForm } from '$lib/utils/remote/command-form.svelte.js';
 	import { updateAdminConfig } from '$lib/remote/admin/config/update-config.remote.js';
 	import { updateAdminConfigSchema } from '$lib/remote/admin/config/update-config.schema.js';
-	import type { SiteConfigurationKey } from '$lib/generated/prisma/enums';
 	import { toast } from 'svelte-sonner';
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
 	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
@@ -16,6 +12,11 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { SaveIcon } from '@lucide/svelte';
 	import { Spinner } from '$lib/components/ui/spinner/index.js';
+	import * as Tabs from '$lib/components/custom/underline-tabs';
+	import { ChainTrustRatingKey } from '$lib/generated/prisma/enums';
+	import { CTREvent } from '$lib/types/ctr-event-detail';
+	import { updateCtrConfig } from '$lib/remote/admin/config/update-ctr-config.remote.js';
+	import { updateCtrConfigSchema } from '$lib/remote/admin/config/update-ctr-config.schema.js';
 
 	let { data } = $props();
 	let showSecrets = $state(false);
@@ -37,65 +38,137 @@
 			});
 		}
 	});
+
+	const ctrCmd = new CommandForm(updateCtrConfigSchema, {
+		command: updateCtrConfig,
+		initial: () => ({
+			data: data.ctrConfig
+		}),
+		onSuccess: () => {
+			toast.success('Chain Trust Rating configuration saved successfully');
+		},
+		onError: () => {
+			toast.error('Failed to save Chain Trust Rating configuration');
+		}
+	});
 </script>
 
 <PageWrapper title="Configuration">
-	<Alert.Root class="border-destructive">
-		<Alert.Title class="text-xl">Oy, read this!</Alert.Title>
-		<Alert.Description>
-			<p>
-				These settings are global and will affect <span class="text-destructive">all</span> users on the
-				platform. Be very when changing these settings.
-			</p>
-		</Alert.Description>
-	</Alert.Root>
+	<Tabs.Root value="ctr">
+		<Tabs.List>
+			<Tabs.Trigger value="ctr">Chain Trust Rating Config</Tabs.Trigger>
+			<Tabs.Trigger value="biometrics">Biometrics Config</Tabs.Trigger>
+		</Tabs.List>
 
-	<CardWrapper title="Global Settings">
-		{#snippet header()}
-			<div class="flex items-center gap-2">
-				<SwitchInput label="Show Secrets" bind:checked={showSecrets} />
-				<Button variant="outline" size="sm" onclick={cmd.submit} disabled={cmd.submitting}>
-					{#if cmd.submitting}
-						<Spinner />
-					{:else}
-						<SaveIcon class="size-4" />
-					{/if}
-					<span>Save Changes</span>
-				</Button>
+		<Tabs.Content value="ctr">
+			<CardWrapper title="Chain Trust Rating Configuration">
+				{#snippet header()}
+					<Button onclick={ctrCmd.submit} disabled={ctrCmd.submitting} variant="outline" size="sm">
+						{#if ctrCmd.submitting}
+							<Spinner />
+						{:else}
+							<SaveIcon class="size-4" />
+						{/if}
+						Save Changes
+					</Button>
+				{/snippet}
+				<ul class="mb-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+					<li>
+						Adjust the points and reasons for various Chain Trust Rating events below. These
+						settings determine how user actions impact their overall trust score within the
+						Holochain ecosystem.
+					</li>
+					<li>
+						Positive points increase a user's trust score, while negative points decrease it. The
+						reason provided will be displayed to users in their Chain Trust Rating history.
+					</li>
+					<li>Make sure to save your changes after adjusting the settings.</li>
+					<li>
+						To disable a specific event from affecting the Chain Trust Rating, set its points to
+						zero.
+					</li>
+					<li>
+						The Holochain is built on transparency. If you change a value - ensure you communicate
+						it to the masses. These settings will be publicly visible on the Holocron.
+					</li>
+				</ul>
+
+				<div class="grid gap-3">
+					{#each ctrCmd.form.data as ctr, index (ctr.key)}
+						<div class="grid gap-2 rounded-md border p-4">
+							<h4>{ctr.key}</h4>
+							<span class="text-sm text-muted-foreground">
+								{CTREvent[ctr.key].description}
+							</span>
+							<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+								<FieldInput
+									label="Points"
+									type="number"
+									description="Positive or negative points to adjust the user's trust score"
+									bind:value={ctrCmd.form.data![index].points}
+								/>
+								<FieldInput
+									label="Reason"
+									bind:value={ctrCmd.form.data![index].reason}
+									description="A brief explanation of why these points were assigned, shown to users in their Chain Trust Rating history"
+								/>
+							</div>
+						</div>
+					{/each}
+				</div>
+			</CardWrapper>
+		</Tabs.Content>
+
+		<Tabs.Content value="biometrics">
+			<div class="grid gap-3">
+				<CardWrapper title="Biometrics OAuth Settings">
+					{#snippet header()}
+						<div class="flex items-center gap-2">
+							<SwitchInput label="Show Secrets" bind:checked={showSecrets} />
+							<Button variant="outline" size="sm" onclick={cmd.submit} disabled={cmd.submitting}>
+								{#if cmd.submitting}
+									<Spinner />
+								{:else}
+									<SaveIcon class="size-4" />
+								{/if}
+								<span>Save Changes</span>
+							</Button>
+						</div>
+					{/snippet}
+				</CardWrapper>
+				<CardWrapper title="Combine Settings">
+					<div class="grid gap-4">
+						<FieldInput
+							label="Combine Client ID"
+							bind:value={cmd.form.combineClientId}
+							class={cn(!showSecrets && 'blur-xs')}
+						/>
+						<FieldInput
+							label="Combine Client Secret"
+							bind:value={cmd.form.combineClientSecret}
+							class={cn(!showSecrets && 'blur-xs')}
+						/>
+					</div>
+				</CardWrapper>
+
+				<CardWrapper
+					title="Discord Settings"
+					description="Settings for Discord OAuth integration. This will allow users to sync their Holochain account with their Discord account, enabling features such as role assignment and notifications."
+				>
+					<div class="grid gap-4">
+						<FieldInput
+							label="Discord Client ID"
+							bind:value={cmd.form.discordClientId}
+							class={cn(!showSecrets && 'blur-xs')}
+						/>
+						<FieldInput
+							label="Discord Client Secret"
+							bind:value={cmd.form.discordClientSecret}
+							class={cn(!showSecrets && 'blur-xs')}
+						/>
+					</div>
+				</CardWrapper>
 			</div>
-		{/snippet}
-	</CardWrapper>
-
-	<CardWrapper title="Combine Settings">
-		<div class="grid gap-4">
-			<FieldInput
-				label="Combine Client ID"
-				bind:value={cmd.form.combineClientId}
-				class={cn(!showSecrets && 'blur-xs')}
-			/>
-			<FieldInput
-				label="Combine Client Secret"
-				bind:value={cmd.form.combineClientSecret}
-				class={cn(!showSecrets && 'blur-xs')}
-			/>
-		</div>
-	</CardWrapper>
-
-	<CardWrapper
-		title="Discord Settings"
-		description="Settings for Discord OAuth integration. This will allow users to sync their Holochain account with their Discord account, enabling features such as role assignment and notifications."
-	>
-		<div class="grid gap-4">
-			<FieldInput
-				label="Discord Client ID"
-				bind:value={cmd.form.discordClientId}
-				class={cn(!showSecrets && 'blur-xs')}
-			/>
-			<FieldInput
-				label="Discord Client Secret"
-				bind:value={cmd.form.discordClientSecret}
-				class={cn(!showSecrets && 'blur-xs')}
-			/>
-		</div>
-	</CardWrapper>
+		</Tabs.Content>
+	</Tabs.Root>
 </PageWrapper>

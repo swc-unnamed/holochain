@@ -13,6 +13,12 @@
 	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
 	import { able } from '$lib/utils/auth/able.svelte.js';
 	import CreditInput from '$lib/components/custom/fields/credit-input/credit-input.svelte';
+	import { CommandForm } from '@akcodeworks/svelte-command-form';
+	import { withdrawLotSchema } from '$lib/remote/auction-house/lot/withdraw-lot.schema.js';
+	import { withdrawLot } from '$lib/remote/auction-house/lot/withdraw-lot.remote.js';
+	import type { HttpError } from '@sveltejs/kit';
+	import { withdrawLotAdminSchema } from '$lib/remote/auction-house/lot/withdraw-lot-admin.schema.js';
+	import { withdrawLotAdmin } from '$lib/remote/auction-house/lot/withdraw-lot-admin.remote.js';
 
 	const { data } = $props();
 	const lot = $derived(data.lot);
@@ -24,6 +30,39 @@
 	let canWithdraw = $derived(
 		lot.status !== 'WITHDRAWN' && lot.status !== 'COMPLETED' && lot.status !== 'SOLD' && isOwner
 	);
+
+	const withdrawCmd = new CommandForm(withdrawLotSchema, {
+		command: withdrawLot,
+		initial: () => ({
+			id: lot.id
+		}),
+		invalidate: 'ah:lot:id',
+		onSuccess: () => {
+			toast.success('Lot withdrawn successfully.');
+			showWithdrawDialog = false;
+		},
+		onError: (err) => {
+			const errMessage = (err as HttpError).body.message || 'Failed to withdraw lot.';
+			toast.error(errMessage);
+		}
+	});
+
+	const withdrawLotAdminCmd = new CommandForm(withdrawLotAdminSchema, {
+		command: withdrawLotAdmin,
+		initial: () => ({
+			id: lot.id,
+			noCtrImpact: false
+		}),
+		invalidate: 'ah:lot:id',
+		onSuccess: () => {
+			toast.success('Lot withdrawn successfully.');
+			showWithdrawDialog = false;
+		},
+		onError: (err) => {
+			const errMessage = (err as HttpError).body.message || 'Failed to withdraw lot.';
+			toast.error(errMessage);
+		}
+	});
 </script>
 
 <PageWrapper title="Lot Details">
@@ -121,7 +160,10 @@
 									Withdraw Lot
 								</Button>
 							{/if}
-							<Button size="sm" href="/auction-house/lots/{lot.id}/edit">Edit Lot</Button>
+
+							{#if able('AUCTIONEER')}
+								<Button size="sm" href="/auction-house/lots/{lot.id}/manage">Manage Lot</Button>
+							{/if}
 						</div>
 					{/if}
 				</div>
@@ -147,12 +189,24 @@
 		{#snippet footer()}
 			<div class="flex items-center gap-2">
 				{#if able('AUCTIONEER')}
-					<Button size="sm" variant="ghost">Withdraw and Retain CTR</Button>
+					<Button
+						size="sm"
+						variant="secondary"
+						onclick={async () => {
+							withdrawLotAdminCmd.form.noCtrImpact = true;
+							await withdrawLotAdminCmd.submit();
+						}}
+						disabled={withdrawLotAdminCmd.submitting}
+					>
+						Withdraw and Retain CTR
+					</Button>
 				{/if}
 				<Button size="sm" variant="secondary" onclick={() => (showWithdrawDialog = false)}>
 					Cancel
 				</Button>
-				<Button size="sm">Withdraw Lot</Button>
+				<Button size="sm" onclick={withdrawCmd.submit} disabled={withdrawCmd.submitting}>
+					Withdraw Lot
+				</Button>
 			</div>
 		{/snippet}
 	</ResponsiveDialog>

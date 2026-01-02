@@ -391,6 +391,7 @@ export const ModelName = {
   LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
+  ChainTrustRatingConfig: 'ChainTrustRatingConfig',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "chainTrustRatingLog"
+    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "chainTrustRatingLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -931,6 +932,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuctionConfigurationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuctionConfigurationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChainTrustRatingConfig: {
+      payload: Prisma.$ChainTrustRatingConfigPayload<ExtArgs>
+      fields: Prisma.ChainTrustRatingConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChainTrustRatingConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChainTrustRatingConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.ChainTrustRatingConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChainTrustRatingConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        findMany: {
+          args: Prisma.ChainTrustRatingConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>[]
+        }
+        create: {
+          args: Prisma.ChainTrustRatingConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        createMany: {
+          args: Prisma.ChainTrustRatingConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChainTrustRatingConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.ChainTrustRatingConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        update: {
+          args: Prisma.ChainTrustRatingConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChainTrustRatingConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChainTrustRatingConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChainTrustRatingConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChainTrustRatingConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.ChainTrustRatingConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChainTrustRatingConfig>
+        }
+        groupBy: {
+          args: Prisma.ChainTrustRatingConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChainTrustRatingConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingConfigCountAggregateOutputType> | number
         }
       }
     }
@@ -1514,6 +1589,16 @@ export const AuctionConfigurationScalarFieldEnum = {
 export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
 
 
+export const ChainTrustRatingConfigScalarFieldEnum = {
+  key: 'key',
+  points: 'points',
+  reason: 'reason',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChainTrustRatingConfigScalarFieldEnum = (typeof ChainTrustRatingConfigScalarFieldEnum)[keyof typeof ChainTrustRatingConfigScalarFieldEnum]
+
+
 export const EntityScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1734,6 +1819,20 @@ export type ListEnumAuctionConfigurationKeyFieldRefInput<$PrismaModel> = FieldRe
 
 
 /**
+ * Reference to a field of type 'ChainTrustRatingKey'
+ */
+export type EnumChainTrustRatingKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChainTrustRatingKey'>
+    
+
+
+/**
+ * Reference to a field of type 'ChainTrustRatingKey[]'
+ */
+export type ListEnumChainTrustRatingKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChainTrustRatingKey[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -1918,6 +2017,7 @@ export type GlobalOmitConfig = {
   lotHistory?: Prisma.LotHistoryOmit
   lotItem?: Prisma.LotItemOmit
   auctionConfiguration?: Prisma.AuctionConfigurationOmit
+  chainTrustRatingConfig?: Prisma.ChainTrustRatingConfigOmit
   entity?: Prisma.EntityOmit
   entityTransaction?: Prisma.EntityTransactionOmit
   siteConfiguration?: Prisma.SiteConfigurationOmit
