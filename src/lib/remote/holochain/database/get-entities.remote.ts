@@ -12,6 +12,7 @@ export const getEntities = query(dynamicQuery, async (data) => {
       id: true,
       name: true,
       imageSmall: true,
+      imageLarge: true,
       type: true,
       _count: {
         select: {
@@ -24,8 +25,18 @@ export const getEntities = query(dynamicQuery, async (data) => {
     }
   });
 
-  // Generate a Set of entity types
-  const entityTypes = new Set(entities.map(({ type }) => type).filter((value): value is string => Boolean(value)));
+  return { records: entities, totalCount };
+});
 
-  return { records: entities, totalCount, entityTypes: Array.from(entityTypes) };
-})
+export const getEntityTypes = query(async () => {
+  const entities = await db.entity.findMany({
+    select: {
+      type: true
+    },
+    distinct: ['type']
+  });
+
+  return {
+    types: entities
+  }
+});

@@ -1,4 +1,5 @@
-import { expandWherePath, expandOrderPath } from './query-state.helpers';
+import { expandWherePath, expandOrderPath, isListField } from './query-state.helpers';
+import type { DateOperatorValue, DateOperators, WhereValue } from './query-state.types';
 import type {
   WhereFields,
   OrderFields,
@@ -7,28 +8,32 @@ import type {
 } from './query-state.types';
 
 export class QueryState<TModel> {
-  #whereState = $state<Partial<Record<WhereFields<TModel>, string | string[]>>>({});
+  #whereState = $state<Partial<Record<WhereFields<TModel>, WhereValue>>>({});
+  #whereDateState = $state<Partial<Record<WhereFields<TModel>, DateOperators>>>({});
+
   #orderState = $state<Array<{ field: OrderFields<TModel>; direction: 'asc' | 'desc' }>>([]);
 
   // pagination mode
   #paginationMode = $state<'none' | 'offset' | 'cursor'>('none');
 
-  // offset
+  // offset pagination
   #offsetSkip = $state(0);
   #offsetTake = $state(50);
   #offsetTotalCount = $state<number | null>(null);
 
-  // cursor
+  // cursor pagination
   #cursorTake = $state(20);
   #cursorCursor = $state<string | null>(null);
   #cursorDirection = $state<CursorDirection>('forward');
 
   constructor(initial?: {
-    where?: Partial<Record<WhereFields<TModel>, string | string[]>>;
+    where?: Partial<Record<WhereFields<TModel>, WhereValue>>;
+    whereDate?: Partial<Record<WhereFields<TModel>, DateOperators>>;
     order?: Array<{ field: OrderFields<TModel>; direction: 'asc' | 'desc' }>;
     pagination?: PaginationConfig;
   }) {
     if (initial?.where) this.#whereState = initial.where;
+    if (initial?.whereDate) this.#whereDateState = initial.whereDate;
     if (initial?.order) this.#orderState = initial.order;
 
     const p = initial?.pagination;
@@ -55,21 +60,42 @@ export class QueryState<TModel> {
       add(field, value) {
         const existing = self.#whereState[field];
 
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+          self.#whereState[field] = value;
+          return;
+        }
+
         if (existing === undefined) {
           self.#whereState[field] = value;
-        } else if (typeof existing === 'string') {
-          self.#whereState[field] = [existing, value];
-        } else {
-          self.#whereState[field] = [...existing, value];
+          return;
         }
+
+        if (Array.isArray(existing)) {
+          self.#whereState[field] = [...existing, value];
+          return;
+        }
+
+        if (typeof existing === 'string' || typeof existing === 'number') {
+          self.#whereState[field] = [existing, value] as WhereValue;
+          return;
+        }
+
+        if (typeof existing === 'object' && existing !== null) {
+          self.#whereState[field] = value;
+          return;
+        }
+
+        self.#whereState[field] = value;
       },
 
       remove(field) {
         delete self.#whereState[field];
+        delete self.#whereDateState[field as WhereFields<TModel>];
       },
 
       clear() {
         self.#whereState = {};
+        self.#whereDateState = {};
       },
 
       removeOne(field, value) {
@@ -81,9 +107,11 @@ export class QueryState<TModel> {
           return;
         }
 
+        if (!Array.isArray(existing)) return;
+
         const next = existing.filter((v) => v !== value);
         if (next.length === 0) delete self.#whereState[field];
-        else self.#whereState[field] = next;
+        else self.#whereState[field] = next as WhereValue;
       },
 
       values(field) {
@@ -91,7 +119,70 @@ export class QueryState<TModel> {
         if (!v) return [];
         return Array.isArray(v) ? v : [v];
       },
+      setDate(field, ops) {
+        const isValidDateValue = (value: unknown): value is DateOperatorValue => {
+          if (value instanceof Date) return !Number.isNaN(value.getTime());
+          if (typeof value === 'string') return !Number.isNaN(Date.parse(value));
+          return false;
+        };
 
+        const validateOperators = (operators: DateOperators): boolean => {
+          for (const value of Object.values(operators)) {
+            if (value === undefined) continue;
+
+            if (Array.isArray(value)) {
+              if (!value.every(isValidDateValue)) return false;
+              continue;
+            }
+
+            if (value instanceof Date || typeof value === 'string') {
+              if (!isValidDateValue(value)) return false;
+              continue;
+            }
+
+            if (typeof value === 'object') {
+              if (!validateOperators(value as DateOperators)) return false;
+              continue;
+            }
+
+            return false;
+          }
+
+          return true;
+        };
+
+        if (!validateOperators(ops)) return;
+
+        self.#whereDateState[field] = ops;
+      },
+      clearDates() {
+        self.#whereDateState = {};
+      },
+      dateValue(field) {
+        return self.#whereDateState[field];
+      },
+      dateValues() {
+        const results: Array<{
+          field: WhereFields<TModel>;
+          op: keyof DateOperators;
+          value: Exclude<DateOperators[keyof DateOperators], undefined>;
+        }> = [];
+
+        for (const [field, ops] of Object.entries(self.#whereDateState)) {
+          if (!ops) continue;
+
+          for (const [op, value] of Object.entries(ops)) {
+            if (value === undefined) continue;
+            results.push({
+              field: field as WhereFields<TModel>,
+              op: op as keyof DateOperators,
+              value: value as Exclude<DateOperators[keyof DateOperators], undefined>
+            });
+          }
+        }
+
+        return results;
+      },
       get value() {
         return self.#whereState;
       }
@@ -113,14 +204,12 @@ export class QueryState<TModel> {
 
       toggle(field) {
         const existing = self.#orderState.find((o) => o.field === field);
-
         if (!existing) {
           self.#orderState = [...self.#orderState, { field, direction: 'asc' }];
           return;
         }
 
         const nextDir = existing.direction === 'asc' ? 'desc' : 'asc';
-
         self.#orderState = self.#orderState.map((o) =>
           o.field === field ? { field, direction: nextDir } : o
         );
@@ -128,17 +217,29 @@ export class QueryState<TModel> {
 
       get value() {
         return self.#orderState;
+      },
+
+      get dates() {
+        return self.#whereDateState;
       }
     };
   }
 
   where!: {
-    add: (field: WhereFields<TModel>, value: string) => void;
+    add: (field: WhereFields<TModel>, value: WhereValue) => void;
     remove: (field: WhereFields<TModel>) => void;
     clear: () => void;
-    values: (field: WhereFields<TModel>) => string[];
+    clearDates: () => void;
+    values: (field: WhereFields<TModel>) => WhereValue[];
+    dateValue: (field: WhereFields<TModel>) => DateOperators | undefined;
+    dateValues: () => Array<{
+      field: WhereFields<TModel>;
+      op: keyof DateOperators;
+      value: Exclude<DateOperators[keyof DateOperators], undefined>;
+    }>;
     removeOne: (field: WhereFields<TModel>, value: string) => void;
-    readonly value: Partial<Record<WhereFields<TModel>, string | string[]>>;
+    setDate: (field: WhereFields<TModel>, ops: DateOperators) => void;
+    readonly value: Partial<Record<WhereFields<TModel>, WhereValue>>;
   };
 
   order!: {
@@ -147,6 +248,7 @@ export class QueryState<TModel> {
     clear: () => void;
     toggle: (field: OrderFields<TModel>) => void;
     readonly value: Array<{ field: OrderFields<TModel>; direction: 'asc' | 'desc' }>;
+    readonly dates: Partial<Record<WhereFields<TModel>, DateOperators>>;
   };
 
   next(cursorFromLastItem?: string) {
@@ -197,24 +299,39 @@ export class QueryState<TModel> {
   get count() {
     return this.#offsetTotalCount;
   }
-
   current = $derived.by(() => {
     const where: Record<string, unknown> = {};
+
+    const modelExample = {} as TModel;
 
     for (const [field, rawUnknown] of Object.entries(this.#whereState)) {
       const raw = rawUnknown as string | string[];
 
-      const value: string | { in: string[] } = Array.isArray(raw) ? { in: raw } : raw;
+      const listField = isListField(modelExample, field);
+
+      let value: WhereValue;
+      if (listField) {
+        if (Array.isArray(raw)) {
+          value = { hasSome: raw };
+        } else {
+          value = { has: raw };
+        }
+      } else {
+        // existing behavior (non-breaking)
+        value = Array.isArray(raw) ? { in: raw } : raw;
+      }
 
       Object.assign(where, expandWherePath(field, value));
     }
 
+    for (const [field, ops] of Object.entries(this.#whereDateState)) {
+      if (!ops) continue;
+      Object.assign(where, expandWherePath(field, ops));
+    }
+
     const base = {
       where,
-      orderBy: this.#orderState.map((o) => expandOrderPath(o.field, o.direction)) as Record<
-        string,
-        unknown
-      >[]
+      orderBy: this.#orderState.map((o) => expandOrderPath(o.field, o.direction))
     };
 
     if (this.#paginationMode === 'offset') {

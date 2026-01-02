@@ -1,4 +1,6 @@
-function expandWherePath(path: string, value: string | { in: string[] }) {
+import type { WhereValue } from './query-state.types';
+
+function expandWherePath(path: string, value: WhereValue) {
   return path
     .split('.')
     .reverse()
@@ -20,4 +22,8 @@ function expandOrderPath(path: string, direction: 'asc' | 'desc') {
   return result;
 }
 
-export { expandWherePath, expandOrderPath };
+function isListField<T>(model: T, field: string): boolean {
+  const value = (model as Record<string, unknown>)[field];
+  return Array.isArray(value);
+}
+export { expandWherePath, expandOrderPath, isListField };
