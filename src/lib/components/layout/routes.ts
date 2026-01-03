@@ -127,6 +127,11 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         role: ['DEVELOPER', 'TZAR']
       },
       {
+        title: "API Clients",
+        url: "/admin/clients",
+        role: ['DEVELOPER', 'TZAR']
+      },
+      {
         title: "Account Management",
         url: "/admin/accounts",
         role: ['DEVELOPER', 'TZAR']

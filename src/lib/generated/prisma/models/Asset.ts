@@ -341,14 +341,6 @@ export type AssetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type AssetCreateNestedOneWithoutImagesInput = {
   create?: Prisma.XOR<Prisma.AssetCreateWithoutImagesInput, Prisma.AssetUncheckedCreateWithoutImagesInput>
   connectOrCreate?: Prisma.AssetCreateOrConnectWithoutImagesInput

@@ -51,6 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  ApiClient: 'ApiClient',
+  ApiClientLog: 'ApiClientLog',
   Asset: 'Asset',
   AssetImage: 'AssetImage',
   Auction: 'Auction',
@@ -81,6 +83,37 @@ export const TransactionIsolationLevel = {
 } as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const ApiClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  apiKey: 'apiKey',
+  ownerId: 'ownerId',
+  scopes: 'scopes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastUsedAt: 'lastUsedAt',
+  status: 'status'
+} as const
+
+export type ApiClientScalarFieldEnum = (typeof ApiClientScalarFieldEnum)[keyof typeof ApiClientScalarFieldEnum]
+
+
+export const ApiClientLogScalarFieldEnum = {
+  id: 'id',
+  apiClientId: 'apiClientId',
+  endpoint: 'endpoint',
+  method: 'method',
+  timestamp: 'timestamp',
+  latencyMs: 'latencyMs',
+  status: 'status',
+  statusText: 'statusText',
+  payload: 'payload'
+} as const
+
+export type ApiClientLogScalarFieldEnum = (typeof ApiClientLogScalarFieldEnum)[keyof typeof ApiClientLogScalarFieldEnum]
 
 
 export const AssetScalarFieldEnum = {

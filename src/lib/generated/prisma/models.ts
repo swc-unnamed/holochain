@@ -8,6 +8,8 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/ApiClient'
+export type * from './models/ApiClientLog'
 export type * from './models/Asset'
 export type * from './models/AssetImage'
 export type * from './models/Auction'

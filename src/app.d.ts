@@ -1,5 +1,5 @@
 import type { UserPreference } from "$lib/generated/prisma/browser";
-import type { AppRole } from "$lib/generated/prisma/enums";
+import type { ApiClientScope, AppRole } from "$lib/generated/prisma/enums";
 
 declare global {
 
@@ -21,6 +21,11 @@ declare global {
     anonid: string;
   }
 
+  interface ApiClient {
+    id: string;
+    scopes: ApiClientScope[];
+  }
+
   namespace App {
     interface Error {
       message: string;
@@ -28,6 +33,7 @@ declare global {
     }
     interface Locals {
       user: User;
+      apiClient?: ApiClient;
     }
     interface PageData {
       user: User;

@@ -1,0 +1,50 @@
+model ApiClient {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  description String
+  apiKey      String           @unique @map("api_key")
+  ownerId     String           @map("owner_id")
+  owner       User             @relation(fields: [ownerId], references: [id])
+  scopes      ApiClientScope[] @default([])
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  lastUsedAt  DateTime?        @map("last_used_at")
+  status      ApiClientStatus  @default(PENDING)
+  logs        ApiClientLog[]
+
+  @@map("api_clients")
+}
+
+model ApiClientLog {
+  id          String    @id @default(cuid())
+  apiClientId String    @map("api_client_id")
+  apiClient   ApiClient @relation(fields: [apiClientId], references: [id])
+  endpoint    String
+  method      String
+  timestamp   DateTime  @default(now())
+  latencyMs   Int       @map("latency_ms")
+  status      Int
+  statusText  String    @map("status_text")
+  payload     String?
+
+  @@map("api_client_logs")
+}
+
+enum ApiClientScope {
+  HOLOCHAIN_DATABASE_READ
+  HOLOCHAIN_TRANSACTIONS_READ
+  HOLOCHAIN_TRANSACTIONS_WRITE
+  MARKET_READ_CONTRACTS
+  MARKET_LIST_CONTRACTS
+  MARKET_CREATE_CONTRACTS
+
+  @@map("api_client_scopes")
+}
+
+enum ApiClientStatus {
+  PENDING
+  APPROVED
+  REVOKED
+
+  @@map("api_client_statuses")
+}
