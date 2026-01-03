@@ -59,12 +59,12 @@ export const ModelName = {
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
   ChainTrustRatingConfig: 'ChainTrustRatingConfig',
+  ChainTrustRatingLog: 'ChainTrustRatingLog',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
   User: 'User',
-  UserPreference: 'UserPreference',
-  ChainTrustRatingLog: 'ChainTrustRatingLog'
+  UserPreference: 'UserPreference'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -130,6 +130,7 @@ export const LotScalarFieldEnum = {
   createdById: 'createdById',
   purchasedById: 'purchasedById',
   purchasedByMiddle: 'purchasedByMiddle',
+  middleId: 'middleId',
   startPrice: 'startPrice',
   purchasePrice: 'purchasePrice',
   anonLot: 'anonLot',
@@ -184,10 +185,23 @@ export const ChainTrustRatingConfigScalarFieldEnum = {
   key: 'key',
   points: 'points',
   reason: 'reason',
+  icon: 'icon',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChainTrustRatingConfigScalarFieldEnum = (typeof ChainTrustRatingConfigScalarFieldEnum)[keyof typeof ChainTrustRatingConfigScalarFieldEnum]
+
+
+export const ChainTrustRatingLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  event: 'event',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const EntityScalarFieldEnum = {
@@ -259,17 +273,6 @@ export const UserPreferenceScalarFieldEnum = {
 } as const
 
 export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
-
-
-export const ChainTrustRatingLogScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  delta: 'delta',
-  reason: 'reason',
-  createdAt: 'createdAt'
-} as const
-
-export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const SortOrder = {

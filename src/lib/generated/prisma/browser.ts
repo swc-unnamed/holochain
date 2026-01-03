@@ -58,6 +58,11 @@ export type AuctionConfiguration = Prisma.AuctionConfigurationModel
  */
 export type ChainTrustRatingConfig = Prisma.ChainTrustRatingConfigModel
 /**
+ * Model ChainTrustRatingLog
+ * 
+ */
+export type ChainTrustRatingLog = Prisma.ChainTrustRatingLogModel
+/**
  * Model Entity
  * 
  */
@@ -82,8 +87,3 @@ export type User = Prisma.UserModel
  * 
  */
 export type UserPreference = Prisma.UserPreferenceModel
-/**
- * Model ChainTrustRatingLog
- * 
- */
-export type ChainTrustRatingLog = Prisma.ChainTrustRatingLogModel

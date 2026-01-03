@@ -4,9 +4,7 @@
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import PageWrapper from '$lib/components/custom/page-wrapper/page-wrapper.svelte';
-	import UserAvatar from '$lib/components/custom/user-avatar/user-avatar.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Separator } from '$lib/components/ui/separator/index.js';
 	import { resetAnonId } from '$lib/remote/account/reset-anonid.remote.js';
 	import {
 		updateAccount,
@@ -17,11 +15,8 @@
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte.js';
 	import * as Tabs from '$lib/components/custom/underline-tabs/index.js';
 	import { ItemSwitch } from '$lib/components/custom/item-switch/index.js';
-	import SelectInput from '$lib/components/custom/fields/select-input/select-input.svelte';
 	import { UserPreferences } from '$lib/types/user-preference-detail.js';
 	import type { UserPreferenceKey } from '$lib/generated/prisma/enums.js';
-	import DataTable from '$lib/components/custom/data-table/data-table.svelte';
-	import { karmaLogColumns } from './karma-logs.columns.js';
 	import { cn } from '$lib/utils.js';
 	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
 	import { setMode } from 'mode-watcher';
@@ -38,6 +33,7 @@
 	import * as Table from '$lib/components/ui/table';
 	import Pagination from '$lib/components/custom/pagination/pagination.svelte';
 	import { UserInfoCard } from '$lib/components/custom/user-info/index.js';
+	import { CTREvent } from '$lib/types/ctr-event-detail';
 
 	const ctrQuery = new QueryState<ChainTrustRatingLog>({
 		pagination: {
@@ -123,7 +119,7 @@
 	<Tabs.Root bind:value={selectedTab}>
 		<Tabs.List class="w-full">
 			<Tabs.Trigger value="details">Account Details</Tabs.Trigger>
-			<Tabs.Trigger value="karma_logs">Chain Trust Rating Changes</Tabs.Trigger>
+			<Tabs.Trigger value="ctr_logs">Chain Trust Rating</Tabs.Trigger>
 			<Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
 		</Tabs.List>
 
@@ -238,7 +234,7 @@
 			</div>
 		</Tabs.Content>
 
-		<Tabs.Content value="karma_logs">
+		<Tabs.Content value="ctr_logs">
 			<CardWrapper title="Chain Trust Rating Changes">
 				{#if mobile.current}
 					<div class="grid gap-3">
@@ -258,6 +254,7 @@
 						</Table.Caption>
 						<Table.Header>
 							<Table.Row>
+								<Table.Head class="w-48">Event</Table.Head>
 								<Table.Head class="w-48">Change Delta</Table.Head>
 								<Table.Head class="w-2/3">Reason</Table.Head>
 								<Table.Head>Date</Table.Head>
@@ -266,7 +263,14 @@
 
 						<Table.Body>
 							{#each ctrLogs.logs as log}
+								{@const ctrEvent = data.ctrConfig.find((c) => c.key === log.event)}
 								<Table.Row>
+									<Table.Cell>
+										<span class="flex items-center gap-1">
+											<Icon icon={ctrEvent?.icon || ''} />
+											<span>{CTREvent[log.event].label}</span>
+										</span>
+									</Table.Cell>
 									<Table.Cell class="flex items-center gap-2">
 										{#if log.delta > 0}
 											<Icon icon="bx:upvote" class="text-primary" />

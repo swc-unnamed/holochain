@@ -28,6 +28,8 @@ export const recordSale = command(recordSaleSchema, async (data) => {
       status: 'SOLD',
       purchasePrice: parsedCurrency,
       purchasedById: data.winnerId || null,
+      purchasedByMiddle: data.purchasedViaMiddle,
+      middleId: data.middleId,
       history: {
         create: {
           event: `Lot marked as sold by ${locals.user.displayName} for ${data.winningAmount} credits.`,
@@ -35,25 +37,6 @@ export const recordSale = command(recordSaleSchema, async (data) => {
       }
     }
   });
-
-  if (data.winnerMiddleId) {
-    const middle = await db.user.findUniqueOrThrow({
-      where: {
-        id: data.winnerMiddleId
-      },
-      select: {
-        id: true,
-        displayName: true,
-      }
-    });
-
-    await db.lotHistory.create({
-      data: {
-        lotId: data.lotId,
-        event: `Middleman ${middle.displayName} assigned to this sale.`,
-      }
-    })
-  }
 
   await inngest.send({
     name: 'auction-house/broadcast.record-lot-sale',

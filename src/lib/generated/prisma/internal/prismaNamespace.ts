@@ -392,12 +392,12 @@ export const ModelName = {
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
   ChainTrustRatingConfig: 'ChainTrustRatingConfig',
+  ChainTrustRatingLog: 'ChainTrustRatingLog',
   Entity: 'Entity',
   EntityTransaction: 'EntityTransaction',
   SiteConfiguration: 'SiteConfiguration',
   User: 'User',
-  UserPreference: 'UserPreference',
-  ChainTrustRatingLog: 'ChainTrustRatingLog'
+  UserPreference: 'UserPreference'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference" | "chainTrustRatingLog"
+    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "chainTrustRatingLog" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1009,6 +1009,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ChainTrustRatingLog: {
+      payload: Prisma.$ChainTrustRatingLogPayload<ExtArgs>
+      fields: Prisma.ChainTrustRatingLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChainTrustRatingLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChainTrustRatingLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ChainTrustRatingLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChainTrustRatingLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        findMany: {
+          args: Prisma.ChainTrustRatingLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
+        }
+        create: {
+          args: Prisma.ChainTrustRatingLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        createMany: {
+          args: Prisma.ChainTrustRatingLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChainTrustRatingLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ChainTrustRatingLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        update: {
+          args: Prisma.ChainTrustRatingLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChainTrustRatingLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChainTrustRatingLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChainTrustRatingLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChainTrustRatingLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ChainTrustRatingLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChainTrustRatingLog>
+        }
+        groupBy: {
+          args: Prisma.ChainTrustRatingLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChainTrustRatingLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogCountAggregateOutputType> | number
+        }
+      }
+    }
     Entity: {
       payload: Prisma.$EntityPayload<ExtArgs>
       fields: Prisma.EntityFieldRefs
@@ -1379,80 +1453,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ChainTrustRatingLog: {
-      payload: Prisma.$ChainTrustRatingLogPayload<ExtArgs>
-      fields: Prisma.ChainTrustRatingLogFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ChainTrustRatingLogFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ChainTrustRatingLogFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        findFirst: {
-          args: Prisma.ChainTrustRatingLogFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ChainTrustRatingLogFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        findMany: {
-          args: Prisma.ChainTrustRatingLogFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
-        }
-        create: {
-          args: Prisma.ChainTrustRatingLogCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        createMany: {
-          args: Prisma.ChainTrustRatingLogCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ChainTrustRatingLogCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
-        }
-        delete: {
-          args: Prisma.ChainTrustRatingLogDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        update: {
-          args: Prisma.ChainTrustRatingLogUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        deleteMany: {
-          args: Prisma.ChainTrustRatingLogDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ChainTrustRatingLogUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ChainTrustRatingLogUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>[]
-        }
-        upsert: {
-          args: Prisma.ChainTrustRatingLogUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChainTrustRatingLogPayload>
-        }
-        aggregate: {
-          args: Prisma.ChainTrustRatingLogAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateChainTrustRatingLog>
-        }
-        groupBy: {
-          args: Prisma.ChainTrustRatingLogGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ChainTrustRatingLogCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChainTrustRatingLogCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -1539,6 +1539,7 @@ export const LotScalarFieldEnum = {
   createdById: 'createdById',
   purchasedById: 'purchasedById',
   purchasedByMiddle: 'purchasedByMiddle',
+  middleId: 'middleId',
   startPrice: 'startPrice',
   purchasePrice: 'purchasePrice',
   anonLot: 'anonLot',
@@ -1593,10 +1594,23 @@ export const ChainTrustRatingConfigScalarFieldEnum = {
   key: 'key',
   points: 'points',
   reason: 'reason',
+  icon: 'icon',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChainTrustRatingConfigScalarFieldEnum = (typeof ChainTrustRatingConfigScalarFieldEnum)[keyof typeof ChainTrustRatingConfigScalarFieldEnum]
+
+
+export const ChainTrustRatingLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  event: 'event',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const EntityScalarFieldEnum = {
@@ -1668,17 +1682,6 @@ export const UserPreferenceScalarFieldEnum = {
 } as const
 
 export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
-
-
-export const ChainTrustRatingLogScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  delta: 'delta',
-  reason: 'reason',
-  createdAt: 'createdAt'
-} as const
-
-export type ChainTrustRatingLogScalarFieldEnum = (typeof ChainTrustRatingLogScalarFieldEnum)[keyof typeof ChainTrustRatingLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2018,12 +2021,12 @@ export type GlobalOmitConfig = {
   lotItem?: Prisma.LotItemOmit
   auctionConfiguration?: Prisma.AuctionConfigurationOmit
   chainTrustRatingConfig?: Prisma.ChainTrustRatingConfigOmit
+  chainTrustRatingLog?: Prisma.ChainTrustRatingLogOmit
   entity?: Prisma.EntityOmit
   entityTransaction?: Prisma.EntityTransactionOmit
   siteConfiguration?: Prisma.SiteConfigurationOmit
   user?: Prisma.UserOmit
   userPreference?: Prisma.UserPreferenceOmit
-  chainTrustRatingLog?: Prisma.ChainTrustRatingLogOmit
 }
 
 /* Types for Logging */

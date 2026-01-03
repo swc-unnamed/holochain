@@ -1,4 +1,5 @@
 import { db } from '$lib/db/prisma';
+import type { ChainTrustRatingConfig } from '$lib/generated/prisma/client.js';
 import { CTREvent } from '$lib/types/ctr-event-detail.js';
 import { guard } from '$lib/utils/auth/server-guard.js'
 
@@ -12,28 +13,43 @@ export const load = async ({ locals }) => {
   const discordClientId = config.find(c => c.key === 'DISCORD_CLIENT_ID')?.value || '';
   const discordClientSecret = config.find(c => c.key === 'DISCORD_CLIENT_SECRET')?.value || '';
 
-  const ctrConfig = await db.chainTrustRatingConfig.findMany();
+  const ctrConfig = await db.chainTrustRatingConfig.findMany({
+    orderBy: {
+      key: 'desc'
+    }
+  });
 
-  if (ctrConfig.length === 0) {
-    // create an array of default CTR config items using the CTREvent record
-    const defaultCtrConfig = Object.values(CTREvent).map(event => ({
-      key: event.key,
-      points: 0,
-      reason: ''
-    }));
+  const C = Object.keys(CTREvent).length;
 
-    await db.chainTrustRatingConfig.createMany({
-      data: defaultCtrConfig
+  if (ctrConfig.length !== C) {
+    console.log('CTR Config incomplete, initializing missing entries...');
+    for (const event of Object.values(CTREvent)) {
+      await db.chainTrustRatingConfig.upsert({
+        where: {
+          key: event.key
+        },
+        create: {
+          key: event.key,
+          points: 0,
+          reason: '',
+          icon: 'mdi:progress-star-four-points'
+        },
+        update: {}
+      })
+    }
+
+    const conf = await db.chainTrustRatingConfig.findMany({
+      orderBy: {
+        key: 'asc'
+      }
     });
-
-    const conf = await db.chainTrustRatingConfig.findMany();
 
     return {
       combineClientId,
       combineClientSecret,
       discordClientId,
       discordClientSecret,
-      ctrConfig: conf
+      ctrConfig: orderCtrKeys(conf)
     }
   } else {
     return {
@@ -41,7 +57,20 @@ export const load = async ({ locals }) => {
       combineClientSecret,
       discordClientId,
       discordClientSecret,
-      ctrConfig: ctrConfig
+      ctrConfig: orderCtrKeys(ctrConfig)
     }
   }
+}
+
+const orderCtrKeys = (incoming: ChainTrustRatingConfig[]) => {
+  const ordered: ChainTrustRatingConfig[] = [];
+
+  for (const eventKey of Object.values(CTREvent)) {
+    const found = incoming.find(c => c.key === eventKey.key);
+    if (found) {
+      ordered.push(found);
+    }
+  }
+
+  return ordered;
 }

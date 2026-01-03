@@ -21,11 +21,12 @@ model Lot {
   details           String
   location          String
   status            LotStatus    @default(SUBMITTED)
-  createdBy         User?        @relation(fields: [createdById], references: [id], name: "lots_created")
-  createdById       String?      @map("created_by_id")
+  createdBy         User         @relation(fields: [createdById], references: [id], name: "lots_created")
+  createdById       String       @map("created_by_id")
   purchasedById     String?      @map("purchased_by_id")
   purchasedBy       User?        @relation(fields: [purchasedById], references: [id], name: "lots_purchased")
   purchasedByMiddle Boolean      @default(false) @map("purchased_by_middle")
+  middleId          String?      @map("middle_id")
   startPrice        String       @map("start_price")
   purchasePrice     String?      @map("purchase_price")
   anonLot           Boolean      @default(false) @map("anon_lot")

@@ -38,6 +38,7 @@ export type ChainTrustRatingLogMinAggregateOutputType = {
   id: string | null
   userId: string | null
   delta: number | null
+  event: $Enums.ChainTrustRatingKey | null
   reason: string | null
   createdAt: Date | null
 }
@@ -46,6 +47,7 @@ export type ChainTrustRatingLogMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   delta: number | null
+  event: $Enums.ChainTrustRatingKey | null
   reason: string | null
   createdAt: Date | null
 }
@@ -54,6 +56,7 @@ export type ChainTrustRatingLogCountAggregateOutputType = {
   id: number
   userId: number
   delta: number
+  event: number
   reason: number
   createdAt: number
   _all: number
@@ -72,6 +75,7 @@ export type ChainTrustRatingLogMinAggregateInputType = {
   id?: true
   userId?: true
   delta?: true
+  event?: true
   reason?: true
   createdAt?: true
 }
@@ -80,6 +84,7 @@ export type ChainTrustRatingLogMaxAggregateInputType = {
   id?: true
   userId?: true
   delta?: true
+  event?: true
   reason?: true
   createdAt?: true
 }
@@ -88,6 +93,7 @@ export type ChainTrustRatingLogCountAggregateInputType = {
   id?: true
   userId?: true
   delta?: true
+  event?: true
   reason?: true
   createdAt?: true
   _all?: true
@@ -183,6 +189,7 @@ export type ChainTrustRatingLogGroupByOutputType = {
   id: string
   userId: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt: Date
   _count: ChainTrustRatingLogCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type ChainTrustRatingLogWhereInput = {
   id?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   userId?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   delta?: Prisma.IntFilter<"ChainTrustRatingLog"> | number
+  event?: Prisma.EnumChainTrustRatingKeyFilter<"ChainTrustRatingLog"> | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   createdAt?: Prisma.DateTimeFilter<"ChainTrustRatingLog"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -223,6 +231,7 @@ export type ChainTrustRatingLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   delta?: Prisma.SortOrder
+  event?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -235,6 +244,7 @@ export type ChainTrustRatingLogWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ChainTrustRatingLogWhereInput | Prisma.ChainTrustRatingLogWhereInput[]
   userId?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   delta?: Prisma.IntFilter<"ChainTrustRatingLog"> | number
+  event?: Prisma.EnumChainTrustRatingKeyFilter<"ChainTrustRatingLog"> | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   createdAt?: Prisma.DateTimeFilter<"ChainTrustRatingLog"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -244,6 +254,7 @@ export type ChainTrustRatingLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   delta?: Prisma.SortOrder
+  event?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ChainTrustRatingLogCountOrderByAggregateInput
@@ -260,6 +271,7 @@ export type ChainTrustRatingLogScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ChainTrustRatingLog"> | string
   userId?: Prisma.StringWithAggregatesFilter<"ChainTrustRatingLog"> | string
   delta?: Prisma.IntWithAggregatesFilter<"ChainTrustRatingLog"> | number
+  event?: Prisma.EnumChainTrustRatingKeyWithAggregatesFilter<"ChainTrustRatingLog"> | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringWithAggregatesFilter<"ChainTrustRatingLog"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChainTrustRatingLog"> | Date | string
 }
@@ -267,6 +279,7 @@ export type ChainTrustRatingLogScalarWhereWithAggregatesInput = {
 export type ChainTrustRatingLogCreateInput = {
   id?: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCtrLogsInput
@@ -276,6 +289,7 @@ export type ChainTrustRatingLogUncheckedCreateInput = {
   id?: string
   userId: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
 }
@@ -283,6 +297,7 @@ export type ChainTrustRatingLogUncheckedCreateInput = {
 export type ChainTrustRatingLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCtrLogsNestedInput
@@ -292,6 +307,7 @@ export type ChainTrustRatingLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -300,6 +316,7 @@ export type ChainTrustRatingLogCreateManyInput = {
   id?: string
   userId: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
 }
@@ -307,6 +324,7 @@ export type ChainTrustRatingLogCreateManyInput = {
 export type ChainTrustRatingLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -315,24 +333,16 @@ export type ChainTrustRatingLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ChainTrustRatingLogListRelationFilter = {
-  every?: Prisma.ChainTrustRatingLogWhereInput
-  some?: Prisma.ChainTrustRatingLogWhereInput
-  none?: Prisma.ChainTrustRatingLogWhereInput
-}
-
-export type ChainTrustRatingLogOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type ChainTrustRatingLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   delta?: Prisma.SortOrder
+  event?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -345,6 +355,7 @@ export type ChainTrustRatingLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   delta?: Prisma.SortOrder
+  event?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -353,12 +364,23 @@ export type ChainTrustRatingLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   delta?: Prisma.SortOrder
+  event?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ChainTrustRatingLogSumOrderByAggregateInput = {
   delta?: Prisma.SortOrder
+}
+
+export type ChainTrustRatingLogListRelationFilter = {
+  every?: Prisma.ChainTrustRatingLogWhereInput
+  some?: Prisma.ChainTrustRatingLogWhereInput
+  none?: Prisma.ChainTrustRatingLogWhereInput
+}
+
+export type ChainTrustRatingLogOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ChainTrustRatingLogCreateNestedManyWithoutUserInput = {
@@ -406,6 +428,7 @@ export type ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput = {
 export type ChainTrustRatingLogCreateWithoutUserInput = {
   id?: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
 }
@@ -413,6 +436,7 @@ export type ChainTrustRatingLogCreateWithoutUserInput = {
 export type ChainTrustRatingLogUncheckedCreateWithoutUserInput = {
   id?: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
 }
@@ -450,6 +474,7 @@ export type ChainTrustRatingLogScalarWhereInput = {
   id?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   userId?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   delta?: Prisma.IntFilter<"ChainTrustRatingLog"> | number
+  event?: Prisma.EnumChainTrustRatingKeyFilter<"ChainTrustRatingLog"> | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFilter<"ChainTrustRatingLog"> | string
   createdAt?: Prisma.DateTimeFilter<"ChainTrustRatingLog"> | Date | string
 }
@@ -457,6 +482,7 @@ export type ChainTrustRatingLogScalarWhereInput = {
 export type ChainTrustRatingLogCreateManyUserInput = {
   id?: string
   delta: number
+  event: $Enums.ChainTrustRatingKey
   reason: string
   createdAt?: Date | string
 }
@@ -464,6 +490,7 @@ export type ChainTrustRatingLogCreateManyUserInput = {
 export type ChainTrustRatingLogUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -471,6 +498,7 @@ export type ChainTrustRatingLogUpdateWithoutUserInput = {
 export type ChainTrustRatingLogUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -478,6 +506,7 @@ export type ChainTrustRatingLogUncheckedUpdateWithoutUserInput = {
 export type ChainTrustRatingLogUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   delta?: Prisma.IntFieldUpdateOperationsInput | number
+  event?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -488,6 +517,7 @@ export type ChainTrustRatingLogSelect<ExtArgs extends runtime.Types.Extensions.I
   id?: boolean
   userId?: boolean
   delta?: boolean
+  event?: boolean
   reason?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -497,6 +527,7 @@ export type ChainTrustRatingLogSelectCreateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   userId?: boolean
   delta?: boolean
+  event?: boolean
   reason?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -506,6 +537,7 @@ export type ChainTrustRatingLogSelectUpdateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   userId?: boolean
   delta?: boolean
+  event?: boolean
   reason?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -515,11 +547,12 @@ export type ChainTrustRatingLogSelectScalar = {
   id?: boolean
   userId?: boolean
   delta?: boolean
+  event?: boolean
   reason?: boolean
   createdAt?: boolean
 }
 
-export type ChainTrustRatingLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "delta" | "reason" | "createdAt", ExtArgs["result"]["chainTrustRatingLog"]>
+export type ChainTrustRatingLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "delta" | "event" | "reason" | "createdAt", ExtArgs["result"]["chainTrustRatingLog"]>
 export type ChainTrustRatingLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -539,6 +572,7 @@ export type $ChainTrustRatingLogPayload<ExtArgs extends runtime.Types.Extensions
     id: string
     userId: string
     delta: number
+    event: $Enums.ChainTrustRatingKey
     reason: string
     createdAt: Date
   }, ExtArgs["result"]["chainTrustRatingLog"]>
@@ -968,6 +1002,7 @@ export interface ChainTrustRatingLogFieldRefs {
   readonly id: Prisma.FieldRef<"ChainTrustRatingLog", 'String'>
   readonly userId: Prisma.FieldRef<"ChainTrustRatingLog", 'String'>
   readonly delta: Prisma.FieldRef<"ChainTrustRatingLog", 'Int'>
+  readonly event: Prisma.FieldRef<"ChainTrustRatingLog", 'ChainTrustRatingKey'>
   readonly reason: Prisma.FieldRef<"ChainTrustRatingLog", 'String'>
   readonly createdAt: Prisma.FieldRef<"ChainTrustRatingLog", 'DateTime'>
 }

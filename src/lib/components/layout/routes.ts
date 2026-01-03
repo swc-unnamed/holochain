@@ -24,11 +24,16 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         url: "/auction-house/lots"
       },
       {
-        title: "Create Lot",
+        title: "Create a Lot",
         url: "/auction-house/lots/create",
       },
       {
-        title: "Create Auction",
+        title: "Pending Lots",
+        url: "/auction-house/lots/pending",
+        role: ['AUCTIONEER']
+      },
+      {
+        title: "Create a Auction",
         url: "/auction-house/auctions/create",
         role: ['AUCTIONEER']
       },
@@ -36,11 +41,7 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         title: "Auction Archive",
         url: "/auction-house/auctions/archive",
       },
-      {
-        title: "Pending Lots",
-        url: "/auction-house/lots/pending",
-        role: ['AUCTIONEER']
-      },
+
       {
         title: "Configuration",
         url: "/auction-house/config",

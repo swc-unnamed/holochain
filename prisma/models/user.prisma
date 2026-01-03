@@ -35,14 +35,3 @@ model UserPreference {
   @@unique([userId, key], name: "user_key")
   @@map("user_preferences")
 }
-
-model ChainTrustRatingLog {
-  id        String   @id @default(cuid())
-  userId    String   @map("user_id")
-  user      User     @relation(fields: [userId], references: [id])
-  delta     Int      @map("delta")
-  reason    String   @map("reason")
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("chain_trust_rating_logs")
-}

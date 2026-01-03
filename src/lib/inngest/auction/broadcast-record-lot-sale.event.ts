@@ -18,6 +18,7 @@ export const broadcastRecordLotSaleEvent = inngest.createFunction(
     event: 'auction-house/broadcast.record-lot-sale',
   },
   async ({ event }) => {
+
     const lot = await db.lot.findUniqueOrThrow({
       where: {
         id: event.data.id

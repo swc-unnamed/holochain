@@ -187,7 +187,12 @@
 				{#snippet footer()}
 					<div class="flex w-full items-center justify-end gap-2">
 						<div class="flex items-center gap-2">
-							<Button variant="secondary" href="/auction-house/lots/{lot.id}">
+							<Button
+								variant="secondary"
+								onclick={async () => {
+									history.back();
+								}}
+							>
 								<Icon icon="mdi:arrow-back" />
 								Go back
 							</Button>

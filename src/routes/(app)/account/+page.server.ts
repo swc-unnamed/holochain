@@ -37,10 +37,11 @@ export const load = async ({ locals, depends }) => {
     }
   }
 
-
+  const ctrConfig = await db.chainTrustRatingConfig.findMany();
 
   return {
     account: account,
-    discordOAuthUrl: discordOAuthUrl
+    discordOAuthUrl: discordOAuthUrl,
+    ctrConfig: ctrConfig
   };
 }

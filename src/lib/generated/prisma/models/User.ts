@@ -588,6 +588,11 @@ export type UserUncheckedUpdateManyInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type UserNullableScalarRelationFilter = {
   is?: Prisma.UserWhereInput | null
   isNot?: Prisma.UserWhereInput | null
@@ -670,11 +675,6 @@ export type UserSumOrderByAggregateInput = {
   ctr?: Prisma.SortOrder
 }
 
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
-}
-
 export type UserCreateNestedOneWithoutLotsOwnedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutLotsOwnedInput, Prisma.UserUncheckedCreateWithoutLotsOwnedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutLotsOwnedInput
@@ -687,12 +687,10 @@ export type UserCreateNestedOneWithoutLotsPurchasedInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutLotsOwnedNestedInput = {
+export type UserUpdateOneRequiredWithoutLotsOwnedNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutLotsOwnedInput, Prisma.UserUncheckedCreateWithoutLotsOwnedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutLotsOwnedInput
   upsert?: Prisma.UserUpsertWithoutLotsOwnedInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLotsOwnedInput, Prisma.UserUpdateWithoutLotsOwnedInput>, Prisma.UserUncheckedUpdateWithoutLotsOwnedInput>
 }
@@ -705,6 +703,20 @@ export type UserUpdateOneWithoutLotsPurchasedNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLotsPurchasedInput, Prisma.UserUpdateWithoutLotsPurchasedInput>, Prisma.UserUncheckedUpdateWithoutLotsPurchasedInput>
+}
+
+export type UserCreateNestedOneWithoutCtrLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCtrLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
+  upsert?: Prisma.UserUpsertWithoutCtrLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCtrLogsInput, Prisma.UserUpdateWithoutCtrLogsInput>, Prisma.UserUncheckedUpdateWithoutCtrLogsInput>
 }
 
 export type UserCreatecombineScopesInput = {
@@ -732,20 +744,6 @@ export type UserUpdateOneRequiredWithoutPreferencesNestedInput = {
   upsert?: Prisma.UserUpsertWithoutPreferencesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPreferencesInput, Prisma.UserUpdateWithoutPreferencesInput>, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
-}
-
-export type UserCreateNestedOneWithoutCtrLogsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutCtrLogsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
-  upsert?: Prisma.UserUpsertWithoutCtrLogsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCtrLogsInput, Prisma.UserUpdateWithoutCtrLogsInput>, Prisma.UserUncheckedUpdateWithoutCtrLogsInput>
 }
 
 export type UserCreateWithoutLotsOwnedInput = {
@@ -972,118 +970,6 @@ export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
-export type UserCreateWithoutPreferencesInput = {
-  id?: string
-  name: string
-  displayName: string
-  anonid: string
-  ctr?: number
-  combineId?: string
-  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  role?: $Enums.AppRole
-  banned?: boolean
-  bannedReason?: string | null
-  bannedUntil?: Date | string | null
-  bannedById?: string | null
-  avatarUrl?: string | null
-  discordId?: string | null
-  discordUsername?: string | null
-  approvedMiddle?: boolean
-  createdAt?: Date | string
-  lastSeenAt?: Date | string
-  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
-  lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
-  lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
-}
-
-export type UserUncheckedCreateWithoutPreferencesInput = {
-  id?: string
-  name: string
-  displayName: string
-  anonid: string
-  ctr?: number
-  combineId?: string
-  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
-  role?: $Enums.AppRole
-  banned?: boolean
-  bannedReason?: string | null
-  bannedUntil?: Date | string | null
-  bannedById?: string | null
-  avatarUrl?: string | null
-  discordId?: string | null
-  discordUsername?: string | null
-  approvedMiddle?: boolean
-  createdAt?: Date | string
-  lastSeenAt?: Date | string
-  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
-  lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
-  lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
-}
-
-export type UserCreateOrConnectWithoutPreferencesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPreferencesInput, Prisma.UserUncheckedCreateWithoutPreferencesInput>
-}
-
-export type UserUpsertWithoutPreferencesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPreferencesInput, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPreferencesInput, Prisma.UserUncheckedCreateWithoutPreferencesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutPreferencesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPreferencesInput, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
-}
-
-export type UserUpdateWithoutPreferencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.StringFieldUpdateOperationsInput | string
-  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
-  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
-  lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
-  lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
-}
-
-export type UserUncheckedUpdateWithoutPreferencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  anonid?: Prisma.StringFieldUpdateOperationsInput | string
-  ctr?: Prisma.IntFieldUpdateOperationsInput | number
-  combineId?: Prisma.StringFieldUpdateOperationsInput | string
-  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
-  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
-  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
-  lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
-  lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
-}
-
 export type UserCreateWithoutCtrLogsInput = {
   id?: string
   name: string
@@ -1192,6 +1078,118 @@ export type UserUncheckedUpdateWithoutCtrLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
+  lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserCreateWithoutPreferencesInput = {
+  id?: string
+  name: string
+  displayName: string
+  anonid: string
+  ctr?: number
+  combineId?: string
+  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
+  role?: $Enums.AppRole
+  banned?: boolean
+  bannedReason?: string | null
+  bannedUntil?: Date | string | null
+  bannedById?: string | null
+  avatarUrl?: string | null
+  discordId?: string | null
+  discordUsername?: string | null
+  approvedMiddle?: boolean
+  createdAt?: Date | string
+  lastSeenAt?: Date | string
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
+  lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
+  lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserUncheckedCreateWithoutPreferencesInput = {
+  id?: string
+  name: string
+  displayName: string
+  anonid: string
+  ctr?: number
+  combineId?: string
+  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
+  role?: $Enums.AppRole
+  banned?: boolean
+  bannedReason?: string | null
+  bannedUntil?: Date | string | null
+  bannedById?: string | null
+  avatarUrl?: string | null
+  discordId?: string | null
+  discordUsername?: string | null
+  approvedMiddle?: boolean
+  createdAt?: Date | string
+  lastSeenAt?: Date | string
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
+  lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
+  lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserCreateOrConnectWithoutPreferencesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreferencesInput, Prisma.UserUncheckedCreateWithoutPreferencesInput>
+}
+
+export type UserUpsertWithoutPreferencesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPreferencesInput, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreferencesInput, Prisma.UserUncheckedCreateWithoutPreferencesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPreferencesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPreferencesInput, Prisma.UserUncheckedUpdateWithoutPreferencesInput>
+}
+
+export type UserUpdateWithoutPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  anonid?: Prisma.StringFieldUpdateOperationsInput | string
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
+  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
+  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
+  lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
+  lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  anonid?: Prisma.StringFieldUpdateOperationsInput | string
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
+  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
+  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
 }

@@ -17,6 +17,7 @@
 	import { CTREvent } from '$lib/types/ctr-event-detail';
 	import { updateCtrConfig } from '$lib/remote/admin/config/update-ctr-config.remote.js';
 	import { updateCtrConfigSchema } from '$lib/remote/admin/config/update-ctr-config.schema.js';
+	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
 	let showSecrets = $state(false);
@@ -91,16 +92,26 @@
 						The Holochain is built on transparency. If you change a value - ensure you communicate
 						it to the masses. These settings will be publicly visible on the Holocron.
 					</li>
+					<li>
+						For the Icons, please refer to <a
+							href="https://icon-sets.iconify.design/"
+							target="_blank"
+							rel="norel">Iconfiy</a
+						>. For example, to use the "star" icon from the "mdi" set, you would enter "mdi:star".
+					</li>
 				</ul>
 
 				<div class="grid gap-3">
 					{#each ctrCmd.form.data as ctr, index (ctr.key)}
 						<div class="grid gap-2 rounded-md border p-4">
-							<h4>{ctr.key}</h4>
+							<div class="flex items-center gap-1">
+								<Icon icon={ctrCmd.form.data![index].icon} class="size-6" />
+								<h5>{ctr.key}</h5>
+							</div>
 							<span class="text-sm text-muted-foreground">
 								{CTREvent[ctr.key].description}
 							</span>
-							<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+							<div class="grid grid-cols-1 gap-2 md:grid-cols-3">
 								<FieldInput
 									label="Points"
 									type="number"
@@ -110,7 +121,12 @@
 								<FieldInput
 									label="Reason"
 									bind:value={ctrCmd.form.data![index].reason}
-									description="A brief explanation of why these points were assigned, shown to users in their Chain Trust Rating history"
+									description="A brief explanation of why these points were assigned, shown to users in their Chain Trust Rating history. Some data we will automatically insert, such as Lot numbers etc."
+								/>
+								<FieldInput
+									label="Icon"
+									bind:value={ctrCmd.form.data![index].icon}
+									description="Icon to represent this event in the UI (use Iconify format, e.g., 'mdi:star')"
 								/>
 							</div>
 						</div>

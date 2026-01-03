@@ -44,17 +44,5 @@
 	<meta name="twitter:card" content={`${data.origin}/images/uim-17.png`} />
 </svelte:head>
 
-<Toaster position="top-right">
-	{#snippet warningIcon()}
-		<CircleAlert class="text-destructive" />
-	{/snippet}
-
-	{#snippet successIcon()}
-		<CheckIcon class="text-green-500" />
-	{/snippet}
-
-	{#snippet errorIcon()}
-		<XIcon class="text-destructive" />
-	{/snippet}
-</Toaster>
+<Toaster position="top-right" />
 {@render children()}

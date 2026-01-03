@@ -38,6 +38,7 @@ export type ChainTrustRatingConfigMinAggregateOutputType = {
   key: $Enums.ChainTrustRatingKey | null
   points: number | null
   reason: string | null
+  icon: string | null
   updatedAt: Date | null
 }
 
@@ -45,6 +46,7 @@ export type ChainTrustRatingConfigMaxAggregateOutputType = {
   key: $Enums.ChainTrustRatingKey | null
   points: number | null
   reason: string | null
+  icon: string | null
   updatedAt: Date | null
 }
 
@@ -52,6 +54,7 @@ export type ChainTrustRatingConfigCountAggregateOutputType = {
   key: number
   points: number
   reason: number
+  icon: number
   updatedAt: number
   _all: number
 }
@@ -69,6 +72,7 @@ export type ChainTrustRatingConfigMinAggregateInputType = {
   key?: true
   points?: true
   reason?: true
+  icon?: true
   updatedAt?: true
 }
 
@@ -76,6 +80,7 @@ export type ChainTrustRatingConfigMaxAggregateInputType = {
   key?: true
   points?: true
   reason?: true
+  icon?: true
   updatedAt?: true
 }
 
@@ -83,6 +88,7 @@ export type ChainTrustRatingConfigCountAggregateInputType = {
   key?: true
   points?: true
   reason?: true
+  icon?: true
   updatedAt?: true
   _all?: true
 }
@@ -177,6 +183,7 @@ export type ChainTrustRatingConfigGroupByOutputType = {
   key: $Enums.ChainTrustRatingKey
   points: number
   reason: string
+  icon: string
   updatedAt: Date
   _count: ChainTrustRatingConfigCountAggregateOutputType | null
   _avg: ChainTrustRatingConfigAvgAggregateOutputType | null
@@ -207,6 +214,7 @@ export type ChainTrustRatingConfigWhereInput = {
   key?: Prisma.EnumChainTrustRatingKeyFilter<"ChainTrustRatingConfig"> | $Enums.ChainTrustRatingKey
   points?: Prisma.IntFilter<"ChainTrustRatingConfig"> | number
   reason?: Prisma.StringFilter<"ChainTrustRatingConfig"> | string
+  icon?: Prisma.StringFilter<"ChainTrustRatingConfig"> | string
   updatedAt?: Prisma.DateTimeFilter<"ChainTrustRatingConfig"> | Date | string
 }
 
@@ -214,6 +222,7 @@ export type ChainTrustRatingConfigOrderByWithRelationInput = {
   key?: Prisma.SortOrder
   points?: Prisma.SortOrder
   reason?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -224,6 +233,7 @@ export type ChainTrustRatingConfigWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ChainTrustRatingConfigWhereInput | Prisma.ChainTrustRatingConfigWhereInput[]
   points?: Prisma.IntFilter<"ChainTrustRatingConfig"> | number
   reason?: Prisma.StringFilter<"ChainTrustRatingConfig"> | string
+  icon?: Prisma.StringFilter<"ChainTrustRatingConfig"> | string
   updatedAt?: Prisma.DateTimeFilter<"ChainTrustRatingConfig"> | Date | string
 }, "key" | "key">
 
@@ -231,6 +241,7 @@ export type ChainTrustRatingConfigOrderByWithAggregationInput = {
   key?: Prisma.SortOrder
   points?: Prisma.SortOrder
   reason?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ChainTrustRatingConfigCountOrderByAggregateInput
   _avg?: Prisma.ChainTrustRatingConfigAvgOrderByAggregateInput
@@ -246,6 +257,7 @@ export type ChainTrustRatingConfigScalarWhereWithAggregatesInput = {
   key?: Prisma.EnumChainTrustRatingKeyWithAggregatesFilter<"ChainTrustRatingConfig"> | $Enums.ChainTrustRatingKey
   points?: Prisma.IntWithAggregatesFilter<"ChainTrustRatingConfig"> | number
   reason?: Prisma.StringWithAggregatesFilter<"ChainTrustRatingConfig"> | string
+  icon?: Prisma.StringWithAggregatesFilter<"ChainTrustRatingConfig"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChainTrustRatingConfig"> | Date | string
 }
 
@@ -253,6 +265,7 @@ export type ChainTrustRatingConfigCreateInput = {
   key: $Enums.ChainTrustRatingKey
   points?: number
   reason: string
+  icon?: string
   updatedAt?: Date | string
 }
 
@@ -260,6 +273,7 @@ export type ChainTrustRatingConfigUncheckedCreateInput = {
   key: $Enums.ChainTrustRatingKey
   points?: number
   reason: string
+  icon?: string
   updatedAt?: Date | string
 }
 
@@ -267,6 +281,7 @@ export type ChainTrustRatingConfigUpdateInput = {
   key?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   points?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -274,6 +289,7 @@ export type ChainTrustRatingConfigUncheckedUpdateInput = {
   key?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   points?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -281,6 +297,7 @@ export type ChainTrustRatingConfigCreateManyInput = {
   key: $Enums.ChainTrustRatingKey
   points?: number
   reason: string
+  icon?: string
   updatedAt?: Date | string
 }
 
@@ -288,6 +305,7 @@ export type ChainTrustRatingConfigUpdateManyMutationInput = {
   key?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   points?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -295,6 +313,7 @@ export type ChainTrustRatingConfigUncheckedUpdateManyInput = {
   key?: Prisma.EnumChainTrustRatingKeyFieldUpdateOperationsInput | $Enums.ChainTrustRatingKey
   points?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -302,6 +321,7 @@ export type ChainTrustRatingConfigCountOrderByAggregateInput = {
   key?: Prisma.SortOrder
   points?: Prisma.SortOrder
   reason?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -313,6 +333,7 @@ export type ChainTrustRatingConfigMaxOrderByAggregateInput = {
   key?: Prisma.SortOrder
   points?: Prisma.SortOrder
   reason?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -320,6 +341,7 @@ export type ChainTrustRatingConfigMinOrderByAggregateInput = {
   key?: Prisma.SortOrder
   points?: Prisma.SortOrder
   reason?: Prisma.SortOrder
+  icon?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -337,6 +359,7 @@ export type ChainTrustRatingConfigSelect<ExtArgs extends runtime.Types.Extension
   key?: boolean
   points?: boolean
   reason?: boolean
+  icon?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["chainTrustRatingConfig"]>
 
@@ -344,6 +367,7 @@ export type ChainTrustRatingConfigSelectCreateManyAndReturn<ExtArgs extends runt
   key?: boolean
   points?: boolean
   reason?: boolean
+  icon?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["chainTrustRatingConfig"]>
 
@@ -351,6 +375,7 @@ export type ChainTrustRatingConfigSelectUpdateManyAndReturn<ExtArgs extends runt
   key?: boolean
   points?: boolean
   reason?: boolean
+  icon?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["chainTrustRatingConfig"]>
 
@@ -358,10 +383,11 @@ export type ChainTrustRatingConfigSelectScalar = {
   key?: boolean
   points?: boolean
   reason?: boolean
+  icon?: boolean
   updatedAt?: boolean
 }
 
-export type ChainTrustRatingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"key" | "points" | "reason" | "updatedAt", ExtArgs["result"]["chainTrustRatingConfig"]>
+export type ChainTrustRatingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"key" | "points" | "reason" | "icon" | "updatedAt", ExtArgs["result"]["chainTrustRatingConfig"]>
 
 export type $ChainTrustRatingConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ChainTrustRatingConfig"
@@ -370,6 +396,7 @@ export type $ChainTrustRatingConfigPayload<ExtArgs extends runtime.Types.Extensi
     key: $Enums.ChainTrustRatingKey
     points: number
     reason: string
+    icon: string
     updatedAt: Date
   }, ExtArgs["result"]["chainTrustRatingConfig"]>
   composites: {}
@@ -797,6 +824,7 @@ export interface ChainTrustRatingConfigFieldRefs {
   readonly key: Prisma.FieldRef<"ChainTrustRatingConfig", 'ChainTrustRatingKey'>
   readonly points: Prisma.FieldRef<"ChainTrustRatingConfig", 'Int'>
   readonly reason: Prisma.FieldRef<"ChainTrustRatingConfig", 'String'>
+  readonly icon: Prisma.FieldRef<"ChainTrustRatingConfig", 'String'>
   readonly updatedAt: Prisma.FieldRef<"ChainTrustRatingConfig", 'DateTime'>
 }
     

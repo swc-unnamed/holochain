@@ -28,6 +28,7 @@
 	import { broadcastLot } from '$lib/remote/auction-house/auctions/manage/broadcast-lot.remote.js';
 	import type { HttpError } from '@sveltejs/kit';
 	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
+	import ItemSwitch from '$lib/components/custom/item-switch/item-switch.svelte';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -76,7 +77,7 @@
 		invalidate: 'ah:auction:manage',
 		initial: () => ({
 			winnerId: null,
-			winnerMiddleId: null
+			purchasedViaMiddle: false
 		}),
 		onSuccess: () => {
 			toast.success('Sale recorded successfully');
@@ -491,45 +492,41 @@
 {#snippet lotSoldDialog()}
 	<ResponsiveDialog title="Mark Lot as Sold" bind:open={showLotSoldDialog}>
 		<div class="grid gap-3">
-			<p class="text-sm text-muted-foreground">
-				If the lot was won by a middle, select the approved middle below. Otherwise, select the
-				winning bidder directly. Then, enter the winning bid amount to finalize the sale of the lot.
-			</p>
-
-			<SelectInput
-				label="Winning Bidder"
-				records={users}
-				labelKey="displayName"
-				valueKey="id"
-				type="single"
-				searchable
-				allowDeselect
-				bind:value={recordSaleCmd.form.winnerId}
-				issues={recordSaleCmd.errors.winnerId?.message}
-				onValueChange={(v) => {
-					if (v === '') recordSaleCmd.form.winnerId = null;
-				}}
-			/>
-
-			<SwitchInput
+			<ItemSwitch
 				label="Purchased via Middle"
-				description="Select this if the Lot was sold via a Middle. If selected, it will indicate that the Winning Bidder is a Middle and the purchase was made on behalf of another user. This will not increase the Middle's total purchases count."
+				description="Select this if the Lot was sold via a Middle. If selected, you must choose the Middle below"
+				bind:checked={recordSaleCmd.form.purchasedViaMiddle}
 			/>
 
-			<SelectInput
-				label="Winning Bidder (Middle)"
-				records={users}
-				labelKey="displayName"
-				valueKey="id"
-				type="single"
-				searchable
-				allowDeselect
-				bind:value={recordSaleCmd.form.winnerMiddleId}
-				issues={recordSaleCmd.errors.winnerMiddleId?.message}
-				onValueChange={(v) => {
-					if (v === '') recordSaleCmd.form.winnerMiddleId = null;
-				}}
-			/>
+			{#if recordSaleCmd.form.purchasedViaMiddle}
+				<SelectInput
+					label="Middle"
+					records={users}
+					labelKey="displayName"
+					valueKey="id"
+					type="single"
+					searchable
+					allowDeselect
+					bind:value={recordSaleCmd.form.middleId}
+					issues={recordSaleCmd.errors.middleId?.message}
+				/>
+			{:else}
+				<SelectInput
+					label="Winning Bidder"
+					records={users}
+					labelKey="displayName"
+					valueKey="id"
+					type="single"
+					searchable
+					allowDeselect
+					bind:value={recordSaleCmd.form.winnerId}
+					issues={recordSaleCmd.errors.winnerId?.message}
+					onValueChange={(v) => {
+						if (v === '') recordSaleCmd.form.winnerId = null;
+					}}
+				/>
+			{/if}
+
 			<CreditInput
 				label="Winning Bid"
 				bind:value={recordSaleCmd.form.winningAmount}
@@ -546,9 +543,7 @@
 					size="sm"
 					onclick={recordSaleCmd.submit}
 					disabled={recordSaleCmd.submitting ||
-						(!recordSaleCmd.form.winnerId &&
-							!recordSaleCmd.form.winnerMiddleId &&
-							!recordSaleCmd.form.winningAmount)}
+						(!recordSaleCmd.form.winnerId && !recordSaleCmd.form.winningAmount)}
 				>
 					{#if recordSaleCmd.submitting}
 						<Spinner />

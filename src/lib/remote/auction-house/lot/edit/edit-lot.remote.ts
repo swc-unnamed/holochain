@@ -19,6 +19,7 @@ export const editLot = command(editLotSchema, async (data) => {
       location: data.location,
       anonLot: data.anonLot,
       startPrice: parseCurrency(data.startPrice),
+      status: data.status,
       createdById: data.createdById,
       creditsTo: data.creditsTo,
       purchasedById: data.purchasedById,
