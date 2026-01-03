@@ -3,6 +3,10 @@ name: Deploy - Dev
 on:
   workflow_dispatch:
 
+  push:
+    branches:
+      - main
+
 permissions:
   contents: read
   packages: write
@@ -33,7 +37,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/swc-unnamed/holochain:dev
+          tags: |
+            ghcr.io/swc-unnamed/holochain:dev
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2

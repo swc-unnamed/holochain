@@ -41,22 +41,33 @@ export const createLot = command(createLotSchema, async (data) => {
     }
   });
 
-  await db.user.update({
+  const config = await db.chainTrustRatingConfig.findUnique({
     where: {
-      id: locals.user.id
-    },
-    data: {
-      ctr: {
-        increment: 1
-      },
-      ctrLogs: {
-        create: {
-          delta: 1,
-          reason: `Created Auction Lot #${lot.lotNumber}, reference: ${lot.id}`
-        }
-      }
-    },
+      key: 'AH_LOT_CREATED'
+    }
   });
+
+  if (config && config.points !== 0) {
+    await db.user.update({
+      where: {
+        id: locals.user.id
+      },
+      data: {
+        ctr: {
+          increment: 1
+        },
+        ctrLogs: {
+          create: {
+            delta: 1,
+            reason: `Created Auction Lot #${lot.lotNumber}, reference: ${lot.id}`,
+            event: 'AH_LOT_CREATED'
+          }
+        }
+      },
+    });
+  }
+
+
 
   return lot;
 })

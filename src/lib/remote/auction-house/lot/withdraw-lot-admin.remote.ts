@@ -3,6 +3,7 @@ import { db } from "$lib/db/prisma";
 import { withdrawLotAdminSchema } from "./withdraw-lot-admin.schema";
 import { guard } from "$lib/utils/auth/server-guard";
 import { error } from "@sveltejs/kit";
+import { getCtrConfig } from "$lib/db/shared/get-ctr-config";
 
 export const withdrawLotAdmin = command(withdrawLotAdminSchema, async (data) => {
   const { locals } = getRequestEvent();
@@ -34,21 +35,28 @@ export const withdrawLotAdmin = command(withdrawLotAdminSchema, async (data) => 
   if (data.noCtrImpact) {
     return;
   } else {
+
     if (lot.status === 'SCHEDULED') {
-      await db.user.update({
-        where: {
-          id: lot.createdById
-        },
-        data: {
-          ctr: { decrement: 2 },
-          ctrLogs: {
-            create: {
-              delta: -2,
-              reason: `Lot #${lot.lotNumber} withdrawn after it was scheduled for an Auction`
+      const config = await getCtrConfig('AH_LOT_WITHDRAWN_AFTER_SCHEDULED')
+      if (config && config.points !== 0) {
+        const pointValue = config.points;
+        await db.user.update({
+          where: {
+            id: lot.createdById
+          },
+          data: {
+            ctr: pointValue < 0 ? { decrement: pointValue } : { increment: pointValue },
+            ctrLogs: {
+              create: {
+                delta: config.points,
+                reason: `Withdrew Auction Lot #${lot.lotNumber} after scheduling, reference: ${lot.id}`,
+                event: 'AH_LOT_WITHDRAWN_AFTER_SCHEDULED'
+              }
             }
           }
-        }
-      })
+        })
+      }
+
     }
   }
 })
