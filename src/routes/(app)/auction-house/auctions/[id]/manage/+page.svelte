@@ -27,7 +27,6 @@
 	import { broadcastAuction } from '$lib/remote/auction-house/auctions/manage/broadcast-auction.remote.js';
 	import { broadcastLot } from '$lib/remote/auction-house/auctions/manage/broadcast-lot.remote.js';
 	import type { HttpError } from '@sveltejs/kit';
-	import SwitchInput from '$lib/components/custom/fields/switch-input/switch-input.svelte';
 	import ItemSwitch from '$lib/components/custom/item-switch/item-switch.svelte';
 
 	let { data } = $props();

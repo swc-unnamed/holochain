@@ -39,7 +39,7 @@ export const recordSale = command(recordSaleSchema, async (data) => {
   });
 
   await inngest.send({
-    name: 'auction-house/broadcast.record-lot-sale',
+    name: 'auction-house/lot.record-sale',
     data: {
       id: data.lotId
     }
