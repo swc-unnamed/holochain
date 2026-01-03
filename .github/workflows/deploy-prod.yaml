@@ -3,6 +3,10 @@ name: Deploy - Prod
 on:
   workflow_dispatch:
 
+  release:
+    types:
+      - published
+
 permissions:
   contents: read
   packages: write
@@ -12,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
+      url: https://market.unnamed-swc.com
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,7 +37,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/swc-unnamed/holochain:latest
+          tags: |
+            ghcr.io/swc-unnamed/holochain:prod
+            ghcr.io/swc-unnamed/holochain:latest
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
@@ -49,7 +56,13 @@ jobs:
           bun prisma migrate deploy
 
       - name: Trigger Coolify deployment
-        env:
-          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
-          curl -fsSL -X POST "$COOLIFY_WEBHOOK_URL"
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+
+      - name: Wait for deployment
+        run: |
+          sleep 60
+
+      - name: Sync Inngest
+        run: |
+          curl -X PUT https://market.unnamed-swc.com/api/inngest --fail-with-body
