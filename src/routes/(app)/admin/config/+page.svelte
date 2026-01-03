@@ -59,6 +59,7 @@
 		<Tabs.List>
 			<Tabs.Trigger value="ctr">Chain Trust Rating Config</Tabs.Trigger>
 			<Tabs.Trigger value="biometrics">Biometrics Config</Tabs.Trigger>
+			<Tabs.Trigger value="integrations">Integrations</Tabs.Trigger>
 		</Tabs.List>
 
 		<Tabs.Content value="ctr">
@@ -185,6 +186,27 @@
 					</div>
 				</CardWrapper>
 			</div>
+		</Tabs.Content>
+
+		<Tabs.Content value="integrations">
+			<CardWrapper title="Inngest">
+				<p>
+					Manually re-sync Inngest events with the Holochain application. This is typically done
+					automatically after deployments, but can be triggered here if needed.
+				</p>
+				<Button
+					onclick={async () => {
+						const res = await fetch('/api/inngest', { method: 'PUT' });
+						if (res.ok) {
+							toast.success('Inngest re-sync triggered successfully');
+						} else {
+							toast.error('Failed to trigger Inngest re-sync');
+						}
+					}}
+				>
+					Re-sync Inngest
+				</Button>
+			</CardWrapper>
 		</Tabs.Content>
 	</Tabs.Root>
 </PageWrapper>

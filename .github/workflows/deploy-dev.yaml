@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
+      url: https://dev.unnamed-swc.com
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -49,7 +50,14 @@ jobs:
           bun prisma migrate deploy
 
       - name: Trigger Coolify deployment
-        env:
-          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
-          curl -fsSL -X POST "$COOLIFY_WEBHOOK_URL"
+          curl ${{secrets.COOLIFY_WEBHOOK}} \
+            --header 'Authorization: ${{secrets.COOLIFY_TOKEN}}'
+
+      - name: Wait for deployment
+        run: |
+          sleep 60
+
+      - name: Sync Inngest
+        run: |
+          curl -X PUT https://dev.unnamed-swc.com/api/inngest --fail-with-body

@@ -3,6 +3,7 @@ import { db } from "$lib/db/prisma";
 import { error, redirect } from "@sveltejs/kit";
 import { nanoid } from "../helpers/shared/nanoid";
 import type { AuthenticatedCharacter, Character } from "$lib/types/combine/character";
+import { getCtrConfig } from "$lib/db/shared/get-ctr-config";
 
 export async function getCombineAuthUrl() {
   const siteConfig = await db.siteConfiguration.findMany({
@@ -92,6 +93,9 @@ export async function exchangeCombineCode(code: string): Promise<AuthenticatedCh
 }
 
 export async function upsertUserAccount(authenticatedCharacter: AuthenticatedCharacter) {
+
+  const ctfConfig = await getCtrConfig('ACCOUNT_CREATED');
+
   const user = await db.user.upsert({
     where: {
       combineId: authenticatedCharacter.character.swcapi.character.uid,
@@ -113,13 +117,14 @@ export async function upsertUserAccount(authenticatedCharacter: AuthenticatedCha
           ]
         }
       },
-      ctr: 50,
-      ctrLogs: {
+      ctr: ctfConfig ? ctfConfig.points : 0,
+      ctrLogs: ctfConfig ? {
         create: {
-          delta: 50,
-          reason: 'Initial account creation with Combine authentication',
+          delta: ctfConfig.points,
+          reason: `${ctfConfig.reason} (Account Created)`,
+          event: 'ACCOUNT_CREATED'
         }
-      }
+      } : undefined
     },
     update: {
       name: authenticatedCharacter.character.swcapi.character.name,
