@@ -36,8 +36,9 @@
 				<Table.Row>
 					<Table.Head>Display Name</Table.Head>
 					<Table.Head>Name</Table.Head>
-					<Table.Head>Karma</Table.Head>
+					<Table.Head>CTR</Table.Head>
 					<Table.Head>Role</Table.Head>
+					<Table.Head>Discord Linked</Table.Head>
 					<Table.Head>Banned</Table.Head>
 				</Table.Row>
 			</Table.Header>
@@ -59,8 +60,9 @@
 							</div>
 						</Table.Cell>
 						<Table.Cell>{account.name}</Table.Cell>
-						<Table.Cell>{account.karma}</Table.Cell>
+						<Table.Cell>{account.ctr}</Table.Cell>
 						<Table.Cell>{account.role}</Table.Cell>
+						<Table.Cell>{account.discordId ? 'Yes' : 'No'}</Table.Cell>
 						<Table.Cell>{account.banned ? 'Yes' : 'No'}</Table.Cell>
 					</Table.Row>
 				{/each}

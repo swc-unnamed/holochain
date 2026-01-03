@@ -12,7 +12,7 @@ export const load = async ({ locals }) => {
       ctr: true,
       avatarUrl: true,
       role: true,
-      anonid: true,
+      discordId: true,
       banned: true,
     },
     orderBy: {
