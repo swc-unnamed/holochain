@@ -140,11 +140,11 @@
 								</DropdownMenu.Item>
 								<DropdownMenu.Item
 									onclick={async () => {
-										toast.success('coming soon');
+										await goto(`/auction-house/lots/pending`);
 									}}
 								>
 									<Icon icon="mdi:plus" />
-									<span>Add Lot</span>
+									<span>Add a Lot</span>
 								</DropdownMenu.Item>
 							</DropdownMenu.Group>
 						</DropdownMenu.Content>
@@ -299,6 +299,15 @@
 										>
 											<Icon icon="mdi:eye" />
 											<span>View Lot</span>
+										</DropdownMenu.Item>
+										<DropdownMenu.Item
+											onclick={async () => {
+												const lot = auction.lots[currentLotIndex];
+												await goto(`/auction-house/lots/${lot.id}/manage`);
+											}}
+										>
+											<Icon icon="mdi:pencil" />
+											<span>Manage Lot</span>
 										</DropdownMenu.Item>
 										<DropdownMenu.Item
 											onclick={() => {
