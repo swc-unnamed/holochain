@@ -25,6 +25,7 @@ export const editLot = command(editLotSchema, async (data) => {
       purchasedById: data.purchasedById,
       purchasedByMiddle: data.purchasedByMiddle,
       purchasePrice: data.purchasePrice ? parseCurrency(data.purchasePrice) : null,
+      middleId: data.middleId,
       history: {
         create: {
           event: `Lot was edited by ${locals.user.displayName}`

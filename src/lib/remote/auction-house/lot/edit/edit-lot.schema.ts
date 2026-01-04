@@ -16,5 +16,6 @@ export const editLotSchema = z.object({
   creditsTo: z.string({ error: 'We have to know where to send the credits!' }),
   purchasedById: z.cuid2().nullish(),
   purchasedByMiddle: z.boolean().default(false),
-  purchasePrice: z.string().nullish()
+  purchasePrice: z.string().nullish(),
+  middleId: z.cuid2().nullish()
 })

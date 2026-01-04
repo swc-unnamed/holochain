@@ -51,7 +51,8 @@
 			creditsTo: lot.creditsTo || 'Unnamed Market',
 			purchasedById: lot.purchasedById,
 			purchasedByMiddle: lot.purchasedByMiddle,
-			purchasePrice: lot.purchasePrice
+			purchasePrice: lot.purchasePrice,
+			middleId: lot.middleId
 		}),
 		onSuccess: async () => {
 			toast.success('Lot updated');
@@ -146,7 +147,7 @@
 								labelKey="displayName"
 								valueKey="id"
 							/>
-							<FieldInput label="Credits To" value={lot.creditsTo} readonly />
+							<FieldInput label="Credits To" value={lot.creditsTo} />
 
 							<CreditInput label="Starting Price" bind:value={cmd.form.startPrice} />
 
@@ -158,6 +159,20 @@
 								description="Indicates whether the lot was purchased through an intermediary. In order for the correct purchase data, make sure to set the correct purchaser below."
 								bind:checked={cmd.form.purchasedByMiddle}
 							/>
+
+							{#if cmd.form.purchasedByMiddle}
+								<SelectInput
+									type="single"
+									searchable
+									allowDeselect
+									label="Middle"
+									bind:value={cmd.form.middleId}
+									records={users}
+									labelKey="displayName"
+									valueKey="id"
+									required={requirePurchaseData}
+								/>
+							{/if}
 
 							<SelectInput
 								type="single"
