@@ -1,0 +1,105 @@
+model Auction {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  status      AuctionStatus @default(PENDING)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
+  start       DateTime?     @map("start_date")
+  completedAt DateTime?     @map("completed_at")
+  lots        Lot[]
+
+  @@map("auctions")
+}
+
+model Lot {
+  id                String       @id @default(cuid())
+  lotNumber         Int          @unique @default(autoincrement()) @map("lot_number")
+  auctionId         String?      @map("auction_id")
+  auction           Auction?     @relation(fields: [auctionId], references: [id])
+  title             String
+  details           String
+  location          String
+  status            LotStatus    @default(SUBMITTED)
+  createdBy         User         @relation(fields: [createdById], references: [id], name: "lots_created")
+  createdById       String       @map("created_by_id")
+  purchasedById     String?      @map("purchased_by_id")
+  purchasedBy       User?        @relation(fields: [purchasedById], references: [id], name: "lots_purchased")
+  purchasedByMiddle Boolean      @default(false) @map("purchased_by_middle")
+  middleId          String?      @map("middle_id")
+  startPrice        String       @map("start_price")
+  purchasePrice     String?      @map("purchase_price")
+  anonLot           Boolean      @default(false) @map("anon_lot")
+  creditsTo         String       @map("credits_to")
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @default(now()) @updatedAt @map("updated_at")
+  items             LotItem[]
+  history           LotHistory[]
+
+  @@map("lots")
+}
+
+model LotHistory {
+  id        String   @id @default(cuid())
+  lotId     String   @map("lot_id")
+  lot       Lot      @relation(fields: [lotId], references: [id])
+  event     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("lot_histories")
+}
+
+model LotItem {
+  id             String   @id @default(cuid())
+  lotId          String   @map("lot_id")
+  lot            Lot      @relation(fields: [lotId], references: [id])
+  name           String
+  quantity       Int
+  batch          Boolean  @default(false)
+  custom         Boolean  @default(false)
+  customImageUrl String?  @map("custom_image_url")
+  uuu            Boolean  @default(true)
+  entityId       String   @map("entity_id")
+  entity         Entity   @relation(fields: [entityId], references: [id])
+  assetId        String?  @map("asset_id")
+  asset          Asset?   @relation(fields: [assetId], references: [id])
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("lot_items")
+}
+
+model AuctionConfiguration {
+  id        String                  @id @default(cuid())
+  key       AuctionConfigurationKey @unique @map("key")
+  value     String?                 @map("value")
+  createdAt DateTime                @default(now()) @map("created_at")
+  updatedAt DateTime                @default(now()) @updatedAt @map("updated_at")
+
+  @@map("auction_configurations")
+}
+
+enum LotStatus {
+  SUBMITTED
+  SCHEDULED
+  SOLD
+  COMPLETED
+  WITHDRAWN
+
+  @@map("lot_status")
+}
+
+enum AuctionStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+  PENDING
+
+  @@map("auction_status")
+}
+
+enum AuctionConfigurationKey {
+  LIVE_DISCORD_BROADCAST_WEBHOOK_URL
+
+  @@map("auction_configuration_key")
+}

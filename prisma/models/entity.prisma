@@ -1,0 +1,29 @@
+model Entity {
+  id           String              @id @default(cuid())
+  name         String
+  type         String
+  enabled      Boolean             @default(true)
+  combineUid   String              @unique @map("combine_uid")
+  combineHref  String              @map("combine_href")
+  combineData  Json                @map("combine_data") @db.JsonB
+  imageSmall   String              @map("image_small")
+  imageLarge   String              @map("image_large")
+  transactions EntityTransaction[]
+  lotItems     LotItem[]
+  assets       Asset[]
+
+  @@map("entities")
+}
+
+model EntityTransaction {
+  id         String                @id @default(cuid())
+  entityId   String                @map("entity_id")
+  entity     Entity                @relation(fields: [entityId], references: [id])
+  value      String
+  type       EntityTransactionType @map("type")
+  fromAnonid String?               @map("from_anoid")
+  toAnonid   String?               @map("to_anoid")
+  timestamp  DateTime              @default(now())
+
+  @@map("entity_transactions")
+}

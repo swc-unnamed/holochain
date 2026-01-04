@@ -1,0 +1,73 @@
+import { command, getRequestEvent } from "$app/server";
+import { db } from "$lib/db/prisma";
+import { parseCurrency } from "$lib/utils/helpers/shared/currency";
+import { createLotSchema } from "./create-lot.schema";
+
+export const createLot = command(createLotSchema, async (data) => {
+  const { locals } = getRequestEvent();
+
+  // console.log("Create Lot Command Invoked with data:", data);
+
+  const price = parseCurrency(data.startPrice);
+
+  const lot = await db.lot.create({
+    data: {
+      title: data.title,
+      details: data.details,
+      location: data.location,
+      status: 'SUBMITTED',
+      createdById: locals.user.id,
+      anonLot: data.anonLot,
+      startPrice: price,
+      creditsTo: data.creditsTo,
+      items: {
+        createMany: {
+          data: data.items.map(item => ({
+            entityId: item.entityId,
+            name: item.name,
+            quantity: item.quantity,
+            batch: item.batch,
+            custom: item.custom,
+            customImageUrl: item.customImageUrl || null,
+            uuu: item.uuu,
+          }))
+        }
+      },
+      history: {
+        create: {
+          event: 'Lot created'
+        }
+      }
+    }
+  });
+
+  const config = await db.chainTrustRatingConfig.findUnique({
+    where: {
+      key: 'AH_LOT_CREATED'
+    }
+  });
+
+  if (config && config.points !== 0) {
+    await db.user.update({
+      where: {
+        id: locals.user.id
+      },
+      data: {
+        ctr: {
+          increment: 1
+        },
+        ctrLogs: {
+          create: {
+            delta: 1,
+            reason: `Created Auction Lot #${lot.lotNumber}, reference: ${lot.id}`,
+            event: 'AH_LOT_CREATED'
+          }
+        }
+      },
+    });
+  }
+
+
+
+  return lot;
+})

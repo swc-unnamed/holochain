@@ -1,0 +1,45 @@
+enum AppRole {
+  PATRON
+  AUCTIONEER
+  DEVELOPER
+  TZAR
+
+  @@map("app_roles")
+}
+
+enum OrganizationRole {
+  PATRON
+  MEMBER
+  MODERATOR
+  ADMINISTRATOR
+  OWNER
+
+  @@map("organization_roles")
+}
+
+enum UserPreferenceKey {
+  GLOBAL_THEME_MODE
+  GLOBAL_ENABLE_NOTIFICATIONS
+  GLOBAL_ANONYMOUS_MODE
+
+  @@map("user_preference_keys")
+}
+
+enum SiteConfigurationKey {
+  COMBINE_CLIENT_ID
+  COMBINE_CLIENT_SECRET
+  GLOBAL_REQUIRE_COMBINE_AUTHENTICATION
+  GLOBAL_DISABLE_NAME_VERIFICATION
+  DISCORD_CLIENT_ID
+  DISCORD_CLIENT_SECRET
+
+  @@map("site_configuration_keys")
+}
+
+enum EntityTransactionType {
+  MARKETPLACE_PURCHASE
+  AUCTION_BID
+  DONATION
+
+  @@map("entity_transaction_types")
+}

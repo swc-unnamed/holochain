@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: holochaindb
+    volumes:
+      - db_data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+
+  inngest:
+    image: inngest/inngest
+    command:
+      ["inngest", "dev", "-u", "http://host.docker.internal:5173/api/inngest"]
+    ports:
+      - "8288:8288"
+
+volumes:
+  db_data:

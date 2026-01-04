@@ -1,0 +1,27 @@
+enum ChainTrustRatingKey {
+  AH_LOT_CREATED
+  AH_LOT_PURCHASED
+  AH_LOT_SOLD
+  AH_LOT_WITHDRAWN_AFTER_SCHEDULED
+  AH_LOT_WITHDRAWN_BEFORE_SCHEDULED
+  AH_LOT_BROKERED_SALE
+  ACCOUNT_CREATED
+  ACCOUNT_DISCORD_LINKED
+  ACCOUNT_DISCORD_UNLINKED
+  ACCOUNT_ROLE_PROMOTED
+  ACCOUNT_ROLE_DEMOTED
+  ACCOUNT_BANNED
+  ACCOUNT_UNBANNED
+
+  @@map("chain_trust_rating_event")
+}
+
+model ChainTrustRatingConfig {
+  key       ChainTrustRatingKey @id @unique
+  points    Int                 @default(0)
+  reason    String
+  icon      String              @default("mdi:progress-star-four-points")
+  updatedAt DateTime            @updatedAt
+
+  @@map("chain_trust_rating_config")
+}

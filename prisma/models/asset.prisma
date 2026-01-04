@@ -1,0 +1,23 @@
+model Asset {
+  id        String       @id @default(cuid())
+  combineId String       @unique @map("combine_id")
+  entityId  String       @map("entity_id")
+  entity    Entity       @relation(fields: [entityId], references: [id])
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @default(now()) @updatedAt @map("updated_at")
+  images    AssetImage[]
+  lotItems  LotItem[]
+
+  @@map("assets")
+}
+
+model AssetImage {
+  id        String   @id @default(cuid())
+  assetId   String   @map("asset_id")
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("asset_images")
+}
