@@ -1,16 +1,17 @@
 model Entity {
-  id           String              @id @default(cuid())
-  name         String
-  type         String
-  enabled      Boolean             @default(true)
-  combineUid   String              @unique @map("combine_uid")
-  combineHref  String              @map("combine_href")
-  combineData  Json                @map("combine_data") @db.JsonB
-  imageSmall   String              @map("image_small")
-  imageLarge   String              @map("image_large")
-  transactions EntityTransaction[]
-  lotItems     LotItem[]
-  assets       Asset[]
+  id            String              @id @default(cuid())
+  name          String
+  type          String
+  enabled       Boolean             @default(true)
+  combineUid    String              @unique @map("combine_uid")
+  combineHref   String              @map("combine_href")
+  combineData   Json                @map("combine_data") @db.JsonB
+  imageSmall    String              @map("image_small")
+  imageLarge    String              @map("image_large")
+  transactions  EntityTransaction[]
+  lotItems      LotItem[]
+  assets        Asset[]
+  contractItems ContractItem[]
 
   @@map("entities")
 }

@@ -1,0 +1,63 @@
+model Contract {
+  id             String         @id @default(cuid())
+  contractTypeId String         @map("contract_type_id")
+  type           ContractType   @relation(fields: [contractTypeId], references: [id])
+  title          String
+  details        String
+  location       String
+  createdById    String         @map("created_by_id")
+  createdBy      User           @relation(fields: [createdById], references: [id], name: "contracts_created_by")
+  items          ContractItem[]
+  fulfilledById  String?        @map("fulfilled_by_id")
+  fulfilledBy    User?          @relation(fields: [fulfilledById], references: [id], name: "contracts_fulfilled_by")
+  expiresAt      DateTime?      @map("expires_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+}
+
+// ContractItem represents an item or service that is part of a Contract.
+// Each ContractItem is linked to both a Contract and an Entity
+model ContractItem {
+  id         String   @id @default(cuid())
+  contractId String   @map("contract_id")
+  contract   Contract @relation(fields: [contractId], references: [id])
+  entityId   String   @map("entity_id")
+  entity     Entity   @relation(fields: [entityId], references: [id])
+  notes      String?
+  quantity   Int      @default(1)
+  unit       Unit     @default(EACH)
+  price      String
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+}
+
+// Contract Types define the various kinds of contracts available in the system.
+// For example, "Sale", "Purchase", "Service", "Production", etc.
+model ContractType {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  enabled     Boolean    @default(true)
+  allowBids   Boolean    @default(false) @map("allow_bids")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  contracts   Contract[]
+}
+
+enum ContractStatus {
+  OPEN // Default status when a contract is created
+  IN_PROGRESS // When work has started on the contract, for example, a Service contract being worked on
+  PENDING_CREDITS // When the contract is awaiting credits to be transferred
+  PENDING_TRANSFER // When the contract is awaiting item transfer
+  FULFILLED // When the contract has been successfully completed
+  CANCELLED // When the contract has been cancelled
+
+  @@map("contract_status")
+}
+
+enum Unit {
+  EACH
+  BATCH
+
+  @@map("unit")
+}
