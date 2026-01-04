@@ -43,13 +43,6 @@
 </script>
 
 <PageWrapper title="Lot Profile">
-	{#snippet header()}
-		<Button href="/auction-house/lots/create" size="sm">
-			<Icon icon="mdi:plus" />
-			<span>Create Lot</span>
-		</Button>
-	{/snippet}
-
 	<div class="md:grid-col-2 grid grid-cols-1 gap-3 lg:grid-cols-4">
 		<CardWrapper title="Submitted" description="Awaiting to be added to an Auction">
 			<div class="text-2xl text-primary">

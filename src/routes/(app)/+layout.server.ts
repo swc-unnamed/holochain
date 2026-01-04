@@ -1,5 +1,4 @@
-export const load = async ({ locals, depends }) => {
-  depends('app:global');
+export const load = async ({ locals }) => {
   return {
     user: locals.user
   }

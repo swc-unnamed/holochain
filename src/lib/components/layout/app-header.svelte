@@ -8,6 +8,7 @@
 	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
 	import Badge from '../ui/badge/badge.svelte';
 	import Icon from '@iconify/svelte';
+	import BugReport from '../custom/bug-report/bug-report.svelte';
 
 	interface SiteHeaderProps {
 		crumbPageTitle?: string;
@@ -66,7 +67,7 @@
 		{/if}
 
 		<div class="ml-auto flex items-center gap-2">
-			<Badge>OPEN BETA</Badge>
+			<BugReport />
 			{@render header?.()}
 		</div>
 	</div>
