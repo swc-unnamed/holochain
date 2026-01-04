@@ -293,7 +293,8 @@
 										</DropdownMenu.Item>
 										<DropdownMenu.Item
 											onclick={async () => {
-												await goto(`/auction-house/lots/${currentLot.id}`);
+												const lot = auction.lots[currentLotIndex];
+												await goto(`/auction-house/lots/${lot.id}`);
 											}}
 										>
 											<Icon icon="mdi:eye" />
