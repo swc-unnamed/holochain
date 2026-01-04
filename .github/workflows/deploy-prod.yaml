@@ -66,3 +66,22 @@ jobs:
       - name: Sync Inngest
         run: |
           curl -X PUT https://market.unnamed-swc.com/api/inngest --fail-with-body
+
+  publish_release_notes:
+    runs-on: ubuntu-latest
+    needs: deploy
+    environment:
+      name: prod
+      url: https://market.unnamed-swc.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Publish to Discord
+        uses: SethCohen/github-releases-to-discord@v1
+        with:
+          webhook_url: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+          color: "2105893"
+          username: "Holochain Release Droid"
+          footer_title: "Changelog"
+          reduce_headings: true
+          footer_timestamp: TRUE
