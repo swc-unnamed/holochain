@@ -22,10 +22,20 @@
 	import ItemSwitch from '$lib/components/custom/item-switch/item-switch.svelte';
 	import { lotStatusSelect } from '$lib/types/auction-house/lot-status.js';
 	import Item from '$lib/components/custom/item/item.svelte';
+	import { addItemSchema } from '$lib/remote/auction-house/lot/edit/add-item.schema.js';
+	import { addItem } from '$lib/remote/auction-house/lot/edit/add-item.remote.js';
+	import { deleteLotItemSchema } from '$lib/remote/auction-house/lot-item/delete-lot-item.schema.js';
+	import { deleteItem } from '$lib/remote/auction-house/lot/edit/delete-item.remote.js';
+	import { deleteItemSchema } from '$lib/remote/auction-house/lot/edit/delete-item.schema.js';
+	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
+	import { Spinner } from '$lib/components/ui/spinner/index.js';
 
 	let { data } = $props();
-	const lot = $derived(await getUserLot({ id: data.id }));
-	const users = $derived(await getUserList());
+	let lot = $derived(await getUserLot({ id: data.id }));
+	let entities = $derived(data.entities);
+	let users = $derived(await getUserList());
+	let showDeleteItemDialog = $state(false);
+	let showAddItemDialog = $state(false);
 
 	const cmd = new CommandForm(editLotSchema, {
 		command: editLot,
@@ -49,6 +59,44 @@
 		onError: () => {
 			toast.error('Failed to update lot');
 		}
+	});
+
+	const addItemCmd = new CommandForm(addItemSchema, {
+		command: addItem,
+		onSuccess: () => {
+			toast.success('Item added to lot');
+			showAddItemDialog = false;
+		},
+		onError: () => {
+			toast.error('Failed to add item to lot');
+			console.error(addItemCmd.errors);
+		},
+		initial: () => ({
+			lotId: lot.id,
+			entityId: '',
+			name: '',
+			quantity: 1,
+			batch: false,
+			custom: false,
+			uuu: true,
+			customImageUrl: null
+		}),
+		reset: 'onSuccess'
+	});
+
+	const deleteItemCmd = new CommandForm(deleteItemSchema, {
+		command: deleteItem,
+		onSuccess: () => {
+			toast.success('Item removed from lot');
+			showDeleteItemDialog = false;
+		},
+		onError: () => {
+			toast.error('Failed to remove item from lot');
+		},
+		initial: () => ({
+			lotId: lot.id
+		}),
+		reset: 'onSuccess'
 	});
 
 	let canSave = $state(true);
@@ -212,6 +260,14 @@
 		<!-- Lot Items -->
 		<div class="md:col-span-2">
 			<CardWrapper title="Items">
+				{#snippet header()}
+					{#if lot.status == 'SUBMITTED' || lot.status === 'SCHEDULED'}
+						<Button size="sm" variant="secondary" onclick={() => (showAddItemDialog = true)}>
+							<Icon icon="mdi:plus" />
+							Add Item
+						</Button>
+					{/if}
+				{/snippet}
 				<div class="grid gap-3">
 					{#if lot.items?.length < 1}
 						<Empty title="No items" description="This lot has no items." />
@@ -242,6 +298,18 @@
 											{/if}
 										</div>
 									</div>
+
+									<Button
+										class="col-span-2"
+										size="sm"
+										variant="ghost"
+										onclick={() => {
+											deleteItemCmd.form.itemId = item.id;
+											showDeleteItemDialog = true;
+										}}
+									>
+										Remove Item
+									</Button>
 								</div>
 							{/each}
 						</div>
@@ -250,4 +318,98 @@
 			</CardWrapper>
 		</div>
 	</div>
+
+	{@render deleteItemDialog()}
+	{@render addItemDialog()}
 </PageWrapper>
+
+{#snippet deleteItemDialog()}
+	<ResponsiveDialog title="Delete Item" bind:open={showDeleteItemDialog}>
+		<p>Are you sure you want to delete this item from the lot? This action cannot be undone.</p>
+		<TextareaInput
+			label="Reason for Deletion"
+			bind:value={deleteItemCmd.form.reason}
+			issues={deleteItemCmd.errors.reason?.message}
+			description="This will be placed into the Lot history."
+			required
+			disabled={deleteItemCmd.submitting}
+		/>
+
+		{#snippet footer()}
+			<Button
+				size="sm"
+				onclick={() => {
+					showDeleteItemDialog = false;
+					deleteItemCmd.reset();
+				}}>Nevermind</Button
+			>
+			<Button
+				size="sm"
+				variant="destructive"
+				onclick={deleteItemCmd.submit}
+				disabled={deleteItemCmd.submitting}
+			>
+				{#if deleteItemCmd.submitting}
+					<Spinner />
+				{:else}
+					<Icon icon="mdi:delete" />
+				{/if}
+				Delete Item
+			</Button>
+		{/snippet}
+	</ResponsiveDialog>
+{/snippet}
+
+{#snippet addItemDialog()}
+	<ResponsiveDialog title="Add Item" bind:open={showAddItemDialog}>
+		<div class="grid gap-3">
+			<SelectInput
+				searchable
+				label="Entity"
+				type="single"
+				records={entities}
+				valueKey="id"
+				labelKey="name"
+				bind:value={addItemCmd.form.entityId}
+			/>
+			<FieldInput type="number" label="Quantity" min="1" bind:value={addItemCmd.form.quantity} />
+			<SwitchInput label="Batched Item" bind:checked={addItemCmd.form.batch} />
+			<SwitchInput label="Custom Item" bind:checked={addItemCmd.form.custom} />
+			<SwitchInput label="UUU" bind:checked={addItemCmd.form.uuu} />
+
+			<TextareaInput
+				label="Reason"
+				bind:value={addItemCmd.form.reason}
+				required
+				description="Reason you are adding this item. Will be placed into the history."
+			/>
+
+			{#if addItemCmd.form.custom}
+				<FieldInput
+					label="Custom Image URL"
+					placeholder="https://example.com/image.png"
+					bind:value={addItemCmd.form.customImageUrl}
+				/>
+			{/if}
+		</div>
+
+		{#snippet footer()}
+			<Button
+				onclick={() => {
+					showAddItemDialog = false;
+					addItemCmd.reset();
+				}}
+			>
+				Cancel
+			</Button>
+			<Button onclick={addItemCmd.submit} disabled={addItemCmd.submitting}>
+				{#if addItemCmd.submitting}
+					<Spinner />
+				{:else}
+					<Icon icon="mdi:plus" />
+				{/if}
+				Add to Lot
+			</Button>
+		{/snippet}
+	</ResponsiveDialog>
+{/snippet}

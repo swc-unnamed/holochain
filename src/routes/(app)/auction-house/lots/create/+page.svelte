@@ -41,7 +41,9 @@
 			showPostCreateDialog = true;
 		},
 		onError: () => {
-			toast.error('Failed to create the Lot, try again');
+			toast.error('Failed to create the Lot, try again', {
+				description: createLotCmd.errors.items?.message
+			});
 		},
 		initial: () => ({
 			title: '',
