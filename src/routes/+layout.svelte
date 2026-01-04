@@ -44,5 +44,5 @@
 	<meta name="twitter:card" content={`${data.origin}/images/uim-17.png`} />
 </svelte:head>
 
-<Toaster position="top-right" />
+<Toaster position="top-right" richColors />
 {@render children()}
