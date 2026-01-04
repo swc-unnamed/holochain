@@ -383,16 +383,8 @@ export type AuctionNullableScalarRelationFilter = {
   isNot?: Prisma.AuctionWhereInput | null
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type EnumAuctionStatusFieldUpdateOperationsInput = {
   set?: $Enums.AuctionStatus
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type AuctionCreateNestedOneWithoutLotsInput = {

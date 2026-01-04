@@ -21,6 +21,7 @@ model User {
   ctrLogs         ChainTrustRatingLog[]
   lotsOwned       Lot[]                 @relation(name: "lots_created")
   lotsPurchased   Lot[]                 @relation(name: "lots_purchased")
+  apiClients      ApiClient[]
 
   @@map("users")
 }

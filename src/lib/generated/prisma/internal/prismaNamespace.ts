@@ -384,6 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  ApiClient: 'ApiClient',
+  ApiClientLog: 'ApiClientLog',
   Asset: 'Asset',
   AssetImage: 'AssetImage',
   Auction: 'Auction',
@@ -413,10 +415,158 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "chainTrustRatingLog" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference"
+    modelProps: "apiClient" | "apiClientLog" | "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "chainTrustRatingLog" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    ApiClient: {
+      payload: Prisma.$ApiClientPayload<ExtArgs>
+      fields: Prisma.ApiClientFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ApiClientFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ApiClientFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        findFirst: {
+          args: Prisma.ApiClientFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ApiClientFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        findMany: {
+          args: Prisma.ApiClientFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>[]
+        }
+        create: {
+          args: Prisma.ApiClientCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        createMany: {
+          args: Prisma.ApiClientCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ApiClientCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>[]
+        }
+        delete: {
+          args: Prisma.ApiClientDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        update: {
+          args: Prisma.ApiClientUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        deleteMany: {
+          args: Prisma.ApiClientDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ApiClientUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ApiClientUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>[]
+        }
+        upsert: {
+          args: Prisma.ApiClientUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientPayload>
+        }
+        aggregate: {
+          args: Prisma.ApiClientAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApiClient>
+        }
+        groupBy: {
+          args: Prisma.ApiClientGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiClientGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ApiClientCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiClientCountAggregateOutputType> | number
+        }
+      }
+    }
+    ApiClientLog: {
+      payload: Prisma.$ApiClientLogPayload<ExtArgs>
+      fields: Prisma.ApiClientLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ApiClientLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ApiClientLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ApiClientLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ApiClientLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        findMany: {
+          args: Prisma.ApiClientLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>[]
+        }
+        create: {
+          args: Prisma.ApiClientLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        createMany: {
+          args: Prisma.ApiClientLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ApiClientLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ApiClientLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        update: {
+          args: Prisma.ApiClientLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ApiClientLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ApiClientLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ApiClientLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ApiClientLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApiClientLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ApiClientLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApiClientLog>
+        }
+        groupBy: {
+          args: Prisma.ApiClientLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiClientLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ApiClientLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApiClientLogCountAggregateOutputType> | number
+        }
+      }
+    }
     Asset: {
       payload: Prisma.$AssetPayload<ExtArgs>
       fields: Prisma.AssetFieldRefs
@@ -1492,6 +1642,37 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const ApiClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  apiKey: 'apiKey',
+  ownerId: 'ownerId',
+  scopes: 'scopes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  lastUsedAt: 'lastUsedAt',
+  status: 'status'
+} as const
+
+export type ApiClientScalarFieldEnum = (typeof ApiClientScalarFieldEnum)[keyof typeof ApiClientScalarFieldEnum]
+
+
+export const ApiClientLogScalarFieldEnum = {
+  id: 'id',
+  apiClientId: 'apiClientId',
+  endpoint: 'endpoint',
+  method: 'method',
+  timestamp: 'timestamp',
+  latencyMs: 'latencyMs',
+  status: 'status',
+  statusText: 'statusText',
+  payload: 'payload'
+} as const
+
+export type ApiClientLogScalarFieldEnum = (typeof ApiClientLogScalarFieldEnum)[keyof typeof ApiClientLogScalarFieldEnum]
+
+
 export const AssetScalarFieldEnum = {
   id: 'id',
   combineId: 'combineId',
@@ -1745,6 +1926,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'ApiClientScope[]'
+ */
+export type ListEnumApiClientScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiClientScope[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ApiClientScope'
+ */
+export type EnumApiClientScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiClientScope'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1759,16 +1954,16 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'AuctionStatus'
+ * Reference to a field of type 'ApiClientStatus'
  */
-export type EnumAuctionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionStatus'>
+export type EnumApiClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiClientStatus'>
     
 
 
 /**
- * Reference to a field of type 'AuctionStatus[]'
+ * Reference to a field of type 'ApiClientStatus[]'
  */
-export type ListEnumAuctionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionStatus[]'>
+export type ListEnumApiClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiClientStatus[]'>
     
 
 
@@ -1783,6 +1978,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AuctionStatus'
+ */
+export type EnumAuctionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AuctionStatus[]'
+ */
+export type ListEnumAuctionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuctionStatus[]'>
     
 
 
@@ -2013,6 +2222,8 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
+  apiClient?: Prisma.ApiClientOmit
+  apiClientLog?: Prisma.ApiClientLogOmit
   asset?: Prisma.AssetOmit
   assetImage?: Prisma.AssetImageOmit
   auction?: Prisma.AuctionOmit

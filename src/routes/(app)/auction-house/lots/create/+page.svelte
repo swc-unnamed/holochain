@@ -14,8 +14,13 @@
 	import { createLotSchema } from '$lib/remote/auction-house/lot/create-lot.schema.js';
 	import { createLot } from '$lib/remote/auction-house/lot/create-lot.remote.js';
 	import { goto } from '$app/navigation';
+	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
 
 	let { data } = $props();
+
+	let showPostCreateDialog = $state(false);
+	let lotNumber = $state(0);
+	let lotId = $state('');
 
 	let addLotItem = $state({
 		entityId: null as string | null,
@@ -31,7 +36,9 @@
 		command: createLot,
 		onSuccess: async (res) => {
 			toast.success('Lot Created Successfully');
-			await goto(`/auction-house/lots/${res.id}`);
+			lotNumber = res.lotNumber;
+			lotId = res.id;
+			showPostCreateDialog = true;
 		},
 		onError: () => {
 			toast.error('Failed to create the Lot, try again');
@@ -206,4 +213,27 @@
 			</CardWrapper>
 		</div>
 	</div>
+
+	{@render postCreateDialog()}
 </PageWrapper>
+
+{#snippet postCreateDialog()}
+	<ResponsiveDialog title="Lot Created" bind:open={showPostCreateDialog}>
+		<div class="grid gap-3">
+			<p>
+				Your lot has been successfully created. Before the Auction takes place, make sure you
+				makeover all Items to <span class="text-primary">Unnamed Market</span>.
+			</p>
+			<p>
+				To make the process smoother, you can optionally tag the items with the lot number. This
+				will help with Holochain automations.
+			</p>
+
+			<p>Recommended Tag: <span class="text-primary">alid-{lotNumber}</span></p>
+		</div>
+
+		{#snippet footer()}
+			<Button href="/auction-house/lots/{lotId}">Acknowledged</Button>
+		{/snippet}
+	</ResponsiveDialog>
+{/snippet}

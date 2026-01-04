@@ -9,6 +9,27 @@
 * 🟢 You can import this file directly.
 */
 
+export const ApiClientScope = {
+  HOLOCHAIN_DATABASE_READ: 'HOLOCHAIN_DATABASE_READ',
+  HOLOCHAIN_TRANSACTIONS_READ: 'HOLOCHAIN_TRANSACTIONS_READ',
+  HOLOCHAIN_TRANSACTIONS_WRITE: 'HOLOCHAIN_TRANSACTIONS_WRITE',
+  MARKET_READ_CONTRACTS: 'MARKET_READ_CONTRACTS',
+  MARKET_LIST_CONTRACTS: 'MARKET_LIST_CONTRACTS',
+  MARKET_CREATE_CONTRACTS: 'MARKET_CREATE_CONTRACTS'
+} as const
+
+export type ApiClientScope = (typeof ApiClientScope)[keyof typeof ApiClientScope]
+
+
+export const ApiClientStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REVOKED: 'REVOKED'
+} as const
+
+export type ApiClientStatus = (typeof ApiClientStatus)[keyof typeof ApiClientStatus]
+
+
 export const LotStatus = {
   SUBMITTED: 'SUBMITTED',
   SCHEDULED: 'SCHEDULED',

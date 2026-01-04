@@ -18,6 +18,16 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model ApiClient
+ * 
+ */
+export type ApiClient = Prisma.ApiClientModel
+/**
+ * Model ApiClientLog
+ * 
+ */
+export type ApiClientLog = Prisma.ApiClientLogModel
+/**
  * Model Asset
  * 
  */
