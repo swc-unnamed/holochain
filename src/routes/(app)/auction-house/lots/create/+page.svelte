@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Sentry from '@sentry/sveltekit';
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import CreditInput from '$lib/components/custom/fields/credit-input/credit-input.svelte';
@@ -57,6 +58,7 @@
 	});
 
 	function importFromCombine() {
+		Sentry.metrics.count('ah_lot_import_combine_interest', 1);
 		toast('Not Implemented Yet', {
 			description:
 				'Your interest has been noted, we will announce when this feature is available on the Holochain.'

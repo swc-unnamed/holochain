@@ -66,6 +66,7 @@
     "@dicebear/core": "^9.2.4",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
+    "@sentry/sveltekit": "^10",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "discord.js": "^14.25.1",

@@ -11,7 +11,7 @@
 	const sidebar = useSidebar();
 	const mobile = new IsMobile();
 
-	const VERSION = 'v0.3.0';
+	const VERSION = 'OPEN BETA';
 </script>
 
 <Sidebar.Menu>
