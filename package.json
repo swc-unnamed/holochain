@@ -64,6 +64,7 @@
     "@akcodeworks/svelte-command-form": "^0.1.1",
     "@dicebear/collection": "^9.2.4",
     "@dicebear/core": "^9.2.4",
+    "@opentelemetry/api": "^1.9.0",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@sentry/sveltekit": "^10",
