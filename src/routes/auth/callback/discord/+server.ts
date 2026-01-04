@@ -1,5 +1,6 @@
 import { env } from "$env/dynamic/private";
 import { db } from "$lib/db/prisma";
+import { getCtrConfig } from "$lib/db/shared/get-ctr-config.js";
 import { redirect } from "@sveltejs/kit";
 
 
@@ -54,24 +55,36 @@ export const GET = async ({ locals, url }) => {
 
   const discordUser = await userResponse.json();
 
-  console.log('Discord User:', discordUser);
-
-  await db.user.update({
-    where: {
-      id: locals.user.id,
-    },
-    data: {
-      discordId: discordUser.id,
-      discordUsername: discordUser.username,
-      ctr: { increment: 10 },
-      ctrLogs: {
-        create: {
-          reason: 'Linked Discord account',
-          delta: 10
+  const ctrConfig = await getCtrConfig('ACCOUNT_DISCORD_LINKED');
+  if (ctrConfig && ctrConfig.points !== 0) {
+    await db.user.update({
+      where: {
+        id: locals.user.id,
+      },
+      data: {
+        discordId: discordUser.id,
+        discordUsername: discordUser.username,
+        ctr: { increment: 10 },
+        ctrLogs: {
+          create: {
+            reason: 'Linked Discord account',
+            delta: 10,
+            event: 'ACCOUNT_DISCORD_LINKED',
+          }
         }
-      }
-    },
-  });
+      },
+    });
+  } else {
+    await db.user.update({
+      where: {
+        id: locals.user.id,
+      },
+      data: {
+        discordId: discordUser.id,
+        discordUsername: discordUser.username,
+      },
+    });
+  }
 
   redirect(307, '/account')
 }
