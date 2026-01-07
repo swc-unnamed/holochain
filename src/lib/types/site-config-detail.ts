@@ -20,6 +20,42 @@ export const SiteConfig: Record<SiteConfigurationKey, SiteConfigDetail> = {
     description: "The client secret used for authentication with the Combine service.",
     default: ""
   },
+  DISCORD_CLIENT_ID: {
+    key: 'DISCORD_CLIENT_ID',
+    name: "Discord Client ID",
+    description: "The client ID used for Discord OAuth authentication.",
+    default: ""
+  },
+  DISCORD_CLIENT_SECRET: {
+    key: 'DISCORD_CLIENT_SECRET',
+    name: "Discord Client Secret",
+    description: "The client secret used for Discord OAuth authentication.",
+    default: ""
+  },
+  INTEGRATION_COMBINE_ACCESS_TOKEN: {
+    key: 'INTEGRATION_COMBINE_ACCESS_TOKEN',
+    name: "Combine Integration - Access Token",
+    description: "OAuth access token for Combine admin integration. Managed automatically.",
+    default: ""
+  },
+  INTEGRATION_COMBINE_REFRESH_TOKEN: {
+    key: 'INTEGRATION_COMBINE_REFRESH_TOKEN',
+    name: "Combine Integration - Refresh Token",
+    description: "OAuth refresh token for Combine admin integration. Managed automatically.",
+    default: ""
+  },
+  INTEGRATION_COMBINE_TOKEN_EXPIRES_AT: {
+    key: 'INTEGRATION_COMBINE_TOKEN_EXPIRES_AT',
+    name: "Combine Integration - Token Expiry",
+    description: "ISO timestamp when the Combine access token expires. Managed automatically.",
+    default: ""
+  },
+  INTEGRATION_COMBINE_SCOPES: {
+    key: 'INTEGRATION_COMBINE_SCOPES',
+    name: "Combine Integration - Granted Scopes",
+    description: "JSON array of scopes granted to the Combine admin integration. Managed automatically.",
+    default: ""
+  },
   GLOBAL_REQUIRE_COMBINE_AUTHENTICATION: {
     key: 'GLOBAL_REQUIRE_COMBINE_AUTHENTICATION',
     name: "Global - Require Combine Authentication",

@@ -13,11 +13,12 @@
 	import { SaveIcon } from '@lucide/svelte';
 	import { Spinner } from '$lib/components/ui/spinner/index.js';
 	import * as Tabs from '$lib/components/custom/underline-tabs';
-	import { ChainTrustRatingKey } from '$lib/generated/prisma/enums';
+
 	import { CTREvent } from '$lib/types/ctr-event-detail';
 	import { updateCtrConfig } from '$lib/remote/admin/config/update-ctr-config.remote.js';
 	import { updateCtrConfigSchema } from '$lib/remote/admin/config/update-ctr-config.schema.js';
 	import Icon from '@iconify/svelte';
+	import { goto } from '$app/navigation';
 
 	let { data } = $props();
 	let showSecrets = $state(false);

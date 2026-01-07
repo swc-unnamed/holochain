@@ -28,10 +28,20 @@ enum UserPreferenceKey {
 enum SiteConfigurationKey {
   COMBINE_CLIENT_ID
   COMBINE_CLIENT_SECRET
-  GLOBAL_REQUIRE_COMBINE_AUTHENTICATION
-  GLOBAL_DISABLE_NAME_VERIFICATION
+  GLOBAL_REQUIRE_COMBINE_AUTHENTICATION // Deprecated
+  GLOBAL_DISABLE_NAME_VERIFICATION // Deprecated
   DISCORD_CLIENT_ID
   DISCORD_CLIENT_SECRET
+
+  // Integration tokens, not to be confused with user tokens
+  // these are used by the backend to interact with the Unnamed Market Faction
+  // within the Combine. They should be kept secret. For obvious reasons.
+  // Additionally, these will ever only be able to be done with the UM faction
+  // so we don't accidentally use them for other factions.
+  INTEGRATION_COMBINE_ACCESS_TOKEN
+  INTEGRATION_COMBINE_REFRESH_TOKEN
+  INTEGRATION_COMBINE_TOKEN_EXPIRES_AT
+  INTEGRATION_COMBINE_SCOPES
 
   @@map("site_configuration_keys")
 }
