@@ -53,3 +53,28 @@ enum EntityTransactionType {
 
   @@map("entity_transaction_types")
 }
+
+enum LotStatus {
+  SUBMITTED
+  SCHEDULED
+  SOLD
+  COMPLETED
+  WITHDRAWN
+
+  @@map("lot_status")
+}
+
+enum AuctionStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+  PENDING
+
+  @@map("auction_status")
+}
+
+enum AuctionConfigurationKey {
+  LIVE_DISCORD_BROADCAST_WEBHOOK_URL
+
+  @@map("auction_configuration_key")
+}

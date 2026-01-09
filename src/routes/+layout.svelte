@@ -5,7 +5,8 @@
 	import { Toaster } from 'svelte-sonner';
 	import { browser } from '$app/environment';
 	import { navigating } from '$app/state';
-	import { CheckIcon, CircleAlert, XIcon } from '@lucide/svelte';
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
+	import posthog from 'posthog-js';
 	import { ModeWatcher } from 'mode-watcher';
 
 	let { children, data } = $props();
@@ -16,6 +17,12 @@
 		showSpinner: false,
 		template: `<div class="bar" style="background: #246eb;" role="bar"><div class="peg"></div></div>`
 	});
+
+	// PostHog pageview & pageleave tracking
+	if (browser) {
+		beforeNavigate(() => posthog.capture('$pageleave'));
+		afterNavigate(() => posthog.capture('$pageview'));
+	}
 
 	$effect(() => {
 		if (browser) {

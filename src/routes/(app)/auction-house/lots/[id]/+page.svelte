@@ -19,6 +19,11 @@
 	import type { HttpError } from '@sveltejs/kit';
 	import { withdrawLotAdminSchema } from '$lib/remote/auction-house/lot/withdraw-lot-admin.schema.js';
 	import { withdrawLotAdmin } from '$lib/remote/auction-house/lot/withdraw-lot-admin.remote.js';
+	import * as Tabs from '$lib/components/custom/underline-tabs';
+	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
+	import Empty from '$lib/components/custom/empty/empty.svelte';
+	import { standardDateFormat } from '$lib/utils/helpers/shared/date-formatter.js';
+	import { triggerCreditCheckpoint } from '$lib/remote/admin/combine/test.remote';
 
 	const { data } = $props();
 	const lot = $derived(data.lot);
@@ -66,7 +71,7 @@
 </script>
 
 <PageWrapper title="Lot Details">
-	<div class="grid grid-cols-1 gap-3 lg:grid-cols-4">
+	<div class="grid grid-cols-1 gap-3 lg:grid-cols-5">
 		<div class="lg:col-span-3">
 			<div class="grid gap-3">
 				<CardWrapper title={lot.title}>
@@ -127,47 +132,136 @@
 			</div>
 		</div>
 
-		<div class="lg:col-span-1">
-			<CardWrapper>
-				<div class="grid gap-3">
-					<FieldInput
-						label="Submitted At"
-						value={new Date(lot.createdAt).toLocaleString()}
-						readonly
-					/>
+		<div class="lg:col-span-2">
+			<CardWrapper title="Metadata">
+				<Tabs.Root value="details">
+					<Tabs.List>
+						<Tabs.Trigger value="details">Details</Tabs.Trigger>
+						<Tabs.Trigger value="activity">Activity</Tabs.Trigger>
+						<Tabs.Trigger value="transactions">Transactions</Tabs.Trigger>
+					</Tabs.List>
 
-					<CreditInput label="Starting Bid" value={lot.startPrice} readonly />
-
-					<FieldInput label="Credits To" value={lot.creditsTo} readonly />
-
-					{#if lot.createdBy}
-						<div class="grid gap-2">
-							<p class="text-sm font-bold">Submitted By</p>
-							<UserInfo
-								avatarUrl={lot.createdBy.avatarUrl!}
-								displayName={lot.createdBy.displayName}
-								ctr={lot.createdBy.ctr}
+					<Tabs.Content value="details">
+						<div class="grid gap-3">
+							<FieldInput
+								label="Submitted At"
+								value={new Date(lot.createdAt).toLocaleString()}
+								readonly
 							/>
-						</div>
-					{:else}
-						<FieldInput label="Listed By" value={anonData.sellerAnonId} readonly />
-					{/if}
 
-					{#if isOwner}
-						<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-							{#if canWithdraw}
-								<Button size="sm" variant="ghost" onclick={() => (showWithdrawDialog = true)}>
-									Withdraw Lot
-								</Button>
+							<CreditInput label="Starting Bid" value={lot.startPrice} readonly />
+
+							<FieldInput label="Credits To" value={lot.creditsTo} readonly />
+
+							{#if lot.createdBy}
+								<div class="grid gap-2">
+									<p class="text-sm font-bold">Submitted By</p>
+									<UserInfo
+										avatarUrl={lot.createdBy.avatarUrl!}
+										displayName={lot.createdBy.displayName}
+										ctr={lot.createdBy.ctr}
+									/>
+								</div>
+							{:else}
+								<FieldInput label="Listed By" value={anonData.sellerAnonId} readonly />
 							{/if}
 
-							{#if able('AUCTIONEER')}
-								<Button size="sm" href="/auction-house/lots/{lot.id}/manage">Manage Lot</Button>
+							{#if isOwner}
+								<div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+									{#if canWithdraw}
+										<Button size="sm" variant="ghost" onclick={() => (showWithdrawDialog = true)}>
+											Withdraw Lot
+										</Button>
+									{/if}
+
+									{#if able('AUCTIONEER')}
+										<Button size="sm" href="/auction-house/lots/{lot.id}/manage">
+											<Icon icon="mdi:library-edit" />
+											Manage Lot
+										</Button>
+									{/if}
+
+									{#if able('AUCTIONEER')}
+										<Button
+											size="sm"
+											variant="outline"
+											onclick={async () => {
+												await triggerCreditCheckpoint();
+												toast.success('Chain status check initiated');
+											}}
+										>
+											<Icon icon="mdi:code-block-braces" />
+											Check Chain Status
+										</Button>
+									{/if}
+								</div>
 							{/if}
 						</div>
-					{/if}
-				</div>
-				{@render withdrawLotDialog()}
+						{@render withdrawLotDialog()}
+					</Tabs.Content>
+
+					<Tabs.Content value="activity">
+						<ScrollArea class="h-96">
+							{#if lot.history.length < 1}
+								<Empty title="No Activity" description="No activity recorded for this lot yet" />
+							{:else}
+								<div class="grid gap-3 px-3">
+									{#each lot.history as hx (hx.id)}
+										<div class="grid gap-2 rounded-md border-2 border-border p-2">
+											<span class="text-left text-xs">
+												{standardDateFormat(hx.createdAt)}
+											</span>
+											<span class="text-sm">
+												{hx.event}
+											</span>
+										</div>
+									{/each}
+								</div>
+							{/if}
+							<div
+								class="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-linear-to-t from-card to-transparent pt-3"
+							></div>
+						</ScrollArea>
+					</Tabs.Content>
+
+					<Tabs.Content value="transactions">
+						<ScrollArea class="h-96">
+							{#if lot.transactions.length < 1}
+								<Empty
+									title="No Transactions"
+									description="No Transactions have been minted yet"
+									variant="loading"
+								/>
+							{:else}
+								<div class="grid gap-3 px-3">
+									{#each lot.transactions as tx (tx.id)}
+										<div class="grid gap-2 rounded-md border-2 border-border p-2 text-sm">
+											<span class="text-left text-xs text-muted-foreground">
+												{standardDateFormat(new Date())}
+											</span>
+											<div class="grid grid-cols-2 items-center gap-2">
+												<span>TX Hash</span>
+												<span class="truncate">{tx.txHash}</span>
+											</div>
+											<div class="grid grid-cols-2 items-center gap-2">
+												<span>Amount</span>
+												<span class="truncate">{toAbbrCurrency(Number(tx.amount))}</span>
+											</div>
+											<div class="grid grid-cols-2 items-center gap-2">
+												<span>Chain Status</span>
+												{#if tx.completed}
+													<Badge>Completed</Badge>
+												{:else}
+													<Badge variant="outline" class="bg-primary text-secondary">Pending</Badge>
+												{/if}
+											</div>
+										</div>
+									{/each}
+								</div>
+							{/if}
+						</ScrollArea>
+					</Tabs.Content>
+				</Tabs.Root>
 			</CardWrapper>
 		</div>
 	</div>

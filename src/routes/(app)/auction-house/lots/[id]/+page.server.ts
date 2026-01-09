@@ -30,7 +30,11 @@ export const load = async ({ params, locals, depends }) => {
           }
         }
       },
-      history: true,
+      history: {
+        orderBy: {
+          createdAt: 'desc'
+        }
+      },
       createdBy: lotCheck.anonLot ? false : {
         select: {
           id: true,
@@ -45,6 +49,11 @@ export const load = async ({ params, locals, depends }) => {
           displayName: true,
           avatarUrl: true,
           ctr: true
+        }
+      },
+      transactions: {
+        omit: {
+          userId: true
         }
       }
     },

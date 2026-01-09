@@ -9,7 +9,12 @@ export type AuctionBroadcastEvent = {
 }
 
 export const broadcastAuctionEvent = inngest.createFunction(
-  { id: 'auction-house-broadcast-auction' },
+  {
+    id: 'auction-house-broadcast-auction', retries: 3,
+    timeouts: {
+      finish: '60s'
+    }
+  },
   { event: 'auction-house/broadcast.auction' },
   async ({ event }) => {
     const auction = await db.auction.findUniqueOrThrow({

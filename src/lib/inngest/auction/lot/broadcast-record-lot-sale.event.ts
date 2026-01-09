@@ -1,5 +1,5 @@
 import { EmbedBuilder, WebhookClient } from "discord.js";
-import { inngest } from "../client";
+import { inngest } from "../../client";
 import { env } from "$env/dynamic/private";
 import { db } from "$lib/db/prisma";
 import { parseCurrency } from "$lib/utils/helpers/shared/currency";
@@ -8,11 +8,16 @@ import { NonRetriableError } from "inngest";
 export type AuctionBroadcastRecordLotSaleEvent = {
   id: string;
   middleId?: string;
+  txHash: string;
 }
 
 export const broadcastRecordLotSaleEvent = inngest.createFunction(
   {
-    id: 'auction-house-broadcast-record-lot-sale'
+    id: 'auction-house-broadcast-record-lot-sale',
+    retries: 3,
+    timeouts: {
+      finish: '60s'
+    }
   },
   {
     event: 'auction-house/broadcast.record-lot-sale',
@@ -63,7 +68,7 @@ export const broadcastRecordLotSaleEvent = inngest.createFunction(
     const params = new URLSearchParams({
       receiver: 'Unnamed Market',
       amount: purchasePrice.toString(),
-      communication: `Purchase of lot #${lot.lotNumber} - lotref~${lot.id}`,
+      communication: `Purchase of lot #${lot.lotNumber} - ${event.data.txHash}`,
     });
 
     const encodedUrl =

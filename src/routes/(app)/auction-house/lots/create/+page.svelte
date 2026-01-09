@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Sentry from '@sentry/sveltekit';
+	import posthog from 'posthog-js';
 	import CardWrapper from '$lib/components/custom/card-wrapper/card-wrapper.svelte';
 	import FieldInput from '$lib/components/custom/fields/field-input/field-input.svelte';
 	import CreditInput from '$lib/components/custom/fields/credit-input/credit-input.svelte';
@@ -14,7 +14,6 @@
 	import { CommandForm } from '@akcodeworks/svelte-command-form';
 	import { createLotSchema } from '$lib/remote/auction-house/lot/create-lot.schema.js';
 	import { createLot } from '$lib/remote/auction-house/lot/create-lot.remote.js';
-	import { goto } from '$app/navigation';
 	import ResponsiveDialog from '$lib/components/custom/responsive-dialog/responsive-dialog.svelte';
 
 	let { data } = $props();
@@ -58,7 +57,8 @@
 	});
 
 	function importFromCombine() {
-		Sentry.metrics.count('ah_lot_import_combine_interest', 1);
+		posthog.updateEarlyAccessFeatureEnrollment('contracts', true, 'concept');
+
 		toast('Not Implemented Yet', {
 			description:
 				'Your interest has been noted, we will announce when this feature is available on the Holochain.'

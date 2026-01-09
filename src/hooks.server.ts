@@ -1,8 +1,8 @@
-import * as Sentry from '@sentry/sveltekit';
 import { db } from "$lib/db/prisma";
 import { getLoggedInUser } from "$lib/utils/auth/get-logged-in-user";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
+import { getPostHogClient } from '$lib/server/posthog';
 
 const authHandle: Handle = async ({ event, resolve }) => {
   if (event.url.pathname === '/auth/callback') return resolve(event);
@@ -15,19 +15,22 @@ const authHandle: Handle = async ({ event, resolve }) => {
   const currentUser = await getLoggedInUser(session);
 
   if (!currentUser) {
-    Sentry.setUser(null);
     throw redirect(303, '/auth/login');
   }
 
   event.locals.user = currentUser;
 
-  Sentry.setUser({
-    id: currentUser.id,
-    username: currentUser.name,
-    ip_address: null, // NEVER track IP addresses - Seriously, don't do it.
-    geo: {} // NEVER track location data - There's no need for it
-  })
+  const posthog = getPostHogClient();
 
+  posthog.identify({
+    distinctId: currentUser.id,
+    properties: {
+      $set: {
+        name: currentUser.name,
+        ctr: currentUser.ctr,
+      }
+    }
+  });
   return resolve(event);
 }
 
@@ -35,7 +38,7 @@ const apiAuthHandle: Handle = async ({ event, resolve }) => {
   if (!event.url.pathname.startsWith('/api')) return resolve(event);
   if (event.url.pathname === '/api/inngest') return resolve(event);
   if (event.url.pathname === '/api/health') return resolve(event);
-  if (event.url.pathname === '/api/metrics') return resolve(event);
+  if (event.url.pathname.startsWith('/api/ph')) return resolve(event);
 
   const start = Date.now();
 
@@ -86,5 +89,4 @@ const apiAuthHandle: Handle = async ({ event, resolve }) => {
   return resp;
 }
 
-export const handle = sequence(authHandle, apiAuthHandle, Sentry.sentryHandle());
-export const handleError = Sentry.handleErrorWithSentry();
+export const handle = sequence(authHandle, apiAuthHandle);

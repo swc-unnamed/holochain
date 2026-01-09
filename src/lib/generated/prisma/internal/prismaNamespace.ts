@@ -393,6 +393,8 @@ export const ModelName = {
   LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
+  LotTransaction: 'LotTransaction',
+  CombineCreditLog: 'CombineCreditLog',
   ChainTrustRatingConfig: 'ChainTrustRatingConfig',
   ChainTrustRatingLog: 'ChainTrustRatingLog',
   Entity: 'Entity',
@@ -415,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "apiClient" | "apiClientLog" | "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "chainTrustRatingConfig" | "chainTrustRatingLog" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference"
+    modelProps: "apiClient" | "apiClientLog" | "asset" | "assetImage" | "auction" | "lot" | "lotHistory" | "lotItem" | "auctionConfiguration" | "lotTransaction" | "combineCreditLog" | "chainTrustRatingConfig" | "chainTrustRatingLog" | "entity" | "entityTransaction" | "siteConfiguration" | "user" | "userPreference"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1082,6 +1084,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuctionConfigurationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuctionConfigurationCountAggregateOutputType> | number
+        }
+      }
+    }
+    LotTransaction: {
+      payload: Prisma.$LotTransactionPayload<ExtArgs>
+      fields: Prisma.LotTransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LotTransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LotTransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.LotTransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LotTransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        findMany: {
+          args: Prisma.LotTransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>[]
+        }
+        create: {
+          args: Prisma.LotTransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        createMany: {
+          args: Prisma.LotTransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LotTransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.LotTransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        update: {
+          args: Prisma.LotTransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.LotTransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LotTransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LotTransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.LotTransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LotTransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.LotTransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLotTransaction>
+        }
+        groupBy: {
+          args: Prisma.LotTransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LotTransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LotTransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LotTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CombineCreditLog: {
+      payload: Prisma.$CombineCreditLogPayload<ExtArgs>
+      fields: Prisma.CombineCreditLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CombineCreditLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CombineCreditLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        findFirst: {
+          args: Prisma.CombineCreditLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CombineCreditLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        findMany: {
+          args: Prisma.CombineCreditLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>[]
+        }
+        create: {
+          args: Prisma.CombineCreditLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        createMany: {
+          args: Prisma.CombineCreditLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CombineCreditLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>[]
+        }
+        delete: {
+          args: Prisma.CombineCreditLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        update: {
+          args: Prisma.CombineCreditLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.CombineCreditLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CombineCreditLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CombineCreditLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.CombineCreditLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CombineCreditLogPayload>
+        }
+        aggregate: {
+          args: Prisma.CombineCreditLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCombineCreditLog>
+        }
+        groupBy: {
+          args: Prisma.CombineCreditLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CombineCreditLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CombineCreditLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CombineCreditLogCountAggregateOutputType> | number
         }
       }
     }
@@ -1771,6 +1921,35 @@ export const AuctionConfigurationScalarFieldEnum = {
 export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
 
 
+export const LotTransactionScalarFieldEnum = {
+  id: 'id',
+  txHash: 'txHash',
+  lotId: 'lotId',
+  amount: 'amount',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  userId: 'userId'
+} as const
+
+export type LotTransactionScalarFieldEnum = (typeof LotTransactionScalarFieldEnum)[keyof typeof LotTransactionScalarFieldEnum]
+
+
+export const CombineCreditLogScalarFieldEnum = {
+  id: 'id',
+  transactionId: 'transactionId',
+  amount: 'amount',
+  communication: 'communication',
+  receiver: 'receiver',
+  sender: 'sender',
+  timestamp: 'timestamp',
+  processedAt: 'processedAt',
+  processed: 'processed',
+  processedNotes: 'processedNotes'
+} as const
+
+export type CombineCreditLogScalarFieldEnum = (typeof CombineCreditLogScalarFieldEnum)[keyof typeof CombineCreditLogScalarFieldEnum]
+
+
 export const ChainTrustRatingConfigScalarFieldEnum = {
   key: 'key',
   points: 'points',
@@ -2231,6 +2410,8 @@ export type GlobalOmitConfig = {
   lotHistory?: Prisma.LotHistoryOmit
   lotItem?: Prisma.LotItemOmit
   auctionConfiguration?: Prisma.AuctionConfigurationOmit
+  lotTransaction?: Prisma.LotTransactionOmit
+  combineCreditLog?: Prisma.CombineCreditLogOmit
   chainTrustRatingConfig?: Prisma.ChainTrustRatingConfigOmit
   chainTrustRatingLog?: Prisma.ChainTrustRatingLogOmit
   entity?: Prisma.EntityOmit

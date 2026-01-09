@@ -28,6 +28,7 @@
 	import { broadcastLot } from '$lib/remote/auction-house/auctions/manage/broadcast-lot.remote.js';
 	import type { HttpError } from '@sveltejs/kit';
 	import ItemSwitch from '$lib/components/custom/item-switch/item-switch.svelte';
+	import { triggerCreditCheckpoint } from '$lib/remote/admin/combine/test.remote.js';
 
 	let { data } = $props();
 	let auction = $derived(data.auction);
@@ -145,6 +146,14 @@
 								>
 									<Icon icon="mdi:plus" />
 									<span>Add a Lot</span>
+								</DropdownMenu.Item>
+								<DropdownMenu.Item
+									onclick={async () => {
+										await triggerCreditCheckpoint();
+										toast.success('Credit log checks initiated');
+									}}
+								>
+									Run Credit Log Checks
 								</DropdownMenu.Item>
 							</DropdownMenu.Group>
 						</DropdownMenu.Content>
