@@ -1,8 +1,25 @@
 -- CreateTable
+CREATE TABLE "combine_credit_logs" (
+    "id" UUID NOT NULL DEFAULT uuidv7(),
+    "transaction_id" INTEGER NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "communication" TEXT NOT NULL,
+    "receiver" TEXT,
+    "sender" TEXT,
+    "timestamp" INTEGER NOT NULL,
+    "processed_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "processed" BOOLEAN NOT NULL DEFAULT false,
+    "processed_notes" TEXT,
+
+    CONSTRAINT "combine_credit_logs_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "lot_transactions" (
     "id" UUID NOT NULL DEFAULT uuidv7(),
-    "tx_hash" VARCHAR(66) NOT NULL,
+    "tx_hash" TEXT NOT NULL,
     "lot_id" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
     "completed" BOOLEAN NOT NULL DEFAULT false,
     "completed_at" TIMESTAMP(3),
     "user_id" TEXT NOT NULL,
