@@ -1,6 +1,6 @@
 import { guard } from '$lib/utils/auth/server-guard';
 import { db } from '$lib/db/prisma';
-import { getAdminCombineAuthUrl, getMarketAccessToken } from '$lib/utils/auth/combine-admin';
+import { getAdminCombineAuthUrl } from '$lib/utils/auth/combine-admin';
 import { allAdminScopes } from '$lib/utils/auth/admin-scopes';
 import type { PageServerLoad } from './$types';
 
@@ -21,9 +21,6 @@ export const load: PageServerLoad = async ({ locals, cookies, depends }) => {
       }
     }
   });
-
-  // By calling this, we ensure that the token is refreshed if needed
-  await getMarketAccessToken()
 
   const accessToken = configs.find((c) => c.key === 'INTEGRATION_COMBINE_ACCESS_TOKEN')?.value;
   const refreshToken = configs.find((c) => c.key === 'INTEGRATION_COMBINE_REFRESH_TOKEN')?.value;
