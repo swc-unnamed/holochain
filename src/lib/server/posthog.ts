@@ -1,12 +1,12 @@
 import { PostHog } from 'posthog-node';
-import { PUBLIC_POSTHOG_KEY, PUBLIC_POSTHOG_HOST } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 let _client: PostHog | null = null;
 
 export function getPostHogClient() {
   if (!_client) {
-    _client = new PostHog(PUBLIC_POSTHOG_KEY, {
-      host: PUBLIC_POSTHOG_HOST,
+    _client = new PostHog(env.PUBLIC_POSTHOG_KEY, {
+      host: env.PUBLIC_POSTHOG_HOST,
       disableGeoip: true,
     });
   }
