@@ -8,5 +8,5 @@ export const triggerCreditCheckpoint = command(async () => {
     data: {
       timestamp: new Date(),
     }
-  })
+  });
 });

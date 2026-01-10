@@ -4,8 +4,8 @@ import { broadcastRecordLotSaleEvent } from './auction/lot/broadcast-record-lot-
 import { lotRecordSaleEvent } from './auction/lot/record-sale.event';
 import { parseCreditlogEvent } from './automation/parse-creditlog.event';
 import { updateLotTxEvent } from './automation/lot-tx.event';
-import { combineCreditLogCron } from './automation/combine-creditlog.cron';
-import { updateCombineCreditLogEvent } from './automation/combine-creditlog.event';
+import { combineCreditLogCron } from './automation/combine/combine-creditlog.cron';
+import { updateCombineCreditLogEvent } from './automation/combine/combine-creditlog.event';
 
 const cronFunctions = [
   combineCreditLogCron,
