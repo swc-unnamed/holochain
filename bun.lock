@@ -10,6 +10,7 @@
         "@opentelemetry/api": "^1.9.0",
         "@prisma/adapter-pg": "^7.2.0",
         "@prisma/client": "^7.2.0",
+        "@valkey/valkey-glide": "^2.2.5",
         "crypto-js": "^4.2.0",
         "date-fns": "^4.1.0",
         "discord.js": "^14.25.1",
@@ -736,6 +737,20 @@
     "@typescript-eslint/utils": ["@typescript-eslint/utils@8.50.0", "", { "dependencies": { "@eslint-community/eslint-utils": "^4.7.0", "@typescript-eslint/scope-manager": "8.50.0", "@typescript-eslint/types": "8.50.0", "@typescript-eslint/typescript-estree": "8.50.0" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0", "typescript": ">=4.8.4 <6.0.0" } }, "sha512-87KgUXET09CRjGCi2Ejxy3PULXna63/bMYv72tCAlDJC3Yqwln0HiFJ3VJMst2+mEtNtZu5oFvX4qJGjKsnAgg=="],
 
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@8.50.0", "", { "dependencies": { "@typescript-eslint/types": "8.50.0", "eslint-visitor-keys": "^4.2.1" } }, "sha512-Xzmnb58+Db78gT/CCj/PVCvK+zxbnsw6F+O1oheYszJbBSdEjVhQi3C/Xttzxgi/GLmpvOggRs1RFpiJ8+c34Q=="],
+
+    "@valkey/valkey-glide": ["@valkey/valkey-glide@2.2.5", "", { "dependencies": { "long": "5", "protobufjs": "7" }, "optionalDependencies": { "@valkey/valkey-glide-darwin-arm64": "2.2.5", "@valkey/valkey-glide-darwin-x64": "2.2.5", "@valkey/valkey-glide-linux-arm64-gnu": "2.2.5", "@valkey/valkey-glide-linux-arm64-musl": "2.2.5", "@valkey/valkey-glide-linux-x64-gnu": "2.2.5", "@valkey/valkey-glide-linux-x64-musl": "2.2.5" } }, "sha512-QNuXaXg1xQIdXjsrf+S3hXY0BGHDI/SImNksTmkctTIEbZnIeXgogym2Gv7mXoVkzluKfAyxrpmd4sBMzI+lnw=="],
+
+    "@valkey/valkey-glide-darwin-arm64": ["@valkey/valkey-glide-darwin-arm64@2.2.5", "", { "os": "darwin", "cpu": "arm64" }, "sha512-DDDnalG+FVAmygsYmEp0xSi3rr4FncmmX4J/wBhDn6kr80CcsaiVPfcVMtiCOyhqVckLZiXqGc5qtCt+b30onA=="],
+
+    "@valkey/valkey-glide-darwin-x64": ["@valkey/valkey-glide-darwin-x64@2.2.5", "", { "os": "darwin", "cpu": "x64" }, "sha512-GvIvacs7Qaix1+ldgDLjXzZaKWAjFSK3MFKJ1iDrbNblEyQOu3PRvAccAdP6QhrJTOfuyj8FGz/fWh4T0hreOA=="],
+
+    "@valkey/valkey-glide-linux-arm64-gnu": ["@valkey/valkey-glide-linux-arm64-gnu@2.2.5", "", { "os": "linux", "cpu": "arm64" }, "sha512-TPn/IdzRCDqI1MmMWka52lxH5eN+i1o0INbG9GkOlFiOwYdQ513vgzaI1/SxNEqpM+z6C789fa63DvGGZzhY7A=="],
+
+    "@valkey/valkey-glide-linux-arm64-musl": ["@valkey/valkey-glide-linux-arm64-musl@2.2.5", "", { "os": "linux", "cpu": "arm64" }, "sha512-MT9TchT9ex3Yvvj7g46dk9r02OrM+L/6l6AlqGgopaWkEvkmq0Q1B59KwkYyFu/XnLoDjFVIBKb6aIfw0HoRpA=="],
+
+    "@valkey/valkey-glide-linux-x64-gnu": ["@valkey/valkey-glide-linux-x64-gnu@2.2.5", "", { "os": "linux", "cpu": "x64" }, "sha512-xtov/MM2/CE/INcD0aYhUdxo30pQ0qY/hwyZKsAB7mJcsur8aZazjVBAFCAFiQGkZ7IeE18Tq5+7FM3GgYjGSA=="],
+
+    "@valkey/valkey-glide-linux-x64-musl": ["@valkey/valkey-glide-linux-x64-musl@2.2.5", "", { "os": "linux", "cpu": "x64" }, "sha512-IjUOyx2MtQ7mK7U98mkR357Qm+JDcTvlqYOzZB/DT/yYY1YnwgnBWVJSmUPjc7NsHbH4bT60i0XWupowR+yIsw=="],
 
     "@vinejs/compiler": ["@vinejs/compiler@3.0.0", "", {}, "sha512-v9Lsv59nR56+bmy2p0+czjZxsLHwaibJ+SV5iK9JJfehlJMa501jUJQqqz4X/OqKXrxtE3uTQmSqjUqzF3B2mw=="],
 

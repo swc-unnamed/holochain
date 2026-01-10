@@ -47,7 +47,7 @@ export const recordSale = command(recordSaleSchema, async (data) => {
         lotId: data.lotId,
         txHash: generatedTxHash,
         userId: data.winnerId ? data.winnerId : data.middleId || '',
-        amount: BigInt(parsedCurrency),
+        amount: Number(parsedCurrency),
       }
     });
   }
