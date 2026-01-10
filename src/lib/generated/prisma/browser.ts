@@ -63,6 +63,16 @@ export type LotItem = Prisma.LotItemModel
  */
 export type AuctionConfiguration = Prisma.AuctionConfigurationModel
 /**
+ * Model LotTransaction
+ * 
+ */
+export type LotTransaction = Prisma.LotTransactionModel
+/**
+ * Model CombineCreditLog
+ * 
+ */
+export type CombineCreditLog = Prisma.CombineCreditLogModel
+/**
  * Model ChainTrustRatingConfig
  * 
  */

@@ -5,6 +5,7 @@ import { error } from "@sveltejs/kit";
 import { recordSaleSchema } from "./record-sale.schema";
 import { db } from "$lib/db/prisma";
 import { inngest } from "$lib/inngest";
+import { nanoid } from "$lib/utils/helpers/shared/nanoid";
 
 export const recordSale = command(recordSaleSchema, async (data) => {
   console.log("Record Sale Data:", data);
@@ -38,10 +39,24 @@ export const recordSale = command(recordSaleSchema, async (data) => {
     }
   });
 
+  const generatedTxHash = `atx_${nanoid(40)}`;
+
+  if (data.winnerId || data.middleId) {
+    await db.lotTransaction.create({
+      data: {
+        lotId: data.lotId,
+        txHash: generatedTxHash,
+        userId: data.winnerId ? data.winnerId : data.middleId || '',
+        amount: BigInt(parsedCurrency),
+      }
+    });
+  }
+
   await inngest.send({
     name: 'auction-house/lot.record-sale',
     data: {
-      id: data.lotId
+      id: data.lotId,
+      txHash: generatedTxHash
     }
   })
   return { success: true };

@@ -46,7 +46,7 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
         title: "Configuration",
         url: "/auction-house/config",
         role: ['DEVELOPER', 'TZAR']
-      }
+      },
     ]
   },
   {
@@ -139,6 +139,11 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
       {
         title: "Config",
         url: "/admin/config",
+        role: ['DEVELOPER', 'TZAR']
+      },
+      {
+        title: "Combine Integration",
+        url: "/admin/config/combine",
         role: ['DEVELOPER', 'TZAR']
       }
     ]

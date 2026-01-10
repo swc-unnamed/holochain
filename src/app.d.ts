@@ -19,6 +19,7 @@ declare global {
     discordUsername?: string;
     preferences: UserPreference[];
     anonid: string;
+    ctr: number;
   }
 
   interface ApiClient {

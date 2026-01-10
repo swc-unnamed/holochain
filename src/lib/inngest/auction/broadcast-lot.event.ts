@@ -12,7 +12,10 @@ export type AuctionLotBroadcastEvent = {
 export const broadcastAuctionLotEvent = inngest.createFunction(
   {
     id: 'auction-house-broadcast-lot',
-    retries: 3
+    retries: 3,
+    timeouts: {
+      finish: '60s'
+    }
   },
   {
     event: 'auction-house/broadcast.lot',

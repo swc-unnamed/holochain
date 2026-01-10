@@ -4,58 +4,73 @@ import { inngest } from "$lib/inngest/client";
 
 export type AuctionLotRecordSaleEvent = {
   id: string;
+  txHash: string;
 }
 
 export const lotRecordSaleEvent = inngest.createFunction(
   {
     id: 'auction-house-lot-record-sale',
-    retries: 3
+    retries: 3,
+    timeouts: {
+      finish: '60s'
+    }
   },
   {
     event: 'auction-house/lot.record-sale',
   },
-  async ({ event }) => {
-    const lot = await db.lot.findUniqueOrThrow({
-      where: {
-        id: event.data.id
-      },
-      include: {
-        createdBy: {
-          select: {
-            id: true,
-            displayName: true,
-            discordId: true,
-            preferences: {
-              where: {
-                key: 'GLOBAL_ENABLE_NOTIFICATIONS'
+  async ({ event, step, logger }) => {
+
+    logger.info('Processing auction lot record sale event');
+    const lot = await step.run('fetch lot', async () => {
+      return await db.lot.findUniqueOrThrow({
+        where: {
+          id: event.data.id
+        },
+        include: {
+          createdBy: {
+            select: {
+              id: true,
+              displayName: true,
+              discordId: true,
+              preferences: {
+                where: {
+                  key: 'GLOBAL_ENABLE_NOTIFICATIONS'
+                }
               }
             }
-          }
-        },
-        purchasedBy: {
-          select: {
-            id: true,
-            displayName: true,
-            discordId: true,
-            preferences: {
-              where: {
-                key: 'GLOBAL_ENABLE_NOTIFICATIONS'
+          },
+          purchasedBy: {
+            select: {
+              id: true,
+              displayName: true,
+              discordId: true,
+              preferences: {
+                where: {
+                  key: 'GLOBAL_ENABLE_NOTIFICATIONS'
+                }
               }
             }
           }
         }
-      }
+      });
     });
-    const lotPurchasedCtr = await getCtrConfig('AH_LOT_PURCHASED')
-    const lotSoldCtr = await getCtrConfig('AH_LOT_SOLD')
 
+    logger.info(`Recording sale for lot ${lot.id} (${lot.lotNumber})`);
+
+    const lotPurchasedCtr = await getCtrConfig('AH_LOT_PURCHASED');
+    const lotSoldCtr = await getCtrConfig('AH_LOT_SOLD');
+
+    logger.debug('sending broadcast event for lot sale');
     await inngest.send({
       name: 'auction-house/broadcast.record-lot-sale',
       data: {
         id: lot.id,
-        middleId: lot.middleId ?? undefined
+        middleId: lot.middleId ?? undefined,
+        txHash: event.data.txHash
       }
-    })
+    });
+
+    logger.debug('sent')
 
     if (lot.createdBy?.preferences.find(p => p.key === 'GLOBAL_ENABLE_NOTIFICATIONS')?.value === 'true') {
       // send notification to creator

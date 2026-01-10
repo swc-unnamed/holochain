@@ -1,0 +1,14 @@
+model CombineCreditLog {
+  id             String    @id @default(dbgenerated("uuidv7()")) @db.Uuid
+  transactionId  Int       @map("transaction_id")
+  amount         Int
+  communication  String
+  receiver       String?
+  sender         String?
+  timestamp      Int
+  processedAt    DateTime? @default(now()) @map("processed_at")
+  processed      Boolean   @default(false)
+  processedNotes String?   @map("processed_notes")
+
+  @@map("combine_credit_logs")
+}

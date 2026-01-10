@@ -22,6 +22,7 @@ model User {
   lotsOwned       Lot[]                 @relation(name: "lots_created")
   lotsPurchased   Lot[]                 @relation(name: "lots_purchased")
   apiClients      ApiClient[]
+  lotTransactions LotTransaction[]
 
   @@map("users")
 }

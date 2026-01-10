@@ -31,6 +31,7 @@ export async function getLoggedInUser(token: string): Promise<User | null> {
       discordUsername: user.discordUsername || undefined,
       preferences: user.preferences,
       anonid: user.anonid,
+      ctr: user.ctr,
     }
 
   } catch (err) {

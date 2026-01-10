@@ -3,7 +3,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import TextareaInput from '../fields/textarea-input/textarea-input.svelte';
-	import * as Sentry from '@sentry/sveltekit';
 	import { page } from '$app/state';
 	import { toast } from 'svelte-sonner';
 
@@ -16,12 +15,12 @@
 	let feedbackText = $state('');
 
 	async function onSubmit() {
-		Sentry.captureFeedback({
-			message: feedbackText,
-			name: page.data.user.name,
-			source: 'bug-report.svelte',
-			url: page.url.pathname
-		});
+		// Sentry.captureFeedback({
+		// 	message: feedbackText,
+		// 	name: page.data.user.name,
+		// 	source: 'bug-report.svelte',
+		// 	url: page.url.pathname
+		// });
 	}
 </script>
 

@@ -321,6 +321,7 @@ export type UserWhereInput = {
   lotsOwned?: Prisma.LotListRelationFilter
   lotsPurchased?: Prisma.LotListRelationFilter
   apiClients?: Prisma.ApiClientListRelationFilter
+  lotTransactions?: Prisma.LotTransactionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -347,6 +348,7 @@ export type UserOrderByWithRelationInput = {
   lotsOwned?: Prisma.LotOrderByRelationAggregateInput
   lotsPurchased?: Prisma.LotOrderByRelationAggregateInput
   apiClients?: Prisma.ApiClientOrderByRelationAggregateInput
+  lotTransactions?: Prisma.LotTransactionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -376,6 +378,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   lotsOwned?: Prisma.LotListRelationFilter
   lotsPurchased?: Prisma.LotListRelationFilter
   apiClients?: Prisma.ApiClientListRelationFilter
+  lotTransactions?: Prisma.LotTransactionListRelationFilter
 }, "id" | "name" | "anonid" | "combineId">
 
 export type UserOrderByWithAggregationInput = {
@@ -452,6 +455,7 @@ export type UserCreateInput = {
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -478,6 +482,7 @@ export type UserUncheckedCreateInput = {
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -504,6 +509,7 @@ export type UserUpdateInput = {
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -530,6 +536,7 @@ export type UserUncheckedUpdateInput = {
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -726,6 +733,20 @@ export type UserUpdateOneWithoutLotsPurchasedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLotsPurchasedInput, Prisma.UserUpdateWithoutLotsPurchasedInput>, Prisma.UserUncheckedUpdateWithoutLotsPurchasedInput>
 }
 
+export type UserCreateNestedOneWithoutLotTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLotTransactionsInput, Prisma.UserUncheckedCreateWithoutLotTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLotTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLotTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLotTransactionsInput, Prisma.UserUncheckedCreateWithoutLotTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLotTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutLotTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLotTransactionsInput, Prisma.UserUpdateWithoutLotTransactionsInput>, Prisma.UserUncheckedUpdateWithoutLotTransactionsInput>
+}
+
 export type UserCreateNestedOneWithoutCtrLogsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCtrLogsInput, Prisma.UserUncheckedCreateWithoutCtrLogsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCtrLogsInput
@@ -790,6 +811,7 @@ export type UserCreateWithoutApiClientsInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApiClientsInput = {
@@ -815,6 +837,7 @@ export type UserUncheckedCreateWithoutApiClientsInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApiClientsInput = {
@@ -856,6 +879,7 @@ export type UserUpdateWithoutApiClientsInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApiClientsInput = {
@@ -881,6 +905,7 @@ export type UserUncheckedUpdateWithoutApiClientsInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLotsOwnedInput = {
@@ -906,6 +931,7 @@ export type UserCreateWithoutLotsOwnedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLotsOwnedInput = {
@@ -931,6 +957,7 @@ export type UserUncheckedCreateWithoutLotsOwnedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLotsOwnedInput = {
@@ -961,6 +988,7 @@ export type UserCreateWithoutLotsPurchasedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLotsPurchasedInput = {
@@ -986,6 +1014,7 @@ export type UserUncheckedCreateWithoutLotsPurchasedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLotsPurchasedInput = {
@@ -1027,6 +1056,7 @@ export type UserUpdateWithoutLotsOwnedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLotsOwnedInput = {
@@ -1052,6 +1082,7 @@ export type UserUncheckedUpdateWithoutLotsOwnedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLotsPurchasedInput = {
@@ -1088,6 +1119,7 @@ export type UserUpdateWithoutLotsPurchasedInput = {
   ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
@@ -1112,6 +1144,127 @@ export type UserUncheckedUpdateWithoutLotsPurchasedInput = {
   preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
   ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
+  apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLotTransactionsInput = {
+  id?: string
+  name: string
+  displayName: string
+  anonid: string
+  ctr?: number
+  combineId?: string
+  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
+  role?: $Enums.AppRole
+  banned?: boolean
+  bannedReason?: string | null
+  bannedUntil?: Date | string | null
+  bannedById?: string | null
+  avatarUrl?: string | null
+  discordId?: string | null
+  discordUsername?: string | null
+  approvedMiddle?: boolean
+  createdAt?: Date | string
+  lastSeenAt?: Date | string
+  preferences?: Prisma.UserPreferenceCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogCreateNestedManyWithoutUserInput
+  lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
+  lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
+  apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutLotTransactionsInput = {
+  id?: string
+  name: string
+  displayName: string
+  anonid: string
+  ctr?: number
+  combineId?: string
+  combineScopes?: Prisma.UserCreatecombineScopesInput | string[]
+  role?: $Enums.AppRole
+  banned?: boolean
+  bannedReason?: string | null
+  bannedUntil?: Date | string | null
+  bannedById?: string | null
+  avatarUrl?: string | null
+  discordId?: string | null
+  discordUsername?: string | null
+  approvedMiddle?: boolean
+  createdAt?: Date | string
+  lastSeenAt?: Date | string
+  preferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutUserInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedCreateNestedManyWithoutUserInput
+  lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
+  lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
+  apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutLotTransactionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLotTransactionsInput, Prisma.UserUncheckedCreateWithoutLotTransactionsInput>
+}
+
+export type UserUpsertWithoutLotTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLotTransactionsInput, Prisma.UserUncheckedUpdateWithoutLotTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLotTransactionsInput, Prisma.UserUncheckedCreateWithoutLotTransactionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLotTransactionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLotTransactionsInput, Prisma.UserUncheckedUpdateWithoutLotTransactionsInput>
+}
+
+export type UserUpdateWithoutLotTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  anonid?: Prisma.StringFieldUpdateOperationsInput | string
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
+  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
+  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferences?: Prisma.UserPreferenceUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUpdateManyWithoutUserNestedInput
+  lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
+  lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
+  apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLotTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  anonid?: Prisma.StringFieldUpdateOperationsInput | string
+  ctr?: Prisma.IntFieldUpdateOperationsInput | number
+  combineId?: Prisma.StringFieldUpdateOperationsInput | string
+  combineScopes?: Prisma.UserUpdatecombineScopesInput | string[]
+  role?: Prisma.EnumAppRoleFieldUpdateOperationsInput | $Enums.AppRole
+  banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discordUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedMiddle?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  ctrLogs?: Prisma.ChainTrustRatingLogUncheckedUpdateManyWithoutUserNestedInput
+  lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
+  lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
@@ -1138,6 +1291,7 @@ export type UserCreateWithoutCtrLogsInput = {
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCtrLogsInput = {
@@ -1163,6 +1317,7 @@ export type UserUncheckedCreateWithoutCtrLogsInput = {
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCtrLogsInput = {
@@ -1204,6 +1359,7 @@ export type UserUpdateWithoutCtrLogsInput = {
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCtrLogsInput = {
@@ -1229,6 +1385,7 @@ export type UserUncheckedUpdateWithoutCtrLogsInput = {
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPreferencesInput = {
@@ -1254,6 +1411,7 @@ export type UserCreateWithoutPreferencesInput = {
   lotsOwned?: Prisma.LotCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPreferencesInput = {
@@ -1279,6 +1437,7 @@ export type UserUncheckedCreateWithoutPreferencesInput = {
   lotsOwned?: Prisma.LotUncheckedCreateNestedManyWithoutCreatedByInput
   lotsPurchased?: Prisma.LotUncheckedCreateNestedManyWithoutPurchasedByInput
   apiClients?: Prisma.ApiClientUncheckedCreateNestedManyWithoutOwnerInput
+  lotTransactions?: Prisma.LotTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPreferencesInput = {
@@ -1320,6 +1479,7 @@ export type UserUpdateWithoutPreferencesInput = {
   lotsOwned?: Prisma.LotUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPreferencesInput = {
@@ -1345,6 +1505,7 @@ export type UserUncheckedUpdateWithoutPreferencesInput = {
   lotsOwned?: Prisma.LotUncheckedUpdateManyWithoutCreatedByNestedInput
   lotsPurchased?: Prisma.LotUncheckedUpdateManyWithoutPurchasedByNestedInput
   apiClients?: Prisma.ApiClientUncheckedUpdateManyWithoutOwnerNestedInput
+  lotTransactions?: Prisma.LotTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1358,6 +1519,7 @@ export type UserCountOutputType = {
   lotsOwned: number
   lotsPurchased: number
   apiClients: number
+  lotTransactions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1366,6 +1528,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   lotsOwned?: boolean | UserCountOutputTypeCountLotsOwnedArgs
   lotsPurchased?: boolean | UserCountOutputTypeCountLotsPurchasedArgs
   apiClients?: boolean | UserCountOutputTypeCountApiClientsArgs
+  lotTransactions?: boolean | UserCountOutputTypeCountLotTransactionsArgs
 }
 
 /**
@@ -1413,6 +1576,13 @@ export type UserCountOutputTypeCountApiClientsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ApiClientWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLotTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LotTransactionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1438,6 +1608,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   lotsOwned?: boolean | Prisma.User$lotsOwnedArgs<ExtArgs>
   lotsPurchased?: boolean | Prisma.User$lotsPurchasedArgs<ExtArgs>
   apiClients?: boolean | Prisma.User$apiClientsArgs<ExtArgs>
+  lotTransactions?: boolean | Prisma.User$lotTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1511,6 +1682,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   lotsOwned?: boolean | Prisma.User$lotsOwnedArgs<ExtArgs>
   lotsPurchased?: boolean | Prisma.User$lotsPurchasedArgs<ExtArgs>
   apiClients?: boolean | Prisma.User$apiClientsArgs<ExtArgs>
+  lotTransactions?: boolean | Prisma.User$lotTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1524,6 +1696,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     lotsOwned: Prisma.$LotPayload<ExtArgs>[]
     lotsPurchased: Prisma.$LotPayload<ExtArgs>[]
     apiClients: Prisma.$ApiClientPayload<ExtArgs>[]
+    lotTransactions: Prisma.$LotTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1943,6 +2116,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   lotsOwned<T extends Prisma.User$lotsOwnedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lotsOwnedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lotsPurchased<T extends Prisma.User$lotsPurchasedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lotsPurchasedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   apiClients<T extends Prisma.User$apiClientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$apiClientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApiClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lotTransactions<T extends Prisma.User$lotTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lotTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LotTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2495,6 +2669,30 @@ export type User$apiClientsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ApiClientScalarFieldEnum | Prisma.ApiClientScalarFieldEnum[]
+}
+
+/**
+ * User.lotTransactions
+ */
+export type User$lotTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LotTransaction
+   */
+  select?: Prisma.LotTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LotTransaction
+   */
+  omit?: Prisma.LotTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LotTransactionInclude<ExtArgs> | null
+  where?: Prisma.LotTransactionWhereInput
+  orderBy?: Prisma.LotTransactionOrderByWithRelationInput | Prisma.LotTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.LotTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LotTransactionScalarFieldEnum | Prisma.LotTransactionScalarFieldEnum[]
 }
 
 /**

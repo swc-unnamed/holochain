@@ -60,6 +60,8 @@ export const ModelName = {
   LotHistory: 'LotHistory',
   LotItem: 'LotItem',
   AuctionConfiguration: 'AuctionConfiguration',
+  LotTransaction: 'LotTransaction',
+  CombineCreditLog: 'CombineCreditLog',
   ChainTrustRatingConfig: 'ChainTrustRatingConfig',
   ChainTrustRatingLog: 'ChainTrustRatingLog',
   Entity: 'Entity',
@@ -212,6 +214,35 @@ export const AuctionConfigurationScalarFieldEnum = {
 } as const
 
 export type AuctionConfigurationScalarFieldEnum = (typeof AuctionConfigurationScalarFieldEnum)[keyof typeof AuctionConfigurationScalarFieldEnum]
+
+
+export const LotTransactionScalarFieldEnum = {
+  id: 'id',
+  txHash: 'txHash',
+  lotId: 'lotId',
+  amount: 'amount',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  userId: 'userId'
+} as const
+
+export type LotTransactionScalarFieldEnum = (typeof LotTransactionScalarFieldEnum)[keyof typeof LotTransactionScalarFieldEnum]
+
+
+export const CombineCreditLogScalarFieldEnum = {
+  id: 'id',
+  transactionId: 'transactionId',
+  amount: 'amount',
+  communication: 'communication',
+  receiver: 'receiver',
+  sender: 'sender',
+  timestamp: 'timestamp',
+  processedAt: 'processedAt',
+  processed: 'processed',
+  processedNotes: 'processedNotes'
+} as const
+
+export type CombineCreditLogScalarFieldEnum = (typeof CombineCreditLogScalarFieldEnum)[keyof typeof CombineCreditLogScalarFieldEnum]
 
 
 export const ChainTrustRatingConfigScalarFieldEnum = {

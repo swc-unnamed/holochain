@@ -30,34 +30,6 @@ export const ApiClientStatus = {
 export type ApiClientStatus = (typeof ApiClientStatus)[keyof typeof ApiClientStatus]
 
 
-export const LotStatus = {
-  SUBMITTED: 'SUBMITTED',
-  SCHEDULED: 'SCHEDULED',
-  SOLD: 'SOLD',
-  COMPLETED: 'COMPLETED',
-  WITHDRAWN: 'WITHDRAWN'
-} as const
-
-export type LotStatus = (typeof LotStatus)[keyof typeof LotStatus]
-
-
-export const AuctionStatus = {
-  ACTIVE: 'ACTIVE',
-  CANCELLED: 'CANCELLED',
-  COMPLETED: 'COMPLETED',
-  PENDING: 'PENDING'
-} as const
-
-export type AuctionStatus = (typeof AuctionStatus)[keyof typeof AuctionStatus]
-
-
-export const AuctionConfigurationKey = {
-  LIVE_DISCORD_BROADCAST_WEBHOOK_URL: 'LIVE_DISCORD_BROADCAST_WEBHOOK_URL'
-} as const
-
-export type AuctionConfigurationKey = (typeof AuctionConfigurationKey)[keyof typeof AuctionConfigurationKey]
-
-
 export const ChainTrustRatingKey = {
   AH_LOT_CREATED: 'AH_LOT_CREATED',
   AH_LOT_PURCHASED: 'AH_LOT_PURCHASED',
@@ -113,7 +85,11 @@ export const SiteConfigurationKey = {
   GLOBAL_REQUIRE_COMBINE_AUTHENTICATION: 'GLOBAL_REQUIRE_COMBINE_AUTHENTICATION',
   GLOBAL_DISABLE_NAME_VERIFICATION: 'GLOBAL_DISABLE_NAME_VERIFICATION',
   DISCORD_CLIENT_ID: 'DISCORD_CLIENT_ID',
-  DISCORD_CLIENT_SECRET: 'DISCORD_CLIENT_SECRET'
+  DISCORD_CLIENT_SECRET: 'DISCORD_CLIENT_SECRET',
+  INTEGRATION_COMBINE_ACCESS_TOKEN: 'INTEGRATION_COMBINE_ACCESS_TOKEN',
+  INTEGRATION_COMBINE_REFRESH_TOKEN: 'INTEGRATION_COMBINE_REFRESH_TOKEN',
+  INTEGRATION_COMBINE_TOKEN_EXPIRES_AT: 'INTEGRATION_COMBINE_TOKEN_EXPIRES_AT',
+  INTEGRATION_COMBINE_SCOPES: 'INTEGRATION_COMBINE_SCOPES'
 } as const
 
 export type SiteConfigurationKey = (typeof SiteConfigurationKey)[keyof typeof SiteConfigurationKey]
@@ -126,3 +102,31 @@ export const EntityTransactionType = {
 } as const
 
 export type EntityTransactionType = (typeof EntityTransactionType)[keyof typeof EntityTransactionType]
+
+
+export const LotStatus = {
+  SUBMITTED: 'SUBMITTED',
+  SCHEDULED: 'SCHEDULED',
+  SOLD: 'SOLD',
+  COMPLETED: 'COMPLETED',
+  WITHDRAWN: 'WITHDRAWN'
+} as const
+
+export type LotStatus = (typeof LotStatus)[keyof typeof LotStatus]
+
+
+export const AuctionStatus = {
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED',
+  PENDING: 'PENDING'
+} as const
+
+export type AuctionStatus = (typeof AuctionStatus)[keyof typeof AuctionStatus]
+
+
+export const AuctionConfigurationKey = {
+  LIVE_DISCORD_BROADCAST_WEBHOOK_URL: 'LIVE_DISCORD_BROADCAST_WEBHOOK_URL'
+} as const
+
+export type AuctionConfigurationKey = (typeof AuctionConfigurationKey)[keyof typeof AuctionConfigurationKey]
