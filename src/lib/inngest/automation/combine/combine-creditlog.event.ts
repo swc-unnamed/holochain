@@ -1,6 +1,6 @@
 import { getMarketAccessToken } from "$lib/utils/auth/combine-admin";
 import { SWCombine } from "swcombine-sdk";
-import { inngest } from "../client";
+import { inngest } from "../../client";
 import { db } from "$lib/db/prisma";
 import type { CombineCreditLog } from "$lib/generated/prisma/client";
 
