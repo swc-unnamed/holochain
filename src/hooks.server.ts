@@ -2,7 +2,7 @@ import { db } from "$lib/db/prisma";
 import { getLoggedInUser } from "$lib/utils/auth/get-logged-in-user";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
-import { getPostHogClient } from '$lib/server/posthog';
+import { getPostHogClient } from '$lib/server/posthog/posthog';
 
 const authHandle: Handle = async ({ event, resolve }) => {
   if (event.url.pathname === '/auth/callback') return resolve(event);
